@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const dbConnection = (app, port) => {
   mongoose
-    .connect(process.env.DB_URL)
+    .connect(process.env.DB_URI)
     .then(() => {
       console.log("Connected successfully to server");
       const listenon = process.env.PORT || port;
