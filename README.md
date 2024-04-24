@@ -87,9 +87,6 @@ This project is licensed under the [ISC License](LICENSE).
 - [Mongoose](https://mongoosejs.com/)
 - [Render](https://render.com/)
 
-## Demo
-- [Sociel_Media_API](https://sociel-media-api.onrender.com)
-
 ## Contact
 
 For any inquiries or support, please contact mohamedtwfik910@gmail.com.
