@@ -74,7 +74,14 @@ This is a RESTful API for a social media platform designed specifically for prog
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit pull requests.
+Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/new-feature`).
+3. Commit your changes (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature/new-feature`).
+5. Create a new Pull Request.
+
 
 ## License
 
