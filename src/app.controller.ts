@@ -11,7 +11,6 @@ export class AppController {
    */
   @Get()
   root(@Req() req: Request, @Res() res: Response) {
-    if (req.isAuthenticated()) return res.redirect('/production');
-    else throw new UnauthorizedException();
+    return (req.isAuthenticated()) ? res.redirect('/production') : res.redirect('/production');
   }
 }
