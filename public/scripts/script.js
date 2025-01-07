@@ -1,3 +1,8 @@
+// cancel auto complete for all input fields
+document.querySelectorAll('input').forEach(ele => {
+  ele.setAttribute('autocomplete', 'off');
+});
+
 // Show range value next to range input field
 document.querySelectorAll("input.range").forEach(range => {
   range.setAttribute('max', 100);
