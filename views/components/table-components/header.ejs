@@ -1,0 +1,16 @@
+<tr class="table-dark">
+  <th scope="col">الرقم</th>
+
+  <% try { %>
+    <%- include(`../modules/${type}/table-components/header`) %>
+  <% } catch(error) { %>
+    <th scope="col">الإسم</th>
+  <% } %>
+
+  <th scope="col">أنشئ بواسطة</th>
+  <th scope="col">آخر تحديث بواسطة</th>
+  <th scope="col">تاريخ الإنشاء</th>
+  <th scope="col">تاريخ آخر تحديث</th>
+  <th scope="col">تحديث</th>
+  <th scope="col">حذف</th>
+</tr>
