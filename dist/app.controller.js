@@ -16,10 +16,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 let AppController = class AppController {
     root(req, res) {
-        if (req.isAuthenticated())
-            return res.redirect('/production');
-        else
-            throw new common_1.UnauthorizedException();
+        return (req.isAuthenticated()) ? res.redirect('/production') : res.redirect('/production');
     }
 };
 exports.AppController = AppController;

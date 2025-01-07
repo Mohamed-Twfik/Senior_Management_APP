@@ -27,6 +27,8 @@ let LoggerExceptionFilter = class LoggerExceptionFilter extends core_1.BaseExcep
         const duration = Date.now() - (request.startTime || Date.now());
         this.customLoggerService.error(`${method} ${url} [${statusCode}] Duration: ${duration}ms Error: ${errorMessage}`, contextName);
         const response = host.switchToHttp().getResponse();
+        if (url.startsWith("/auth/login"))
+            response.redirect(`/auth/login?error=${errorMessage}`);
         if (url.startsWith("/users"))
             response.redirect(`/users?error=${errorMessage}`);
         else if (url.startsWith("/workers"))
