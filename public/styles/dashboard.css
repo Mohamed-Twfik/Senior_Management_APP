@@ -1,0 +1,118 @@
+/* 
+  #5fd3ff #000217 #4ac6ff
+*/
+
+*:not(.toggle-password):not(i) {
+  font-family: 'Harmattan', sans-serif;
+  font-size: 1.03em;
+}
+
+body {
+  background-color: #000217;
+}
+
+.container {
+  max-width: 1800px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+i {
+  color: inherit;
+  font-size: .9rem;
+}
+
+.btn {
+  transition: all 300ms ease-in-out;
+}
+
+.btn:not(.btn-dark-golden):not(.btn-danger):not(.close) {
+  background-color: #5fd3ff;
+  color: #000217;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:not(.btn-dark-golden):not(.btn-danger):not(.close) i {
+  color: #000217;
+}
+
+.btn.btn-dark-golden {
+  background-color: #000217;
+  color: #5fd3ff;
+  border: none;
+}
+
+.btn.close {
+  color: #000217;
+  background-color: #4ac6ff;
+  border: none;
+}
+
+.btn.btn-danger {
+  color: #4ac6ff;
+  background-color: #9b0000;
+  border: none;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.form-control, .form-select {
+  background-color: #4ac6ff;
+  color: #000217;
+  border: none;
+}
+
+.form-control[type='number'][form="filter-form"] {
+  max-width: 100px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #4ac6ff;
+  color: #000217;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control[name="password"] {
+  padding-left: 2.5rem;
+}
+
+.toggle-password {
+  top: 30%;
+  left: 4%;
+  cursor: pointer;
+}
+
+.modal-header, .modal-footer {
+  border-color: #000217;
+}
+
+.modal-content {
+  background-color: #5fd3ff;
+  color: #000217;
+}
+
+.modal-content .form-control, .modal-content .form-select {
+  border-radius: 25px;
+}
+
+.logo {
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
+}

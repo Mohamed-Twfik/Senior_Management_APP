@@ -1,0 +1,41 @@
+<tr class="table-dark">
+  <th scope="col"><i class="fa-solid fa-magnifying-glass"></i></th>
+
+  <% try { %>
+    <%- include(`../modules/${type}/table-components/filters`) %>
+  <% } catch(error) { %>
+    <td scope="col">
+      <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
+    </td>
+  <% } %>
+
+  <td scope="col">
+    <select class="form-select" name="createdBy" form="filter-form">
+      <option value="" selected <%= (!filters.createdBy) ? "selected" : "" %>>إختر</option>
+      <% users.forEach(user=> { %>
+        <option value="objectid:<%= user._id %>" <%= (filters.createdBy===user._id.toString() ) ? "selected" : "" %>>
+          <%= user.username %>
+        </option>
+        <% }) %>
+    </select>
+  </td>
+  <td scope="col">
+    <select class="form-select" name="updatedBy" form="filter-form">
+      <option value="" selected <%= (!filters.updatedBy) ? "selected" : "" %>>إختر</option>
+      <% users.forEach(user=> { %>
+        <option value="objectid:<%= user._id %>" <%= (filters.updatedBy.replace("objectid:", "" )===user._id.toString() ) ? "selected" : "" %>>
+          <%= user.username %>
+        </option>
+        <% }) %>
+    </select>
+  </td>
+  <td scope="col">
+    <input type="text" class="form-control" name="createdAtArabic" form="filter-form" placeholder="إبحث" value='<%= (filters.createdAtArabic) ? filters.createdAtArabic : '' %>'>
+  </td>
+  <td scope="col">
+    <input type="text" class="form-control" name="updatedAtArabic" form="filter-form" placeholder="إبحث" value='<%= (filters.updatedAtArabic) ? filters.updatedAtArabic : '' %>'>
+  </td>
+  <td scope="col" colspan="2">
+    <button type="submit" class="btn w-4" form="filter-form"><i class="fa-solid fa-magnifying-glass"></i>&nbsp&nbsp&nbspبحث</button>
+  </td>
+</tr>
