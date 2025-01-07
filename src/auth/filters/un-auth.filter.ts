@@ -3,6 +3,7 @@ import { ExceptionFilter, Catch, ArgumentsHost, UnauthorizedException } from "@n
 @Catch(UnauthorizedException)
 export class UnauthorizedFilter implements ExceptionFilter {
   catch(exception: UnauthorizedException, host: ArgumentsHost) {
-    host.switchToHttp().getResponse().redirect('/auth/login');
+    const message = exception.message;
+    host.switchToHttp().getResponse().redirect('/auth/login?error=' + message);
   }
 }

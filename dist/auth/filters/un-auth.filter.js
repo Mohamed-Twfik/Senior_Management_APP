@@ -10,7 +10,8 @@ exports.UnauthorizedFilter = void 0;
 const common_1 = require("@nestjs/common");
 let UnauthorizedFilter = class UnauthorizedFilter {
     catch(exception, host) {
-        host.switchToHttp().getResponse().redirect('/auth/login');
+        const message = exception.message;
+        host.switchToHttp().getResponse().redirect('/auth/login?error=' + message);
     }
 };
 exports.UnauthorizedFilter = UnauthorizedFilter;
