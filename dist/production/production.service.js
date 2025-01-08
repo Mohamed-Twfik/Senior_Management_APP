@@ -99,13 +99,13 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
     }
     async getSalary(getSalaryDto, queryParams, user) {
         try {
-            console.log(1);
             const productions = await this.productionModel.find({
                 date: {
                     $gte: getSalaryDto.from,
                     $lte: getSalaryDto.to
                 }
-            }).populate('worker', 'name')
+            })
+                .populate('worker', 'name')
                 .populate('product', 'name')
                 .populate('department', 'name');
             const workerSalaries = new Map();
@@ -118,7 +118,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
                 const workerData = workerSalaries.get(workerId);
                 workerData.salary += cost;
             });
-            console.log(3);
             const salaries = Array.from(workerSalaries.values());
             for (const salary of salaries) {
                 const bonusPresent = (await this.bonusService.find({
@@ -133,7 +132,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
                 salary.total = salary.salary + salary.bonus;
             }
             ;
-            console.log(4);
             return { data: salaries, user, error: queryParams.error || null };
         }
         catch (error) {
