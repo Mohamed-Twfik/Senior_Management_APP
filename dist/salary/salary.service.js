@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalaryService = void 0;
 const common_1 = require("@nestjs/common");
-const production_service_1 = require("../production/production.service");
 const bonus_service_1 = require("../bonus/bonus.service");
+const production_service_1 = require("../production/production.service");
 let SalaryService = class SalaryService {
     constructor(productionService, bonusService) {
         this.productionService = productionService;

@@ -1,13 +1,14 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Query,
-    Redirect,
-    Render
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render
 } from '@nestjs/common';
+import { GetSalaryDto } from 'src/production/dto/get-salary.dto';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
@@ -57,5 +58,15 @@ export class ProductionController {
     @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument
   ) {
     return this.productionService.remove(production);
+  }
+
+  @Post('salary')
+  @Render('salary')
+  getSalary(
+    @Body() getSalaryDto: GetSalaryDto,
+    @GetUser() user: UserDocument,
+    @Query('error') error: string
+  ) {
+    return this.productionService.getSalary(getSalaryDto, user, error);
   }
 }

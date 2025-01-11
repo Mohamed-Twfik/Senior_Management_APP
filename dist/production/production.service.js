@@ -23,8 +23,9 @@ const workers_service_1 = require("../workers/workers.service");
 const product_price_service_1 = require("../product-price/product-price.service");
 const production_entity_1 = require("./entities/production.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const bonus_service_1 = require("../bonus/bonus.service");
 let ProductionService = class ProductionService extends base_service_1.BaseService {
-    constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService) {
+    constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService, bonusService) {
         super();
         this.productionModel = productionModel;
         this.usersService = usersService;
@@ -32,6 +33,7 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         this.workersService = workersService;
         this.departmentsService = departmentsService;
         this.productPriceService = productPriceService;
+        this.bonusService = bonusService;
         this.searchableKeys = [
             "arabicDate"
         ];
@@ -119,6 +121,27 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         await Production.set(inputData).save();
     }
+    async getSalary(getSalaryDto, user, error) {
+        const salaries = await this.workersService.getSalary(getSalaryDto, user, error);
+        console.log(salaries);
+        for (const salary of salaries) {
+            salary.bonus = 0;
+            if (salary.workerType === 'production') {
+                const bonusPresent = (await this.bonusService.find({
+                    from: {
+                        $lte: salary.salary
+                    },
+                    to: {
+                        $gte: salary.salary
+                    }
+                }))[0];
+                salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.totalSalary : 0;
+            }
+            salary.total = salary.totalSalary + salary.bonus;
+        }
+        ;
+        return { data: salaries, user, error: error || null };
+    }
 };
 exports.ProductionService = ProductionService;
 exports.ProductionService = ProductionService = __decorate([
@@ -129,6 +152,7 @@ exports.ProductionService = ProductionService = __decorate([
         products_service_1.ProductsService,
         workers_service_1.WorkersService,
         departments_service_1.DepartmentsService,
-        product_price_service_1.ProductPriceService])
+        product_price_service_1.ProductPriceService,
+        bonus_service_1.BonusService])
 ], ProductionService);
 //# sourceMappingURL=production.service.js.map

@@ -16,9 +16,10 @@ exports.WorkersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const production_entity_1 = require("../production/entities/production.entity");
 const users_service_1 = require("../users/users.service");
-const worker_entity_1 = require("./entities/worker.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const worker_entity_1 = require("./entities/worker.entity");
 let WorkersService = class WorkersService extends base_service_1.BaseService {
     constructor(workersModel, usersService) {
         super();
@@ -64,6 +65,88 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
             updatedBy: user._id
         };
         await worker.set(inputData).save();
+    }
+    async getSalary(getSalaryDto, user, error) {
+        const salaries = await this.workersModel.aggregate([
+            {
+                $lookup: {
+                    from: production_entity_1.Production.name,
+                    localField: "_id",
+                    foreignField: "worker",
+                    as: "productions"
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    salary: 1,
+                    workerType: {
+                        $cond: { if: { $eq: ["$salary", 0] }, then: "production", else: "daily" }
+                    },
+                    productions: {
+                        $filter: {
+                            input: "$productions",
+                            as: "production",
+                            cond: {
+                                $and: [
+                                    { $gte: ["$$production.date", getSalaryDto.from] },
+                                    { $lte: ["$$production.date", getSalaryDto.to] }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                $addFields: {
+                    totalProductionCost: {
+                        $cond: {
+                            if: { $eq: ["$workerType", "production"] },
+                            then: { $sum: "$productions.cost" },
+                            else: 0
+                        }
+                    },
+                    attendedDays: {
+                        $cond: {
+                            if: { $eq: ["$workerType", "daily"] },
+                            then: {
+                                $size: {
+                                    $setUnion: {
+                                        $map: {
+                                            input: "$productions",
+                                            as: "production",
+                                            in: "$$production.date"
+                                        }
+                                    }
+                                }
+                            },
+                            else: 0
+                        }
+                    }
+                }
+            },
+            {
+                $addFields: {
+                    totalSalary: {
+                        $cond: {
+                            if: { $eq: ["$workerType", "production"] },
+                            then: "$totalProductionCost",
+                            else: { $multiply: ["$salary", "$attendedDays"] }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    workerType: 1,
+                    totalSalary: 1
+                }
+            }
+        ]);
+        return salaries;
     }
 };
 exports.WorkersService = WorkersService;

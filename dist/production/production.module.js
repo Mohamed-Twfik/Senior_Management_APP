@@ -17,6 +17,7 @@ const product_price_module_1 = require("../product-price/product-price.module");
 const products_module_1 = require("../products/products.module");
 const workers_module_1 = require("../workers/workers.module");
 const departments_module_1 = require("../departments/departments.module");
+const bonus_module_1 = require("../bonus/bonus.module");
 let ProductionModule = class ProductionModule {
 };
 exports.ProductionModule = ProductionModule;
@@ -34,6 +35,7 @@ exports.ProductionModule = ProductionModule = __decorate([
             products_module_1.ProductsModule,
             workers_module_1.WorkersModule,
             departments_module_1.DepartmentsModule,
+            bonus_module_1.BonusModule
         ],
         controllers: [production_controller_1.ProductionController],
         providers: [production_service_1.ProductionService],

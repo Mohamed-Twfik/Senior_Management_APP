@@ -26,17 +26,13 @@
       <div class="row g-4 my-4" style="max-width: 400px;">
         <%- include(`components/form-modal`, {operation: 'create' }) %>
         <div class="col-sm-6 col-12">
-          <div class="input-group">
-            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
-          </div>
+          <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
         </div>
           
         <% if (type==='production' ) { %>
           <%- include('components/form-modal', {operation: 'salary' }) %>
           <div class="col-sm-6 col-12">
-            <div class="input-group">
-              <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
-            </div>
+            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
           </div>
         <% } %>
       </div>

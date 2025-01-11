@@ -13,6 +13,8 @@ import { CreateProductionDto } from './dto/create-production.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { GetSalaryDto } from './dto/get-salary.dto';
+import { BonusService } from 'src/bonus/bonus.service';
 
 @Injectable()
 export class ProductionService extends BaseService {
@@ -27,6 +29,7 @@ export class ProductionService extends BaseService {
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
     private readonly productPriceService: ProductPriceService,
+    private readonly bonusService: BonusService
   ) {
     super();
   }
@@ -144,5 +147,26 @@ export class ProductionService extends BaseService {
     }
 
     await Production.set(inputData).save();
+  }
+
+  async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string) {
+    const salaries = await this.workersService.getSalary(getSalaryDto, user, error);
+    console.log(salaries);
+    for (const salary of salaries) {
+      salary.bonus = 0;
+      if(salary.workerType === 'production') {
+        const bonusPresent = (await this.bonusService.find({
+          from: {
+            $lte: salary.salary
+          },
+          to: {
+            $gte: salary.salary
+          }
+        }))[0];
+        salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.totalSalary : 0;
+      }
+      salary.total = salary.totalSalary + salary.bonus;
+    };
+    return { data: salaries, user, error: error || null };
   }
 }

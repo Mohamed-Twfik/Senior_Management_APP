@@ -1,11 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { GetSalaryDto } from 'src/production/dto/get-salary.dto';
+import { Production } from 'src/production/entities/production.entity';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { BaseService } from 'src/utils/classes/base.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { Worker, WorkerDocument } from './entities/worker.entity';
-import { BaseService } from 'src/utils/classes/base.service';
 
 @Injectable()
 export class WorkersService extends BaseService {
@@ -80,5 +82,89 @@ export class WorkersService extends BaseService {
     }
 
     await worker.set(inputData).save();
+  }
+
+
+  async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string) {
+    const salaries = await this.workersModel.aggregate([
+      {
+        $lookup: {
+          from: Production.name, // Replace 'productions' with your actual Production collection name
+          localField: "_id",
+          foreignField: "worker",
+          as: "productions"
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          salary: 1,
+          workerType: {
+            $cond: { if: { $eq: ["$salary", 0] }, then: "production", else: "daily" }
+          },
+          productions: {
+            $filter: {
+              input: "$productions",
+              as: "production",
+              cond: {
+                $and: [
+                  { $gte: ["$$production.date", getSalaryDto.from] },
+                  { $lte: ["$$production.date", getSalaryDto.to] }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        $addFields: {
+          totalProductionCost: {
+            $cond: {
+              if: { $eq: ["$workerType", "production"] },
+              then: { $sum: "$productions.cost" }, // Sum cost for production workers
+              else: 0
+            }
+          },
+          attendedDays: {
+            $cond: {
+              if: { $eq: ["$workerType", "daily"] },
+              then: {
+                $size: {
+                  $setUnion: {
+                    $map: {
+                      input: "$productions",
+                      as: "production",
+                      in: "$$production.date"
+                    }
+                  }
+                }
+              },
+              else: 0
+            }
+          }
+        }
+      },
+      {
+        $addFields: {
+          totalSalary: {
+            $cond: {
+              if: { $eq: ["$workerType", "production"] },
+              then: "$totalProductionCost", // Total salary for production workers
+              else: { $multiply: ["$salary", "$attendedDays"] } // Total salary for daily workers
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          workerType: 1,
+          totalSalary: 1
+        }
+      }
+    ]);
+    return salaries;
   }
 }

@@ -1,7 +1,7 @@
-import { GetSalaryDto } from './dtos/get-salary.dto';
-import { UserDocument } from 'src/users/entities/user.entity';
-import { ProductionService } from '../production/production.service';
 import { BonusService } from 'src/bonus/bonus.service';
+import { UserDocument } from 'src/users/entities/user.entity';
+import { GetSalaryDto } from '../production/dto/get-salary.dto';
+import { ProductionService } from '../production/production.service';
 export declare class SalaryService {
     private readonly productionService;
     private readonly bonusService;

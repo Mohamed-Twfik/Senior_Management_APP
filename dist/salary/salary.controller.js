@@ -14,9 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SalaryController = void 0;
 const common_1 = require("@nestjs/common");
-const salary_service_1 = require("./salary.service");
-const get_salary_dto_1 = require("./dtos/get-salary.dto");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
+const get_salary_dto_1 = require("../production/dto/get-salary.dto");
+const salary_service_1 = require("./salary.service");
 let SalaryController = class SalaryController {
     constructor(salaryService) {
         this.salaryService = salaryService;
