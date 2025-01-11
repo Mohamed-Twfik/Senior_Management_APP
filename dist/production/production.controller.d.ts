@@ -1,6 +1,5 @@
 import { UserDocument } from 'src/users/entities/user.entity';
 import { CreateProductionDto } from './dto/create-production.dto';
-import { GetSalaryDto } from './dto/get-salary.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { ProductionDocument } from './entities/production.entity';
 import { ProductionService } from './production.service';
@@ -28,11 +27,6 @@ export declare class ProductionController {
                 totalPages: number;
             };
         };
-    }>;
-    getSalary(queryParams: any, getSalaryDto: GetSalaryDto, user: UserDocument): Promise<{
-        data: any[];
-        user: UserDocument;
-        error: any;
     }>;
     update(production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
     remove(production: ProductionDocument): Promise<void>;

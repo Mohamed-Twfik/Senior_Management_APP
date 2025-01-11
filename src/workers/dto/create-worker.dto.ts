@@ -1,5 +1,5 @@
-import { IsEnum, IsNotEmpty, IsString, Matches } from "class-validator";
-import { WorkerType } from "../enums/worker-type.enum";
+import { IsInt, IsNotEmpty, IsOptional, IsString, Matches } from "class-validator";
+import { Transform } from "class-transformer";
 
 export class CreateWorkerDto {
   @IsString()
@@ -7,8 +7,8 @@ export class CreateWorkerDto {
   @IsNotEmpty()
   name: string;
 
-  @IsString()
-  @IsEnum(WorkerType)
-  @IsNotEmpty()
-  type: WorkerType;
+  @IsOptional()
+  @Transform(({ value }) => parseInt(value))
+  @IsInt()
+  salary: number;
 }

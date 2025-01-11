@@ -8,10 +8,8 @@ import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.t
 import { UsersService } from 'src/users/users.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkersService } from 'src/workers/workers.service';
-import { BonusService } from '../bonus/bonus.service';
 import { ProductPriceService } from '../product-price/product-price.service';
 import { CreateProductionDto } from './dto/create-production.dto';
-import { GetSalaryDto } from './dto/get-salary.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 import { BaseService } from 'src/utils/classes/base.service';
@@ -29,7 +27,6 @@ export class ProductionService extends BaseService {
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
     private readonly productPriceService: ProductPriceService,
-    private readonly bonusService: BonusService
   ) {
     super();
   }
@@ -117,57 +114,6 @@ export class ProductionService extends BaseService {
       }
     };
     return {...renderVariables, ...(await this.getAdditionalRenderVariables())};
-  }
-
-  /**
-   * Get salary for all workers.
-   * @param getSalaryDto The data to get the salary.
-   * @param queryParams The query parameters for filters.
-   * @param user The user who is getting the salary.
-   */
-  async getSalary(getSalaryDto: GetSalaryDto, queryParams: QueryDto, user: UserDocument) {
-    try {
-      const productions = await this.productionModel.find({
-        date: {
-          $gte: getSalaryDto.from,
-          $lte: getSalaryDto.to
-        }
-      })
-        .populate('worker', 'name')
-        .populate('product', 'name')
-        .populate('department', 'name');
-      
-      const workerSalaries = new Map();
-      
-      productions.forEach((production) => {
-        const workerId = production.worker._id.toString();
-        const cost = production.cost;
-        
-        if (!workerSalaries.has(workerId)) {
-          workerSalaries.set(workerId, { name: (production.worker as any).name, salary: 0, bonus: 0, total: 0 });
-        }
-        
-        const workerData = workerSalaries.get(workerId);
-        workerData.salary += cost;
-      });
-      const salaries = Array.from(workerSalaries.values())
-      
-      for (const salary of salaries) {
-        const bonusPresent = (await this.bonusService.find({
-          from: {
-            $lte: salary.salary
-          },
-          to: {
-            $gte: salary.salary
-          }
-        }))[0];
-        salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.salary : 0;
-        salary.total = salary.salary + salary.bonus;
-      };
-      return { data: salaries, user, error: queryParams.error || null };
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   /**

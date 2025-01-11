@@ -19,34 +19,25 @@ const EntityValidation = (formSelector) => {
   } else form.submit();
 };
 
-const workerValidation = (formSelector) => {
-  const form = document.querySelector(formSelector);
-  const name = form.querySelector('input[name="name"]').value;
-  const type = form.querySelector('select[name="type"]').value;
+// const workerValidation = (formSelector) => {
+//   const form = document.querySelector(formSelector);
+//   const name = form.querySelector('input[name="name"]').value;
 
-  const nameError = form.querySelector('.text-danger-name');
-  const typeError = form.querySelector('.text-danger-type');
+//   const nameError = form.querySelector('.text-danger-name');
 
-  nameError.style.display = 'none';
-  typeError.style.display = 'none';
+//   nameError.style.display = 'none';
 
-  let isValid = true;
+//   let isValid = true;
 
-  const nameRegex = /^[\s\S]{3,}$/;
-  if (!name || !nameRegex.test(name)) {
-    nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
-    nameError.style.display = 'block';
-    isValid = false;
-  }
+//   const nameRegex = /^[\s\S]{3,}$/;
+//   if (!name || !nameRegex.test(name)) {
+//     nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+//     nameError.style.display = 'block';
+//     isValid = false;
+//   }
   
-  if (!type) { 
-    typeError.textContent = 'يجب إختيار نوع العامل';
-    typeError.style.display = 'block';
-    isValid = false;
-  }
-  
-  if(isValid) form.submit();
-};
+//   if(isValid) form.submit();
+// };
 
 /**
  * Users Form Validation
@@ -274,7 +265,7 @@ const salaryValidation = () => {
 
 const ValidationMethods = {
   bonus: bonusValidation,
-  workers: workerValidation,
+  workers: EntityValidation,
   products: EntityValidation,
   departments: EntityValidation,
   users: userValidation,

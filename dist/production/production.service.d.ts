@@ -5,10 +5,8 @@ import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkersService } from 'src/workers/workers.service';
-import { BonusService } from '../bonus/bonus.service';
 import { ProductPriceService } from '../product-price/product-price.service';
 import { CreateProductionDto } from './dto/create-production.dto';
-import { GetSalaryDto } from './dto/get-salary.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 import { BaseService } from 'src/utils/classes/base.service';
@@ -19,9 +17,8 @@ export declare class ProductionService extends BaseService {
     private readonly workersService;
     private readonly departmentsService;
     private readonly productPriceService;
-    private readonly bonusService;
     searchableKeys: string[];
-    constructor(productionModel: Model<Production>, usersService: UsersService, productsService: ProductsService, workersService: WorkersService, departmentsService: DepartmentsService, productPriceService: ProductPriceService, bonusService: BonusService);
+    constructor(productionModel: Model<Production>, usersService: UsersService, productsService: ProductsService, workersService: WorkersService, departmentsService: DepartmentsService, productPriceService: ProductPriceService);
     getModuleModel(): Model<Production, {}, {}, {}, import("mongoose").Document<unknown, {}, Production> & Production & {
         _id: Types.ObjectId;
     } & {
@@ -56,11 +53,6 @@ export declare class ProductionService extends BaseService {
                 totalPages: number;
             };
         };
-    }>;
-    getSalary(getSalaryDto: GetSalaryDto, queryParams: QueryDto, user: UserDocument): Promise<{
-        data: any[];
-        user: UserDocument;
-        error: any;
     }>;
     update(Production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
 }

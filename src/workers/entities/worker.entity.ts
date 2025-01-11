@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 import { arabicDateFormatter } from "src/utils/arabic-date-formatter";
-import { WorkerType } from "../enums/worker-type.enum";
 
 @Schema({ timestamps: true })
 export class Worker {
@@ -13,9 +12,9 @@ export class Worker {
 
   @Prop({
     required: true,
-    enum: WorkerType
+    default: 0
   })
-  type: WorkerType;
+  salary: number;
 
   @Prop()
   createdAtArabic?: string;

@@ -8,7 +8,6 @@ import { ProductPriceModule } from 'src/product-price/product-price.module';
 import { ProductsModule } from 'src/products/products.module';
 import { WorkersModule } from 'src/workers/workers.module';
 import { DepartmentsModule } from 'src/departments/departments.module';
-import { BonusModule } from 'src/bonus/bonus.module';
 
 @Module({
   imports: [
@@ -23,9 +22,9 @@ import { BonusModule } from 'src/bonus/bonus.module';
     ProductsModule,
     WorkersModule,
     DepartmentsModule,
-    BonusModule
   ],
   controllers: [ProductionController],
   providers: [ProductionService],
+  exports: [ProductionService],
 })
 export class ProductionModule {}

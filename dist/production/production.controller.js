@@ -18,7 +18,6 @@ const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const create_production_dto_1 = require("./dto/create-production.dto");
-const get_salary_dto_1 = require("./dto/get-salary.dto");
 const update_production_dto_1 = require("./dto/update-production.dto");
 const create_production_price_pipe_1 = require("./pipes/create-production-price.pipe");
 const production_id_pipe_1 = require("./pipes/production-id.pipe");
@@ -32,9 +31,6 @@ let ProductionController = class ProductionController {
     }
     findAll(queryParams, user) {
         return this.productionService.findAll(queryParams, user);
-    }
-    getSalary(queryParams, getSalaryDto, user) {
-        return this.productionService.getSalary(getSalaryDto, queryParams, user);
     }
     update(production, updateProductionDto, user) {
         return this.productionService.update(production, updateProductionDto, user);
@@ -62,16 +58,6 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Post)('get-salary'),
-    (0, common_1.Render)('salary'),
-    __param(0, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, get_salary_dto_1.GetSalaryDto, Object]),
-    __metadata("design:returntype", void 0)
-], ProductionController.prototype, "getSalary", null);
 __decorate([
     (0, common_1.Post)('update/:productionId'),
     (0, common_1.Redirect)('/production'),
