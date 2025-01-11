@@ -7,6 +7,9 @@ import { CreateBonusDto } from './dto/create-bonus.dto';
 import { UpdateBonusDto } from './dto/update-bonus.dto';
 import { Bonus, BonusDocument } from './entities/bonus.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { DepartmentsService } from 'src/departments/departments.service';
+import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { QueryDto } from 'src/utils/dtos/query.dto';
 
 
 @Injectable()
@@ -15,7 +18,8 @@ export class BonusService extends BaseService {
 
   constructor(
     @InjectModel(Bonus.name) private bonusModel: Model<Bonus>,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly departmentsService: DepartmentsService,
   ) {
     super();
   }
@@ -35,8 +39,9 @@ export class BonusService extends BaseService {
   async getAdditionalRenderVariables() {
     return {
       users: await this.usersService.find(),
+      departments: await this.departmentsService.find(),
       type: 'bonus',
-      title: 'الحوافز'
+      title: 'الحوافز',
     }
   }
 
@@ -49,21 +54,60 @@ export class BonusService extends BaseService {
     createBonusDto.to = (createBonusDto.to === 0)? Infinity : createBonusDto.to;
     if(createBonusDto.from >= createBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
     const existBonus = await this.bonusModel.findOne({
-      $or: [
-        { from: createBonusDto.from },
-        { to: createBonusDto.to }
-      ]
+      $and: [
+            {
+              $or: [
+                { from: createBonusDto.from },
+                { to: createBonusDto.to }
+              ]
+            },
+            { department: createBonusDto.department }
+          ]
     });
     if (existBonus) throw new ConflictException('أحد أطراف الحافز مكرر');
 
     const inputDate: Bonus = {
-      from: createBonusDto.from,
-      to: createBonusDto.to,
-      percentage: createBonusDto.percentage,
+      ...createBonusDto,
       createdBy: user._id,
       updatedBy: user._id,
     }
     await this.bonusModel.create(inputDate);
+  }
+
+    /**
+   * Find all bonuses.
+   * @param queryParams The query parameters.
+   * @param user The user who is get bonuses.
+   * @returns The render variables.
+   */
+  async findAll(queryParams: QueryDto, user: UserDocument) {
+    const queryBuilder = this.getQueryBuilder(queryParams);
+    const bonus = await queryBuilder
+      .filter()
+      .search(this.searchableKeys)
+      .sort()
+      .paginate()
+      .build()
+      .populate('department', 'name')
+      .populate('createdBy', 'username')
+      .populate('updatedBy', 'username');
+
+    const renderVariables: BaseRenderVariablesType = {
+      error: queryParams.error || null,
+      data: bonus,
+      user,
+      filters: {
+        search: queryBuilder.getSearchKey(),
+        sort: queryBuilder.getSortKey(),
+        pagination: {
+          page: queryBuilder.getPage(),
+          totalPages: await queryBuilder.getTotalPages(),
+          pageSize: queryBuilder.getPageSize()
+        },
+        ...queryBuilder.getCustomFilters()
+      }
+    };
+    return {...renderVariables, ...(await this.getAdditionalRenderVariables())};
   }
 
   /**
@@ -80,18 +124,21 @@ export class BonusService extends BaseService {
       $and: [
         { _id: { $ne: bonus._id } },
         {
-          $or: [
-            { from: updateBonusDto.from },
-            { to: updateBonusDto.to }
+          $and: [
+            {
+              $or: [
+                { from: updateBonusDto.from },
+                { to: updateBonusDto.to }
+              ]
+            },
+            { department: updateBonusDto.department || bonus.department }
           ]
         }
       ]
     });
     if (existBonus) throw new ConflictException('أحد أطراف الحافز مكرر');
     const inputData: Partial<Bonus> = {
-      from: updateBonusDto.from || bonus.from,
-      to: updateBonusDto.to || bonus.to,
-      percentage: updateBonusDto.percentage || bonus.percentage,
+      ...updateBonusDto,
       updatedBy: user._id
     }
 

@@ -23,6 +23,12 @@ export class Bonus {
   })
   percentage: number;
 
+  @Prop({
+    required: true,
+    ref: 'Department'
+  })
+  department: Types.ObjectId
+
   @Prop()
   createdAtArabic?: string;
 

@@ -39,6 +39,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Bonus.prototype, "percentage", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        ref: 'Department'
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Bonus.prototype, "department", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Bonus.prototype, "createdAtArabic", void 0);

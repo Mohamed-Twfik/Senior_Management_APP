@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBonusDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const mongoose_1 = require("mongoose");
 class CreateBonusDto {
 }
 exports.CreateBonusDto = CreateBonusDto;
@@ -47,4 +48,9 @@ __decorate([
     (0, class_validator_1.Max)(100),
     __metadata("design:type", Number)
 ], CreateBonusDto.prototype, "percentage", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", mongoose_1.Types.ObjectId)
+], CreateBonusDto.prototype, "department", void 0);
 //# sourceMappingURL=create-bonus.dto.js.map

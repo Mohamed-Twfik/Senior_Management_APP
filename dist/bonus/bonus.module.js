@@ -13,6 +13,7 @@ const bonus_controller_1 = require("./bonus.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const bonus_entity_1 = require("./entities/bonus.entity");
 const users_module_1 = require("../users/users.module");
+const departments_module_1 = require("../departments/departments.module");
 let BonusModule = class BonusModule {
 };
 exports.BonusModule = BonusModule;
@@ -25,7 +26,8 @@ exports.BonusModule = BonusModule = __decorate([
                     schema: bonus_entity_1.BonusSchema
                 }
             ]),
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            departments_module_1.DepartmentsModule
         ],
         controllers: [bonus_controller_1.BonusController],
         providers: [bonus_service_1.BonusService],
