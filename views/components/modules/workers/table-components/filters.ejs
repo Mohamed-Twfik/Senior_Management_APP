@@ -1,0 +1,10 @@
+<td scope="col">
+  <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
+</td>
+<td scope="col">
+  <select class="form-select" name="type" form="filter-form">
+    <option value="" <%=(!filters.type) ? "selected" : "" %>>اختر</option>
+    <option value="إنتاج" <%=(filters.type==='إنتاج' ) ? "selected" : "" %>>إنتاج</option>
+    <option value="ساعة" <%=(filters.type==='ساعة' ) ? "selected" : "" %>>ساعة</option>
+  </select>
+</td>

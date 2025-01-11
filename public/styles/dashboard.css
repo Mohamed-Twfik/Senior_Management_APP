@@ -47,7 +47,7 @@ i {
   border: none;
 }
 
-.btn.close {
+.btn.close, .btn.close:active {
   color: #000217;
   background-color: #4ac6ff;
   border: none;

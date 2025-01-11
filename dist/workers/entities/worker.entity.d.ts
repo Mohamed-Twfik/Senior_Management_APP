@@ -1,6 +1,8 @@
 import { Document, Types } from "mongoose";
+import { WorkerType } from "../enums/worker-type.enum";
 export declare class Worker {
     name: string;
+    type: WorkerType;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     createdBy: Types.ObjectId;

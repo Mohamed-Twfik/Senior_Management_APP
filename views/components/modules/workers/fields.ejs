@@ -1,0 +1,25 @@
+<%
+  let nameValue;
+  let typeValue;
+  let id;
+  try{
+    nameValue=dataItem.name;
+    typeValue=dataItem.type;
+    id=dataItem._id;
+  }catch(error){
+    nameValue='' ;
+    typeValue='' ;
+    id='' ;
+  }
+%>
+
+<%- include('../../inputs-fields/input', {id, value: nameValue , name: 'name' , type: 'text' , label: 'الإسم' , classes: '' , placeholder: '' }) %>
+<div class="mb-3">
+  <label for="<%= `type-${id}` %>" class="col-form-label fs-4 px-4">النوع</label>
+  <select class="form-select px-4" id="<%= `type-${id}` %>" name="type">
+    <option value="" selected>اختر النوع</option>
+    <option value="إنتاج" <%= (typeValue==='إنتاج') ? 'selected' : '' %>>إنتاج</option>\
+    <option value="ساعة" <%= (typeValue==='ساعة') ? 'selected' : '' %>>ساعة</option>
+  </select>
+  <div class="text-danger text-danger-type mt-1" style="display: none;"></div>
+</div>

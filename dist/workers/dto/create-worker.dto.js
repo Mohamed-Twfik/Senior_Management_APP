@@ -11,12 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateWorkerDto = void 0;
 const class_validator_1 = require("class-validator");
+const worker_type_enum_1 = require("../enums/worker-type.enum");
 class CreateWorkerDto {
 }
 exports.CreateWorkerDto = CreateWorkerDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Matches)(/^[\s\S]{3,}$/, { message: 'الإسم يجب أن يكون 3 أحرف على الأقل' }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateWorkerDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsEnum)(worker_type_enum_1.WorkerType),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateWorkerDto.prototype, "type", void 0);
 //# sourceMappingURL=create-worker.dto.js.map
