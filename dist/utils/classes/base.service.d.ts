@@ -6,7 +6,7 @@ import { FindQueryBuilderService } from './find-query-builder.service';
 export declare abstract class BaseService {
     private queryBuilder;
     getQueryBuilder(queryParams: QueryDto, filter?: RootFilterQuery<any>): FindQueryBuilderService;
-    find(filter?: RootFilterQuery<any>): Promise<any[]>;
+    find(filter?: RootFilterQuery<any>): import("mongoose").Query<any[], any, {}, any, "find", {}>;
     findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType>;
     findById(id: string): Promise<any>;
     findOne(filter: RootFilterQuery<any>): Promise<any>;

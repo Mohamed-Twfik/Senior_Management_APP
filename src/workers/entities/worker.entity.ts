@@ -10,6 +10,12 @@ export class Worker {
   })
   name: string;
 
+  @Prop({
+    required: true,
+    default: 0
+  })
+  salary: number;
+
   @Prop()
   createdAtArabic?: string;
 

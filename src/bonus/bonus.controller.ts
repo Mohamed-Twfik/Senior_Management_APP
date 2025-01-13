@@ -17,6 +17,7 @@ import { CreateBonusDto } from './dto/create-bonus.dto';
 import { UpdateBonusDto } from './dto/update-bonus.dto';
 import { BonusDocument } from './entities/bonus.entity';
 import { BonusIdPipe } from './pipes/bonus-id.pipe';
+import { BonusDataPipe } from './pipes/bonus-data.pipe';
 
 @Controller('bonus')
 export class BonusController {
@@ -25,7 +26,7 @@ export class BonusController {
   @Post()
   @Redirect('/bonus')
   create(
-    @Body() createBonusDto: CreateBonusDto,
+    @Body(BonusDataPipe) createBonusDto: CreateBonusDto,
     @GetUser() user: UserDocument
   ) {
     return this.bonusService.create(createBonusDto, user);
@@ -44,7 +45,7 @@ export class BonusController {
   @Redirect('/bonus?sort=-updatedAt')
   update(
     @Param('bonusId', ObjectIdPipe, BonusIdPipe) bonus: BonusDocument,
-    @Body() updateBonusDto: UpdateBonusDto,
+    @Body(BonusDataPipe) updateBonusDto: UpdateBonusDto,
     @GetUser() user: UserDocument,
   ) {
     return this.bonusService.update(bonus, updateBonusDto, user);

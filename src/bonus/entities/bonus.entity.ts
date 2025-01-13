@@ -6,13 +6,11 @@ import { arabicDateFormatter } from "src/utils/arabic-date-formatter";
 export class Bonus {
   @Prop({
     required: true,
-    unique: true
   })
   from: number;
 
   @Prop({
     required: true,
-    unique: true
   })
   to: number;
   
@@ -22,6 +20,12 @@ export class Bonus {
     max: 100
   })
   percentage: number;
+
+  @Prop({
+    required: true,
+    ref: 'Department'
+  })
+  department: Types.ObjectId
 
   @Prop()
   createdAtArabic?: string;
@@ -43,6 +47,8 @@ export class Bonus {
 }
 
 const BonusSchema = SchemaFactory.createForClass(Bonus);
+
+BonusSchema.index({ from: 1, to: 1, department: 1 }, { unique: true });
 
 BonusSchema.pre('save', async function (next) {
   if (this.isNew) {

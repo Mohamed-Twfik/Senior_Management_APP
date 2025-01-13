@@ -19,14 +19,12 @@ exports.Bonus = Bonus;
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
-        unique: true
     }),
     __metadata("design:type", Number)
 ], Bonus.prototype, "from", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
-        unique: true
     }),
     __metadata("design:type", Number)
 ], Bonus.prototype, "to", void 0);
@@ -38,6 +36,13 @@ __decorate([
     }),
     __metadata("design:type", Number)
 ], Bonus.prototype, "percentage", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        ref: 'Department'
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Bonus.prototype, "department", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
@@ -65,6 +70,7 @@ exports.Bonus = Bonus = __decorate([
 ], Bonus);
 const BonusSchema = mongoose_1.SchemaFactory.createForClass(Bonus);
 exports.BonusSchema = BonusSchema;
+BonusSchema.index({ from: 1, to: 1, department: 1 }, { unique: true });
 BonusSchema.pre('save', async function (next) {
     if (this.isNew) {
         this.createdAtArabic = arabic_date_formatter_1.arabicDateFormatter.format(new Date());

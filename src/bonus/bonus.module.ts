@@ -4,6 +4,7 @@ import { BonusController } from './bonus.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Bonus, BonusSchema } from './entities/bonus.entity';
 import { UsersModule } from 'src/users/users.module';
+import { DepartmentsModule } from 'src/departments/departments.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { UsersModule } from 'src/users/users.module';
         schema: BonusSchema
       }
     ]),
-    UsersModule
+    UsersModule,
+    DepartmentsModule
   ],
   controllers: [BonusController],
   providers: [BonusService],

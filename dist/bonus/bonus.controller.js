@@ -21,6 +21,7 @@ const bonus_service_1 = require("./bonus.service");
 const create_bonus_dto_1 = require("./dto/create-bonus.dto");
 const update_bonus_dto_1 = require("./dto/update-bonus.dto");
 const bonus_id_pipe_1 = require("./pipes/bonus-id.pipe");
+const bonus_data_pipe_1 = require("./pipes/bonus-data.pipe");
 let BonusController = class BonusController {
     constructor(bonusService) {
         this.bonusService = bonusService;
@@ -42,7 +43,7 @@ exports.BonusController = BonusController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.Redirect)('/bonus'),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_bonus_dto_1.CreateBonusDto, Object]),
@@ -61,7 +62,7 @@ __decorate([
     (0, common_1.Post)('update/:bonusId'),
     (0, common_1.Redirect)('/bonus?sort=-updatedAt'),
     __param(0, (0, common_1.Param)('bonusId', ObjectId_pipe_1.ObjectIdPipe, bonus_id_pipe_1.BonusIdPipe)),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, update_bonus_dto_1.UpdateBonusDto, Object]),

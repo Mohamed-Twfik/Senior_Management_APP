@@ -14,7 +14,7 @@ export abstract class BaseService {
     return this.queryBuilder;
   }
   
-  find(filter: RootFilterQuery<any> = {}): Promise<any[]> {
+  find(filter: RootFilterQuery<any> = {}) {
     return this.getModuleModel().find(filter);
   };
 

@@ -5,13 +5,13 @@ import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkersService } from 'src/workers/workers.service';
-import { BonusService } from '../bonus/bonus.service';
 import { ProductPriceService } from '../product-price/product-price.service';
 import { CreateProductionDto } from './dto/create-production.dto';
-import { GetSalaryDto } from './dto/get-salary.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { GetSalaryDto } from './dto/get-salary.dto';
+import { BonusService } from 'src/bonus/bonus.service';
 export declare class ProductionService extends BaseService {
     private productionModel;
     private readonly usersService;
@@ -57,10 +57,10 @@ export declare class ProductionService extends BaseService {
             };
         };
     }>;
-    getSalary(getSalaryDto: GetSalaryDto, queryParams: QueryDto, user: UserDocument): Promise<{
+    update(Production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
+    getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string): Promise<{
         data: any[];
         user: UserDocument;
-        error: any;
+        error: string;
     }>;
-    update(Production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
 }

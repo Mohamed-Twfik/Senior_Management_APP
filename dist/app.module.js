@@ -66,7 +66,7 @@ exports.AppModule = AppModule = __decorate([
             bonus_module_1.BonusModule,
             product_price_module_1.ProductPriceModule,
             production_module_1.ProductionModule,
-            fall_back_module_1.FallBackModule
+            fall_back_module_1.FallBackModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

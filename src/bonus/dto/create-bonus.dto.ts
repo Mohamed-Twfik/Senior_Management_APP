@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, Max, Min } from "class-validator";
+import { IsMongoId, IsNotEmpty, IsNumber, Max, Min } from "class-validator";
 import { Transform } from 'class-transformer';
+import { Types } from "mongoose";
 
 export class CreateBonusDto {
   @Transform(({ value }) => {
@@ -26,4 +27,8 @@ export class CreateBonusDto {
   @Min(1)
   @Max(100)
   percentage: number;
+
+  @IsNotEmpty()
+  @IsMongoId()
+  department: Types.ObjectId;
 }

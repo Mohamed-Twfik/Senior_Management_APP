@@ -1,0 +1,17 @@
+<%
+  let nameValue;
+  let salaryValue;
+  let id;
+  try{
+    nameValue=dataItem.name;
+    salaryValue=dataItem.salary;
+    id=dataItem._id;
+  }catch(error){
+    nameValue='' ;
+    salaryValue=0 ;
+    id='' ;
+  }
+%>
+
+<%- include('../../inputs-fields/input', {id, value: nameValue , name: 'name' , type: 'text' , label: 'الإسم' , classes: '' , placeholder: '' }) %>
+<%- include('../../inputs-fields/input', {id, value: salaryValue , name: 'salary' , type: 'number' , label: 'مرتب اليوم' , classes: '' , placeholder: '0' }) %>

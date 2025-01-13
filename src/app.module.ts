@@ -56,7 +56,7 @@ import { FallBackModule } from './fall-back/fall-back.module';
     BonusModule,
     ProductPriceModule,
     ProductionModule,
-    FallBackModule
+    FallBackModule,
   ],
   controllers: [AppController],
   providers: [

@@ -20,10 +20,10 @@ const departments_service_1 = require("../departments/departments.service");
 const products_service_1 = require("../products/products.service");
 const users_service_1 = require("../users/users.service");
 const workers_service_1 = require("../workers/workers.service");
-const bonus_service_1 = require("../bonus/bonus.service");
 const product_price_service_1 = require("../product-price/product-price.service");
 const production_entity_1 = require("./entities/production.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const bonus_service_1 = require("../bonus/bonus.service");
 let ProductionService = class ProductionService extends base_service_1.BaseService {
     constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService, bonusService) {
         super();
@@ -97,47 +97,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
     }
-    async getSalary(getSalaryDto, queryParams, user) {
-        try {
-            const productions = await this.productionModel.find({
-                date: {
-                    $gte: getSalaryDto.from,
-                    $lte: getSalaryDto.to
-                }
-            })
-                .populate('worker', 'name')
-                .populate('product', 'name')
-                .populate('department', 'name');
-            const workerSalaries = new Map();
-            productions.forEach((production) => {
-                const workerId = production.worker._id.toString();
-                const cost = production.cost;
-                if (!workerSalaries.has(workerId)) {
-                    workerSalaries.set(workerId, { name: production.worker.name, salary: 0, bonus: 0, total: 0 });
-                }
-                const workerData = workerSalaries.get(workerId);
-                workerData.salary += cost;
-            });
-            const salaries = Array.from(workerSalaries.values());
-            for (const salary of salaries) {
-                const bonusPresent = (await this.bonusService.find({
-                    from: {
-                        $lte: salary.salary
-                    },
-                    to: {
-                        $gte: salary.salary
-                    }
-                }))[0];
-                salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.salary : 0;
-                salary.total = salary.salary + salary.bonus;
-            }
-            ;
-            return { data: salaries, user, error: queryParams.error || null };
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
     async update(Production, updateProductionDto, user) {
         if (updateProductionDto.worker)
             updateProductionDto.worker = new mongoose_2.Types.ObjectId(updateProductionDto.worker);
@@ -161,6 +120,27 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
             updatedBy: user._id
         };
         await Production.set(inputData).save();
+    }
+    async getSalary(getSalaryDto, user, error) {
+        const salaries = await this.workersService.getSalary(getSalaryDto, user, error);
+        console.log(salaries);
+        for (const salary of salaries) {
+            salary.bonus = 0;
+            if (salary.workerType === 'production') {
+                const bonusPresent = (await this.bonusService.find({
+                    from: {
+                        $lte: salary.salary
+                    },
+                    to: {
+                        $gte: salary.salary
+                    }
+                }))[0];
+                salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.totalSalary : 0;
+            }
+            salary.total = salary.totalSalary + salary.bonus;
+        }
+        ;
+        return { data: salaries, user, error: error || null };
     }
 };
 exports.ProductionService = ProductionService;

@@ -27,5 +27,6 @@ import { BonusModule } from 'src/bonus/bonus.module';
   ],
   controllers: [ProductionController],
   providers: [ProductionService],
+  exports: [ProductionService],
 })
 export class ProductionModule {}

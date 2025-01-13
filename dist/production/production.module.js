@@ -39,6 +39,7 @@ exports.ProductionModule = ProductionModule = __decorate([
         ],
         controllers: [production_controller_1.ProductionController],
         providers: [production_service_1.ProductionService],
+        exports: [production_service_1.ProductionService],
     })
 ], ProductionModule);
 //# sourceMappingURL=production.module.js.map

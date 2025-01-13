@@ -7,7 +7,25 @@ export declare class BonusController {
     private readonly bonusService;
     constructor(bonusService: BonusService);
     create(createBonusDto: CreateBonusDto, user: UserDocument): Promise<void>;
-    findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
+    findAll(queryParams: any, user: UserDocument): Promise<{
+        users: any[];
+        departments: any[];
+        type: string;
+        title: string;
+        error: string | null;
+        data: Array<any> | null;
+        user: UserDocument;
+        filters: {
+            [key: string]: any;
+            search: string;
+            sort: string;
+            pagination: {
+                page: number;
+                pageSize: number;
+                totalPages: number;
+            };
+        };
+    }>;
     update(bonus: BonusDocument, updateBonusDto: UpdateBonusDto, user: UserDocument): Promise<void>;
     remove(bonus: BonusDocument): Promise<void>;
 }

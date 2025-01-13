@@ -19,11 +19,13 @@ const mongoose_2 = require("mongoose");
 const users_service_1 = require("../users/users.service");
 const bonus_entity_1 = require("./entities/bonus.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const departments_service_1 = require("../departments/departments.service");
 let BonusService = class BonusService extends base_service_1.BaseService {
-    constructor(bonusModel, usersService) {
+    constructor(bonusModel, usersService, departmentsService) {
         super();
         this.bonusModel = bonusModel;
         this.usersService = usersService;
+        this.departmentsService = departmentsService;
         this.searchableKeys = [];
     }
     getModuleModel() {
@@ -32,42 +34,84 @@ let BonusService = class BonusService extends base_service_1.BaseService {
     async getAdditionalRenderVariables() {
         return {
             users: await this.usersService.find(),
+            departments: await this.departmentsService.find(),
             type: 'bonus',
-            title: 'الحوافز'
+            title: 'الحوافز',
         };
     }
     async create(createBonusDto, user) {
         createBonusDto.to = (createBonusDto.to === 0) ? Infinity : createBonusDto.to;
         if (createBonusDto.from >= createBonusDto.to)
             throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+        createBonusDto.department = new mongoose_2.Types.ObjectId(createBonusDto.department);
         const existBonus = await this.bonusModel.findOne({
-            $or: [
-                { from: createBonusDto.from },
-                { to: createBonusDto.to }
+            $and: [
+                {
+                    $or: [
+                        { from: createBonusDto.from },
+                        { to: createBonusDto.to }
+                    ]
+                },
+                { department: createBonusDto.department }
             ]
         });
         if (existBonus)
             throw new common_1.ConflictException('أحد أطراف الحافز مكرر');
         const inputDate = {
-            from: createBonusDto.from,
-            to: createBonusDto.to,
-            percentage: createBonusDto.percentage,
+            ...createBonusDto,
             createdBy: user._id,
             updatedBy: user._id,
         };
         await this.bonusModel.create(inputDate);
     }
+    async findAll(queryParams, user) {
+        const queryBuilder = this.getQueryBuilder(queryParams);
+        const bonus = await queryBuilder
+            .filter()
+            .search(this.searchableKeys)
+            .sort()
+            .paginate()
+            .build()
+            .populate('department', 'name')
+            .populate('createdBy', 'username')
+            .populate('updatedBy', 'username');
+        const renderVariables = {
+            error: queryParams.error || null,
+            data: bonus,
+            user,
+            filters: {
+                search: queryBuilder.getSearchKey(),
+                sort: queryBuilder.getSortKey(),
+                pagination: {
+                    page: queryBuilder.getPage(),
+                    totalPages: await queryBuilder.getTotalPages(),
+                    pageSize: queryBuilder.getPageSize()
+                },
+                ...queryBuilder.getCustomFilters()
+            }
+        };
+        return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+    }
     async update(bonus, updateBonusDto, user) {
         updateBonusDto.to = (updateBonusDto.to === 0) ? Infinity : (updateBonusDto.to || bonus.to);
         if (updateBonusDto.from >= updateBonusDto.to)
             throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+        if (updateBonusDto.department)
+            updateBonusDto.department = new mongoose_2.Types.ObjectId(updateBonusDto.department);
+        else
+            updateBonusDto.department = bonus.department;
         const existBonus = await this.bonusModel.findOne({
             $and: [
                 { _id: { $ne: bonus._id } },
                 {
-                    $or: [
-                        { from: updateBonusDto.from },
-                        { to: updateBonusDto.to }
+                    $and: [
+                        {
+                            $or: [
+                                { from: updateBonusDto.from },
+                                { to: updateBonusDto.to }
+                            ]
+                        },
+                        { department: updateBonusDto.department || bonus.department }
                     ]
                 }
             ]
@@ -75,9 +119,7 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         if (existBonus)
             throw new common_1.ConflictException('أحد أطراف الحافز مكرر');
         const inputData = {
-            from: updateBonusDto.from || bonus.from,
-            to: updateBonusDto.to || bonus.to,
-            percentage: updateBonusDto.percentage || bonus.percentage,
+            ...updateBonusDto,
             updatedBy: user._id
         };
         await bonus.set(inputData).save();
@@ -88,6 +130,7 @@ exports.BonusService = BonusService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(bonus_entity_1.Bonus.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        users_service_1.UsersService])
+        users_service_1.UsersService,
+        departments_service_1.DepartmentsService])
 ], BonusService);
 //# sourceMappingURL=bonus.service.js.map

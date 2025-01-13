@@ -74,23 +74,32 @@ const bonusValidation = (formSelector) => {
   const form = document.querySelector(formSelector);
   const from = form.querySelector('input[name="from"]').value;
   const to = form.querySelector('input[name="to"]').value;
+  const department = form.querySelector('select[name="department"').value;
   const percentage = form.querySelector('input[name="percentage"]').value;
   const percentageError = form.querySelector('.text-danger-percentage');
-  const error = form.querySelector('.text-danger');
+  const fromError = form.querySelector('.text-danger-from');
+  const departmentError = form.querySelector('.text-danger-department');
   percentageError.style.display = 'none';
-  error.style.display = 'none';
+  fromError.style.display = 'none';
+  departmentError.style.display = 'none';
 
   let isValid = true;
 
   if (parseInt(from) >= parseInt(to)) {
-    error.innerText = 'الحد الأدنى يجب أن يكون أقل من الحد الأعلى';
-    error.style.display = 'block';
+    fromError.innerText = 'الحد الأدنى يجب أن يكون أقل من الحد الأعلى';
+    fromError.style.display = 'block';
     isValid = false;
   }
 
   if (!percentage || isNaN(percentage)) {
     percentageError.innerText = 'يجب إدخال النسبة المئوية';
     percentageError.style.display = 'block';
+    isValid = false;
+  }
+
+  if (!department) {
+    departmentError.innerText = 'يجب إختيار القسم';
+    departmentError.style.display = 'block';
     isValid = false;
   }
   
@@ -252,6 +261,13 @@ const ValidationMethods = {
   production: productionValidation,
   productPrice: productPriceValidation,
 }
+
+// Prevent form submission
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+});
 
 // Create entity
 document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {

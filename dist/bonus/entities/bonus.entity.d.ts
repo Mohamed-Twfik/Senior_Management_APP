@@ -3,6 +3,7 @@ export declare class Bonus {
     from: number;
     to: number;
     percentage: number;
+    department: Types.ObjectId;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     createdBy: Types.ObjectId;

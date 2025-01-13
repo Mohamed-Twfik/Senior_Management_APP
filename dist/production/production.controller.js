@@ -14,11 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductionController = void 0;
 const common_1 = require("@nestjs/common");
+const get_salary_dto_1 = require("./dto/get-salary.dto");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const create_production_dto_1 = require("./dto/create-production.dto");
-const get_salary_dto_1 = require("./dto/get-salary.dto");
 const update_production_dto_1 = require("./dto/update-production.dto");
 const create_production_price_pipe_1 = require("./pipes/create-production-price.pipe");
 const production_id_pipe_1 = require("./pipes/production-id.pipe");
@@ -33,14 +33,14 @@ let ProductionController = class ProductionController {
     findAll(queryParams, user) {
         return this.productionService.findAll(queryParams, user);
     }
-    getSalary(queryParams, getSalaryDto, user) {
-        return this.productionService.getSalary(getSalaryDto, queryParams, user);
-    }
     update(production, updateProductionDto, user) {
         return this.productionService.update(production, updateProductionDto, user);
     }
     remove(production) {
         return this.productionService.remove(production);
+    }
+    getSalary(getSalaryDto, user, error) {
+        return this.productionService.getSalary(getSalaryDto, user, error);
     }
 };
 exports.ProductionController = ProductionController;
@@ -63,16 +63,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Post)('get-salary'),
-    (0, common_1.Render)('salary'),
-    __param(0, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, get_salary_dto_1.GetSalaryDto, Object]),
-    __metadata("design:returntype", void 0)
-], ProductionController.prototype, "getSalary", null);
-__decorate([
     (0, common_1.Post)('update/:productionId'),
     (0, common_1.Redirect)('/production'),
     __param(0, (0, common_1.Param)('productionId', ObjectId_pipe_1.ObjectIdPipe, production_id_pipe_1.ProductionIdPipe)),
@@ -90,6 +80,16 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Post)('salary'),
+    (0, common_1.Render)('salary'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, get_user_decorator_1.GetUser)()),
+    __param(2, (0, common_1.Query)('error')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [get_salary_dto_1.GetSalaryDto, Object, String]),
+    __metadata("design:returntype", void 0)
+], ProductionController.prototype, "getSalary", null);
 exports.ProductionController = ProductionController = __decorate([
     (0, common_1.Controller)('production'),
     __metadata("design:paramtypes", [production_service_1.ProductionService])

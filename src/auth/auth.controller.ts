@@ -20,14 +20,14 @@ export class AuthController {
    * @returns - The login page.
    */
   @Get('login')
-  @Render('login')
-  loginPage(@Query() query: any) {
+  loginPage(@Req() req: Request, @Query() query: any, @Res() res: Response) {
+    if (req.isAuthenticated()) return res.redirect('/production');
     const { error, username } = query;
     const renderData = {
       error: error || null,
       username: username || '',
     };
-    return renderData;
+    return res.render('login', renderData);
   }
 
   /**
