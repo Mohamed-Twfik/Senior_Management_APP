@@ -262,6 +262,13 @@ const ValidationMethods = {
   productPrice: productPriceValidation,
 }
 
+// Prevent form submission
+document.querySelectorAll('form').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+});
+
 // Create entity
 document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
   ValidationMethods[PAGE_TYPE](`#create-${PAGE_TYPE}-form`);

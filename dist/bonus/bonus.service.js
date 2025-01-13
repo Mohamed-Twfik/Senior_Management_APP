@@ -43,6 +43,7 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         createBonusDto.to = (createBonusDto.to === 0) ? Infinity : createBonusDto.to;
         if (createBonusDto.from >= createBonusDto.to)
             throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+        createBonusDto.department = new mongoose_2.Types.ObjectId(createBonusDto.department);
         const existBonus = await this.bonusModel.findOne({
             $and: [
                 {
@@ -95,6 +96,10 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         updateBonusDto.to = (updateBonusDto.to === 0) ? Infinity : (updateBonusDto.to || bonus.to);
         if (updateBonusDto.from >= updateBonusDto.to)
             throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+        if (updateBonusDto.department)
+            updateBonusDto.department = new mongoose_2.Types.ObjectId(updateBonusDto.department);
+        else
+            updateBonusDto.department = bonus.department;
         const existBonus = await this.bonusModel.findOne({
             $and: [
                 { _id: { $ne: bonus._id } },

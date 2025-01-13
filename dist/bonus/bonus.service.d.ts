@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { CreateBonusDto } from './dto/create-bonus.dto';
@@ -14,7 +14,7 @@ export declare class BonusService extends BaseService {
     searchableKeys: string[];
     constructor(bonusModel: Model<Bonus>, usersService: UsersService, departmentsService: DepartmentsService);
     getModuleModel(): Model<Bonus, {}, {}, {}, import("mongoose").Document<unknown, {}, Bonus> & Bonus & {
-        _id: import("mongoose").Types.ObjectId;
+        _id: Types.ObjectId;
     } & {
         __v: number;
     }, any>;

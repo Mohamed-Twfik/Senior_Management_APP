@@ -16,13 +16,15 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const localAuth_guard_1 = require("./guards/localAuth.guard");
 let AuthController = class AuthController {
-    loginPage(query) {
+    loginPage(req, query, res) {
+        if (req.isAuthenticated())
+            return res.redirect('/production');
         const { error, username } = query;
         const renderData = {
             error: error || null,
             username: username || '',
         };
-        return renderData;
+        return res.render('login', renderData);
     }
     login(req, res) {
         req.login(req.user, (err) => {
@@ -39,10 +41,11 @@ let AuthController = class AuthController {
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Get)('login'),
-    (0, common_1.Render)('login'),
-    __param(0, (0, common_1.Query)()),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Query)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "loginPage", null);
 __decorate([

@@ -9,6 +9,7 @@
 const getFilterUrl = (filterForm) => {
   for (const element of filterForm.elements) {
     if (element.value) {
+      console.log(element);
       if (element.getAttribute('type') === 'text') element.value = `search:` + element.value;
       if ((element.getAttribute('type') === 'number' && element.getAttribute('name') !== 'pageSize') || element.getAttribute('type') === 'range') {
         element.setAttribute('type', 'text');
@@ -24,7 +25,8 @@ const getFilterUrl = (filterForm) => {
   filterFormData.delete('sort-type');
 
   const action = filterForm.getAttribute('action');
-  return `${action}?${new URLSearchParams(filterFormData).toString()}`;
+  const url = `${action}?${new URLSearchParams(filterFormData).toString()}`;
+  return url;
 }
 
 // Used to filter data when submitting filter form
@@ -36,5 +38,8 @@ document.querySelector('#filter-form').addEventListener('submit', function (e) {
 // Update page links href attribute and add filter form data to it
 // Used to apply filter form data with pagination links
 document.querySelectorAll('.page-link').forEach(link => {
-  link.setAttribute('href', `${getFilterUrl(document.querySelector('#filter-form'))}&page=${link.getAttribute('page')}`);
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.location.href = `${getFilterUrl(document.querySelector('#filter-form'))}&page=${link.getAttribute('page')}`;
+  });
 });

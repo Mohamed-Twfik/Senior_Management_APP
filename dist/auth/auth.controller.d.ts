@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 export declare class AuthController {
-    loginPage(query: any): {
-        error: any;
-        username: any;
-    };
+    loginPage(req: Request, query: any, res: Response): void;
     login(req: Request, res: Response): void;
     logout(req: Request, res: Response): void;
 }

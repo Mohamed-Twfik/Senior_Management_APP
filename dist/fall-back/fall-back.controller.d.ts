@@ -1,3 +1,4 @@
+import { Request } from "express";
 export declare class FallBackController {
-    fallBack(): void;
+    fallBack(req: Request, res: any): void;
 }

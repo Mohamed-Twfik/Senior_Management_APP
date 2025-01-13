@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { CreateBonusDto } from './dto/create-bonus.dto';
@@ -52,7 +52,10 @@ export class BonusService extends BaseService {
    */
   async create(createBonusDto: CreateBonusDto, user: UserDocument) {
     createBonusDto.to = (createBonusDto.to === 0)? Infinity : createBonusDto.to;
-    if(createBonusDto.from >= createBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+    if (createBonusDto.from >= createBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+    
+    createBonusDto.department = new Types.ObjectId(createBonusDto.department);
+    
     const existBonus = await this.bonusModel.findOne({
       $and: [
             {
@@ -120,6 +123,10 @@ export class BonusService extends BaseService {
   async update(bonus: BonusDocument, updateBonusDto: UpdateBonusDto, user: UserDocument) {
     updateBonusDto.to = (updateBonusDto.to === 0)? Infinity : (updateBonusDto.to || bonus.to);
     if (updateBonusDto.from >= updateBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
+    
+    if (updateBonusDto.department) updateBonusDto.department = new Types.ObjectId(updateBonusDto.department);
+    else updateBonusDto.department = bonus.department;
+    
     const existBonus = await this.bonusModel.findOne({
       $and: [
         { _id: { $ne: bonus._id } },
