@@ -19,6 +19,34 @@ const EntityValidation = (formSelector) => {
   } else form.submit();
 };
 
+const WorkerValidation = (formSelector) => {
+  const form = document.querySelector(formSelector);
+  const name = form.querySelector('input[name="name"]').value;
+  const nameError = form.querySelector('.text-danger');
+  nameError.style.display = 'none';
+
+  const department = form.querySelector('select[name="department"').value;
+  const departmentError = form.querySelector('.text-danger-department');
+  departmentError.style.display = 'none';
+
+  const isValid = true;
+
+  const nameRegex = /^[\s\S]{3,}$/;
+  if (!name || !nameRegex.test(name)) {
+    nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+    nameError.style.display = 'block';
+    isValid = false;
+  }
+  
+  if (!department) {
+    departmentError.textContent = 'يجب إختيار القسم';
+    departmentError.style.display = 'block';
+    isValid = false;
+  }
+
+  if(isValid) form.submit();
+};
+
 /**
  * Users Form Validation
  * Used to validate user form data before submitting it to the server
@@ -254,7 +282,7 @@ const salaryValidation = () => {
 
 const ValidationMethods = {
   bonus: bonusValidation,
-  workers: EntityValidation,
+  workers: WorkerValidation,
   products: EntityValidation,
   departments: EntityValidation,
   users: userValidation,

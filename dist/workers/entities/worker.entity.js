@@ -26,6 +26,13 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
+        ref: 'Department'
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Worker.prototype, "department", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
         default: 0
     }),
     __metadata("design:type", Number)

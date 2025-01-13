@@ -13,6 +13,7 @@ const workers_controller_1 = require("./workers.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const worker_entity_1 = require("./entities/worker.entity");
 const users_module_1 = require("../users/users.module");
+const departments_module_1 = require("../departments/departments.module");
 let WorkersModule = class WorkersModule {
 };
 exports.WorkersModule = WorkersModule;
@@ -25,7 +26,8 @@ exports.WorkersModule = WorkersModule = __decorate([
                     schema: worker_entity_1.WorkerSchema,
                 },
             ]),
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            departments_module_1.DepartmentsModule
         ],
         controllers: [workers_controller_1.WorkersController],
         providers: [workers_service_1.WorkersService],

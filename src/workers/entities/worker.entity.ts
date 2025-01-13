@@ -12,6 +12,12 @@ export class Worker {
 
   @Prop({
     required: true,
+    ref: 'Department'
+  })
+  department: Types.ObjectId;
+
+  @Prop({
+    required: true,
     default: 0
   })
   salary: number;

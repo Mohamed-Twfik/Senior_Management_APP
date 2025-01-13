@@ -16,6 +16,7 @@ import { CreateWorkerDto } from './dto/create-worker.dto';
 import { WorkerDocument } from './entities/worker.entity';
 import { WorkerIdPipe } from './pipes/worker-id.pipe';
 import { WorkersService } from './workers.service';
+import { WorkerDataPipe } from './pipes/worker-data.pipe';
 
 @Controller('workers')
 export class WorkersController {
@@ -25,7 +26,7 @@ export class WorkersController {
   @Redirect('/workers')
   create(
     @GetUser() user: UserDocument,
-    @Body() createWorkerDto: CreateWorkerDto
+    @Body(WorkerDataPipe) createWorkerDto: CreateWorkerDto
   ) {
     return this.workersService.create(createWorkerDto, user);
   }
@@ -44,7 +45,7 @@ export class WorkersController {
   update(
     @Param('workerId', ObjectIdPipe, WorkerIdPipe) worker: WorkerDocument,
     @GetUser() user: UserDocument,
-    @Body() updateWorkerDto: CreateWorkerDto,
+    @Body(WorkerDataPipe) updateWorkerDto: CreateWorkerDto,
 
   ) {
     return this.workersService.update(worker, updateWorkerDto, user);

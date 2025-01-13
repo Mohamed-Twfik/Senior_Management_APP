@@ -2,5 +2,8 @@
   <%= dataItem.name %>
 </td>
 <td scope="col">
+  <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
+</td>
+<td scope="col">
   <%= (dataItem.salary) ? dataItem.salary : '0' %>
 </td>

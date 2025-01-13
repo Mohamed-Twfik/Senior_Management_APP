@@ -2,6 +2,17 @@
   <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
 </td>
 <td scope="col">
+  <select class="form-select" name="department" form="filter-form">
+    <option value="" selected <%=(!filters.department) ? "selected" : "" %>>إختر</option>
+    <% departments.forEach(department=> { %>
+      <option value="objectid:<%= department._id %>" <%=(filters.department===department._id.toString() ) ? "selected"
+        : "" %>>
+        <%= department.name %>
+      </option>
+      <% }) %>
+  </select>
+</td>
+<td scope="col">
   <div class="input-group">
     <select class="form-select">
       <option value="" <%=(filters.salary.split(":").length===1) ? 'selected' : '' %>>يساوي</option>

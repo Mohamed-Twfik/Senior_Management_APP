@@ -8,5 +8,5 @@
   <%= dataItem.percentage %>%
 </td>
 <td scope="col">
-  <%= dataItem.department.name %>
+  <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
 </td>

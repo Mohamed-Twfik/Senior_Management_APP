@@ -8,6 +8,10 @@ import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { Worker, WorkerDocument } from './entities/worker.entity';
+import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { QueryDto } from 'src/utils/dtos/query.dto';
+import { DepartmentsService } from 'src/departments/departments.service';
+import { WorkerType } from './enums/workerType.enum';
 
 @Injectable()
 export class WorkersService extends BaseService {
@@ -17,7 +21,8 @@ export class WorkersService extends BaseService {
 
   constructor(
     @InjectModel(Worker.name) private workersModel: Model<Worker>,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly departmentsService: DepartmentsService
   ) {
     super();
   }
@@ -37,6 +42,7 @@ export class WorkersService extends BaseService {
   async getAdditionalRenderVariables() {
     return {
       users: await this.usersService.find(),
+      departments: await this.departmentsService.find(),
       type: 'workers',
       title: 'العمال'
     }
@@ -58,6 +64,37 @@ export class WorkersService extends BaseService {
       updatedBy: user._id,
     }
     await this.workersModel.create(inputDate);
+  }
+
+  async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
+    const queryBuilder = this.getQueryBuilder(queryParams);
+    const data = await queryBuilder
+      .filter()
+      .search(this.searchableKeys)
+      .sort()
+      .paginate()
+      .build()
+      .populate('department', 'name')
+      .populate('createdBy', 'username')
+      .populate('updatedBy', 'username');
+
+    const baseRenderVariables: BaseRenderVariablesType = {
+      error: queryParams.error || null,
+      data,
+      user,
+      filters: {
+        search: queryBuilder.getSearchKey(),
+        sort: queryBuilder.getSortKey(),
+        pagination: {
+          page: queryBuilder.getPage(),
+          totalPages: await queryBuilder.getTotalPages(),
+          pageSize: queryBuilder.getPageSize()
+        },
+        ...queryBuilder.getCustomFilters()
+      }
+    };
+    const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
+    return renderVariables;
   }
 
   /**
@@ -100,8 +137,9 @@ export class WorkersService extends BaseService {
           _id: 1,
           name: 1,
           salary: 1,
+          department: 1,
           workerType: {
-            $cond: { if: { $eq: ["$salary", 0] }, then: "production", else: "daily" }
+            $cond: { if: { $eq: ["$salary", 0] }, then: WorkerType.Production, else: WorkerType.Daily }
           },
           productions: {
             $filter: {
@@ -121,14 +159,14 @@ export class WorkersService extends BaseService {
         $addFields: {
           totalProductionCost: {
             $cond: {
-              if: { $eq: ["$workerType", "production"] },
+              if: { $eq: ["$workerType", WorkerType.Production] },
               then: { $sum: "$productions.cost" }, // Sum cost for production workers
               else: 0
             }
           },
           attendedDays: {
             $cond: {
-              if: { $eq: ["$workerType", "daily"] },
+              if: { $eq: ["$workerType", WorkerType.Daily] },
               then: {
                 $size: {
                   $setUnion: {
@@ -149,9 +187,14 @@ export class WorkersService extends BaseService {
         $addFields: {
           totalSalary: {
             $cond: {
-              if: { $eq: ["$workerType", "production"] },
-              then: "$totalProductionCost", // Total salary for production workers
-              else: { $multiply: ["$salary", "$attendedDays"] } // Total salary for daily workers
+              if: { $eq: ["$workerType", WorkerType.Production] },
+              then: { $ifNull: ["$totalProductionCost", 0] }, // Default to 0 if null
+              else: { 
+                $multiply: [
+                  { $ifNull: ["$salary", 0] }, 
+                  { $ifNull: ["$attendedDays", 0] }
+                ] 
+              } // Default to 0 if null
             }
           }
         }
@@ -160,6 +203,7 @@ export class WorkersService extends BaseService {
         $project: {
           _id: 1,
           name: 1,
+          department: 1,
           workerType: 1,
           totalSalary: 1
         }
