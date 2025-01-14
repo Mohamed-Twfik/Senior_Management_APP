@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateDepartmentDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class CreateDepartmentDto {
 }
@@ -19,4 +20,10 @@ __decorate([
     (0, class_validator_1.Matches)(/^[\s\S]{3,}$/, { message: 'الإسم يجب أن يكون 3 أحرف على الأقل' }),
     __metadata("design:type", String)
 ], CreateDepartmentDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateDepartmentDto.prototype, "bonusLimit", void 0);
 //# sourceMappingURL=create-department.dto.js.map

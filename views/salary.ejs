@@ -56,18 +56,18 @@
                       <%= worker.name %>
                     </td>
                     <td>
-                      <%= worker.totalSalary %>
+                      <%= worker.pureSalary %>
                     </td>
                     <td>
                       <%= worker.bonus %>
                     </td>
                     <td>
-                      <%= worker.total %>
+                      <%= worker.totalSalary %>
                     </td>
                     <td>
-                      <label for="salary-done" style="display: block;">
-                        <input class="form-check-input" id="salary-done" type="checkbox" role="switch">
-                      </label>
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch">
+                      </div>
                     </td>
                   </tr>
                 <% }) %>

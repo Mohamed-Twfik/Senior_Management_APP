@@ -5,5 +5,5 @@
   <%= (dataItem.department && dataItem.department.name) ? dataItem.department.name : 'لا يوجد' %>
 </td>
 <td>
-  <%= dataItem.price %> قرش
+  <%= (dataItem.price) ? dataItem.price+' قرش' : "لايوجد" %>
 </td>

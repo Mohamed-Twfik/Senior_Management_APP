@@ -162,7 +162,7 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
             },
             {
                 $addFields: {
-                    totalSalary: {
+                    pureSalary: {
                         $cond: {
                             if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Production] },
                             then: { $ifNull: ["$totalProductionCost", 0] },
@@ -182,7 +182,7 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
                     name: 1,
                     department: 1,
                     workerType: 1,
-                    totalSalary: 1
+                    pureSalary: 1
                 }
             }
         ]);

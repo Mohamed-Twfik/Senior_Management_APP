@@ -4,11 +4,7 @@
       <%= index+1 %>
     </th>
 
-    <% try { %>
-      <%- include(`../modules/${type}/table-components/data`, { dataItem }) %>
-    <% } catch(error) { %>
-      <td scope="col"><%= dataItem.name %></td>
-    <% } %>
+    <%- include(`../modules/${type}/table-components/data`, { dataItem }) %>
 
     <td>
       <%= (dataItem.createdBy && dataItem.createdBy.username) ? dataItem.createdBy.username : 'لا يوجد' %>
@@ -17,10 +13,10 @@
       <%= (dataItem.updatedBy && dataItem.updatedBy.username) ? dataItem.updatedBy.username : 'لا يوجد' %>
     </td>
     <td>
-      <%= (dataItem.createdAtArabic)?dataItem.createdAtArabic:"لا يوجد" %>
+      <%= (dataItem.createdAtArabic) ? dataItem.createdAtArabic : "لا يوجد" %>
     </td>
     <td>
-      <%= (dataItem.updatedAtArabic)?dataItem.updatedAtArabic:"لا يوجد" %>
+      <%= (dataItem.updatedAtArabic) ? dataItem.updatedAtArabic : "لا يوجد" %>
     </td>
     <td>
       <% if(dataItem.role !== 'مدير') { %>

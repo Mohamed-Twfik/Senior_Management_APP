@@ -160,9 +160,15 @@ export class ProductionService extends BaseService {
           to: { $gte: salary.salary },
           department: salary.department
         });
-        salary.bonus = bonusPresent ? ((bonusPresent.percentage / 100) * salary.totalSalary) : 0;
+        const department = await this.departmentsService.findById(salary.department);
+        if (bonusPresent) {
+          let bonus = (bonusPresent.percentage / 100) * salary.pureSalary;
+          salary.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
+        } else {
+          salary.bonus = 0;
+        }
       }
-      salary.total = salary.totalSalary + salary.bonus;
+      salary.totalSalary = salary.pureSalary + salary.bonus;
     };
     return { data: salaries, user, error: error || null };
   }

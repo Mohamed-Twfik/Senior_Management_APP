@@ -1,6 +1,7 @@
 import { Document, Types } from "mongoose";
 export declare class Department {
     name: string;
+    bonusLimit: number;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     createdBy: Types.ObjectId;

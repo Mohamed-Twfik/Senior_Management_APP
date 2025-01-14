@@ -1,13 +1,7 @@
 <tr class="table-dark">
   <th scope="col"><i class="fa-solid fa-magnifying-glass"></i></th>
 
-  <% try { %>
-    <%- include(`../modules/${type}/table-components/filters`) %>
-  <% } catch(error) { console.log(error); %>
-    <td scope="col">
-      <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
-    </td>
-  <% } %>
+  <%- include(`../modules/${type}/table-components/filters`) %>
 
   <td scope="col">
     <select class="form-select" name="createdBy" form="filter-form">

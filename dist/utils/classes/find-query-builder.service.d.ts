@@ -44,5 +44,6 @@ export declare class FindQueryBuilderService {
         createdAtArabic: string;
         updatedAtArabic: string;
         salary: string;
+        bonusLimit: string;
     };
 }

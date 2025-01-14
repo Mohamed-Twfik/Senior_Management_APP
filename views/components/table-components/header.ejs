@@ -1,11 +1,7 @@
 <tr class="table-dark">
   <th scope="col">الرقم</th>
 
-  <% try { %>
-    <%- include(`../modules/${type}/table-components/header`) %>
-  <% } catch(error) { %>
-    <th scope="col">الإسم</th>
-  <% } %>
+  <%- include(`../modules/${type}/table-components/header`) %>
 
   <th scope="col">أنشئ بواسطة</th>
   <th scope="col">آخر تحديث بواسطة</th>

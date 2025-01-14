@@ -32,3 +32,10 @@ document.querySelectorAll('.toggle-password').forEach(icon => {
     }
   });
 });
+
+// Prevent form submission
+document.querySelectorAll('form:not[#login-form]').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+});

@@ -10,6 +10,9 @@ export class Department {
   })
   name: string;
 
+  @Prop({ required: true })
+  bonusLimit: number;
+
   @Prop()
   createdAtArabic?: string;
 

@@ -185,7 +185,7 @@ export class WorkersService extends BaseService {
       },
       {
         $addFields: {
-          totalSalary: {
+          pureSalary: {
             $cond: {
               if: { $eq: ["$workerType", WorkerType.Production] },
               then: { $ifNull: ["$totalProductionCost", 0] }, // Default to 0 if null
@@ -205,7 +205,7 @@ export class WorkersService extends BaseService {
           name: 1,
           department: 1,
           workerType: 1,
-          totalSalary: 1
+          pureSalary: 1
         }
       }
     ]);
