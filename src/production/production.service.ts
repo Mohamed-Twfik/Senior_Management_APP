@@ -155,17 +155,20 @@ export class ProductionService extends BaseService {
     for (const salary of salaries) {
       salary.bonus = 0;
       if(salary.workerType === 'production') {
-        const bonusPresent = (await this.bonusService.find({
-          from: {
-            $lte: salary.salary
-          },
-          to: {
-            $gte: salary.salary
-          }
-        }))[0];
-        salary.bonus = bonusPresent ? (bonusPresent.percentage / 100) * salary.totalSalary : 0;
+        const bonusPresent = await this.bonusService.findOne({
+          from: { $lte: salary.salary },
+          to: { $gte: salary.salary },
+          department: salary.department
+        });
+        const department = await this.departmentsService.findById(salary.department);
+        if (bonusPresent) {
+          let bonus = (bonusPresent.percentage / 100) * salary.pureSalary;
+          salary.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
+        } else {
+          salary.bonus = 0;
+        }
       }
-      salary.total = salary.totalSalary + salary.bonus;
+      salary.totalSalary = salary.pureSalary + salary.bonus;
     };
     return { data: salaries, user, error: error || null };
   }

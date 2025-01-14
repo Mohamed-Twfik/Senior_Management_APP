@@ -1,17 +1,21 @@
 <%
   let nameValue;
   let salaryValue;
+  let departmentValue;
   let id;
   try{
     nameValue=dataItem.name;
     salaryValue=dataItem.salary;
+    departmentValue = (dataItem.department && dataItem.department._id )? dataItem.department._id.toString() : '' ;
     id=dataItem._id;
   }catch(error){
     nameValue='' ;
     salaryValue=0 ;
+    departmentValue = '';
     id='' ;
   }
 %>
 
 <%- include('../../inputs-fields/input', {id, value: nameValue , name: 'name' , type: 'text' , label: 'الإسم' , classes: '' , placeholder: '' }) %>
+<%- include('../../inputs-fields/select', {id, value: departmentValue, name: 'department' , label: 'القسم' , data: departments}) %>
 <%- include('../../inputs-fields/input', {id, value: salaryValue , name: 'salary' , type: 'number' , label: 'مرتب اليوم' , classes: '' , placeholder: '0' }) %>

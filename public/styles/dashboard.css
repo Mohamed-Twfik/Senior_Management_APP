@@ -116,3 +116,33 @@ i {
   margin: 0 auto;
   padding: 20px;
 }
+
+.choices {
+  border-radius: 10px;
+}
+
+.choices * {
+  border: none !important;
+  font-size: large !important;
+}
+
+.choices, .choices__list, .choices__inner, .is-highlighted {
+  background-color: #4ac6ff !important;
+  color: #000217;
+  margin: 0;
+}
+
+.choices__input {
+  background-color: #000217 !important;
+  color: #4ac6ff;
+  border: 1px solid #f9ff4a !important;
+}
+
+.choices__item.is-selected, .choices__list:not(.choices__list--single) .choices__item:hover {
+  background-color: #000217 !important;
+  color: #4ac6ff;
+}
+
+.choices__inner{
+  padding-right: 30px;
+}

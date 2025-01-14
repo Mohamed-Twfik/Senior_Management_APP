@@ -1,22 +1,89 @@
 const PAGE_TYPE = document.body.getAttribute('data-page-type');
 
 /**
- * Entity Form Validation
- * Used to validate entity form data before submitting it to the server
- * Used to vaidate forms of entities like departments, workers, and products that have the same structure (have only name field)
+ * Product Form Validation
+ * Used to validate product form data before submitting it to the server
  * @param {string} formSelector The form selector to get the form element
  */
-const EntityValidation = (formSelector) => {
+const ProductValidation = (formSelector) => {
   const form = document.querySelector(formSelector);
   const name = form.querySelector('input[name="name"]').value;
-  const error = form.querySelector('.text-danger');
-  error.style.display = 'none';
+  const nameError = form.querySelector('.text-danger-name');
+  nameError.style.display = 'none';
 
   const nameRegex = /^[\s\S]{3,}$/;
   if (!name || !nameRegex.test(name)) {
-    error.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
-    error.style.display = 'block';
+    nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+    nameError.style.display = 'block';
   } else form.submit();
+};
+
+/**
+ * Department Form Validation
+ * Used to validate department form data before submitting it to the server
+ * @param {string} formSelector The form selector to get the form element
+ */
+const DepartmentValidation = (formSelector) => {
+  const form = document.querySelector(formSelector);
+
+  const name = form.querySelector('input[name="name"]').value;
+  const nameError = form.querySelector('.text-danger-name');
+  nameError.style.display = 'none';
+
+  const bonusLimit = form.querySelector('input[name="bonusLimit"]').value;
+  const bonusLimitError = form.querySelector('.text-danger-bonusLimit');
+  bonusLimitError.style.display = 'none';
+
+  let isValid = true;
+
+  const nameRegex = /^[\s\S]{3,}$/;
+  if (!name || !nameRegex.test(name)) {
+    nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+    nameError.style.display = 'block';
+    isValid = false;
+  }
+  
+  if (!bonusLimit) {
+    bonusLimitError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+    bonusLimitError.style.display = 'block';
+    isValid = false;
+  }
+
+  if(isValid) form.submit();
+}
+
+
+/**
+ * Worker Form Validation
+ * Used to validate worker form data before submitting it to the server
+ * @param {string} formSelector The form selector to get the form element
+ */
+const WorkerValidation = (formSelector) => {
+  const form = document.querySelector(formSelector);
+  const name = form.querySelector('input[name="name"]').value;
+  const nameError = form.querySelector('.text-danger');
+  nameError.style.display = 'none';
+
+  const department = form.querySelector('select[name="department"').value;
+  const departmentError = form.querySelector('.text-danger-department');
+  departmentError.style.display = 'none';
+
+  const isValid = true;
+
+  const nameRegex = /^[\s\S]{3,}$/;
+  if (!name || !nameRegex.test(name)) {
+    nameError.textContent = 'الإسم يجب أن يحتوي على 3 أحرف على الأقل';
+    nameError.style.display = 'block';
+    isValid = false;
+  }
+  
+  if (!department) {
+    departmentError.textContent = 'يجب إختيار القسم';
+    departmentError.style.display = 'block';
+    isValid = false;
+  }
+
+  if(isValid) form.submit();
 };
 
 /**
@@ -254,20 +321,13 @@ const salaryValidation = () => {
 
 const ValidationMethods = {
   bonus: bonusValidation,
-  workers: EntityValidation,
-  products: EntityValidation,
-  departments: EntityValidation,
+  workers: WorkerValidation,
+  products: ProductValidation,
+  departments: DepartmentValidation,
   users: userValidation,
   production: productionValidation,
   productPrice: productPriceValidation,
 }
-
-// Prevent form submission
-document.querySelectorAll('form').forEach(form => {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-  });
-});
 
 // Create entity
 document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {

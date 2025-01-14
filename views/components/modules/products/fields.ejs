@@ -1,0 +1,13 @@
+<%
+  let nameValue;
+  let id;
+  try{
+    nameValue=dataItem.name;
+    id=dataItem._id;
+  }catch(error){
+    nameValue='' ;
+    id='' ;
+  }
+%>
+
+<%- include('../../inputs-fields/input', {id, value: nameValue, name: 'name' , type: 'text' , label: 'الإسم' , classes: '' , placeholder: '' }) %>

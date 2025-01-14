@@ -20,11 +20,14 @@ const production_entity_1 = require("../production/entities/production.entity");
 const users_service_1 = require("../users/users.service");
 const base_service_1 = require("../utils/classes/base.service");
 const worker_entity_1 = require("./entities/worker.entity");
+const departments_service_1 = require("../departments/departments.service");
+const workerType_enum_1 = require("./enums/workerType.enum");
 let WorkersService = class WorkersService extends base_service_1.BaseService {
-    constructor(workersModel, usersService) {
+    constructor(workersModel, usersService, departmentsService) {
         super();
         this.workersModel = workersModel;
         this.usersService = usersService;
+        this.departmentsService = departmentsService;
         this.searchableKeys = [
             "name"
         ];
@@ -35,6 +38,7 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
     async getAdditionalRenderVariables() {
         return {
             users: await this.usersService.find(),
+            departments: await this.departmentsService.find(),
             type: 'workers',
             title: 'العمال'
         };
@@ -50,6 +54,35 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
             updatedBy: user._id,
         };
         await this.workersModel.create(inputDate);
+    }
+    async findAll(queryParams, user) {
+        const queryBuilder = this.getQueryBuilder(queryParams);
+        const data = await queryBuilder
+            .filter()
+            .search(this.searchableKeys)
+            .sort()
+            .paginate()
+            .build()
+            .populate('department', 'name')
+            .populate('createdBy', 'username')
+            .populate('updatedBy', 'username');
+        const baseRenderVariables = {
+            error: queryParams.error || null,
+            data,
+            user,
+            filters: {
+                search: queryBuilder.getSearchKey(),
+                sort: queryBuilder.getSortKey(),
+                pagination: {
+                    page: queryBuilder.getPage(),
+                    totalPages: await queryBuilder.getTotalPages(),
+                    pageSize: queryBuilder.getPageSize()
+                },
+                ...queryBuilder.getCustomFilters()
+            }
+        };
+        const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
+        return renderVariables;
     }
     async update(worker, updateWorkerDto, user) {
         const existWorker = await this.findOne({
@@ -81,8 +114,9 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
                     _id: 1,
                     name: 1,
                     salary: 1,
+                    department: 1,
                     workerType: {
-                        $cond: { if: { $eq: ["$salary", 0] }, then: "production", else: "daily" }
+                        $cond: { if: { $eq: ["$salary", 0] }, then: workerType_enum_1.WorkerType.Production, else: workerType_enum_1.WorkerType.Daily }
                     },
                     productions: {
                         $filter: {
@@ -102,14 +136,14 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
                 $addFields: {
                     totalProductionCost: {
                         $cond: {
-                            if: { $eq: ["$workerType", "production"] },
+                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Production] },
                             then: { $sum: "$productions.cost" },
                             else: 0
                         }
                     },
                     attendedDays: {
                         $cond: {
-                            if: { $eq: ["$workerType", "daily"] },
+                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Daily] },
                             then: {
                                 $size: {
                                     $setUnion: {
@@ -128,11 +162,16 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
             },
             {
                 $addFields: {
-                    totalSalary: {
+                    pureSalary: {
                         $cond: {
-                            if: { $eq: ["$workerType", "production"] },
-                            then: "$totalProductionCost",
-                            else: { $multiply: ["$salary", "$attendedDays"] }
+                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Production] },
+                            then: { $ifNull: ["$totalProductionCost", 0] },
+                            else: {
+                                $multiply: [
+                                    { $ifNull: ["$salary", 0] },
+                                    { $ifNull: ["$attendedDays", 0] }
+                                ]
+                            }
                         }
                     }
                 }
@@ -141,8 +180,9 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
                 $project: {
                     _id: 1,
                     name: 1,
+                    department: 1,
                     workerType: 1,
-                    totalSalary: 1
+                    pureSalary: 1
                 }
             }
         ]);
@@ -154,6 +194,7 @@ exports.WorkersService = WorkersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(worker_entity_1.Worker.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        users_service_1.UsersService])
+        users_service_1.UsersService,
+        departments_service_1.DepartmentsService])
 ], WorkersService);
 //# sourceMappingURL=workers.service.js.map

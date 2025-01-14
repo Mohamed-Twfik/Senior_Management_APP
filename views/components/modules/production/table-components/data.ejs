@@ -8,11 +8,11 @@
   <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لا يوجد' %>
 </td>
 <td>
-  <%= dataItem.quantity %>
+  <%= (dataItem.quantity) ? dataItem.quantity : 'لايوجد' %>
 </td>
 <td>
-  <%= dataItem.arabicDate %>
+  <%= (dataItem.arabicDate) ? dataItem.arabicDate : 'لايوجد' %>
 </td>
 <td>
-  <%= dataItem.cost %>
+  <%= (dataItem.cost) ? dataItem.cost : 'لايوجد' %>
 </td>

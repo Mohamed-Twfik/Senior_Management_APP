@@ -38,6 +38,7 @@ export class FindQueryBuilderService {
     createdAtArabic: "",
     updatedAtArabic: "",
     salary: '',
+    bonusLimit: '',
   };
 
   constructor(query: Query<any, any>, queryParams: QueryDto) {

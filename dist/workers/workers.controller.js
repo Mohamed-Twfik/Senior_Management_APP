@@ -20,6 +20,7 @@ const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const create_worker_dto_1 = require("./dto/create-worker.dto");
 const worker_id_pipe_1 = require("./pipes/worker-id.pipe");
 const workers_service_1 = require("./workers.service");
+const worker_data_pipe_1 = require("./pipes/worker-data.pipe");
 let WorkersController = class WorkersController {
     constructor(workersService) {
         this.workersService = workersService;
@@ -42,7 +43,7 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.Redirect)('/workers'),
     __param(0, (0, get_user_decorator_1.GetUser)()),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(worker_data_pipe_1.WorkerDataPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, create_worker_dto_1.CreateWorkerDto]),
     __metadata("design:returntype", void 0)
@@ -61,7 +62,7 @@ __decorate([
     (0, common_1.Redirect)('/workers?sort=-updatedAt'),
     __param(0, (0, common_1.Param)('workerId', ObjectId_pipe_1.ObjectIdPipe, worker_id_pipe_1.WorkerIdPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
-    __param(2, (0, common_1.Body)()),
+    __param(2, (0, common_1.Body)(worker_data_pipe_1.WorkerDataPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, create_worker_dto_1.CreateWorkerDto]),
     __metadata("design:returntype", void 0)

@@ -39,6 +39,7 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
             createdAtArabic: "",
             updatedAtArabic: "",
             salary: '',
+            bonusLimit: '',
         };
         this.query = query;
         this.queryParams = queryParams;

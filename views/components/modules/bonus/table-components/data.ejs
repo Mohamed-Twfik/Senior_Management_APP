@@ -1,12 +1,12 @@
 <td scope="col">
-  <%= dataItem.from %>
+  <%= (dataItem.from) ? dataItem.from : 'لايوجد' %>
 </td>
 <td scope="col">
-  <%= (dataItem.to===Infinity) ? 'ما لا نهاية' : dataItem.to %>
+  <%= (dataItem.to) ? ((dataItem.to === Infinity) ? 'ما لا نهاية' : dataItem.to) : 'لايوجد' %>
 </td>
 <td scope="col">
-  <%= dataItem.percentage %>%
+  <%= (dataItem.percentage) ? dataItem.percentage+"%" : 'لايوجد' %>
 </td>
 <td scope="col">
-  <%= dataItem.department.name %>
+  <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
 </td>
