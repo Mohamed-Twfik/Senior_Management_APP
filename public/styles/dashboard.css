@@ -79,6 +79,7 @@ i {
 }
 
 .form-control:focus,
+.form-control:disabled,
 .form-select:focus {
   background-color: #4ac6ff;
   color: #000217;
@@ -123,7 +124,7 @@ i {
 
 .choices * {
   border: none !important;
-  font-size: large !important;
+  font-size: 1em !important;
 }
 
 .choices, .choices__list, .choices__inner, .is-highlighted {

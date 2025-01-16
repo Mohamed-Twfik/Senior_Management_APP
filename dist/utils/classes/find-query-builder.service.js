@@ -31,7 +31,6 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
             department: "",
             quantity: "",
             arabicDate: "",
-            cost: "",
             price: "",
             name: "",
             createdBy: "",

@@ -30,7 +30,6 @@ export class FindQueryBuilderService {
     department: "",
     quantity: "",
     arabicDate: "",
-    cost: "",
     price: "",
     name: "",
     createdBy: "",

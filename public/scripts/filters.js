@@ -43,3 +43,5 @@ document.querySelectorAll('.page-link').forEach(link => {
     window.location.href = `${getFilterUrl(document.querySelector('#filter-form'))}&page=${link.getAttribute('page')}`;
   });
 });
+
+const PAGE_TYPE = document.querySelector('body').getAttribute('page-type');

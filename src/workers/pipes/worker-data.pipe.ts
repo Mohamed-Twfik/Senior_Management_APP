@@ -7,6 +7,7 @@ import {
 import { DepartmentsService } from '../../departments/departments.service';
 import { Types } from 'mongoose';
 import { CreateWorkerDto } from '../dto/create-worker.dto';
+import { WorkerType } from '../enums/workerType.enum';
 
 /**
  * Validates worker data.
@@ -21,6 +22,9 @@ export class WorkerDataPipe implements PipeTransform {
       if (!department) throw new NotFoundException('خطأ في معرف القسم.');
       workerData.department = new Types.ObjectId(workerData.department);
     }
+
+    if (workerData.type === WorkerType.Production) workerData.salary = undefined;
+
     return workerData;
   }
 }

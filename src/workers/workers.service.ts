@@ -1,17 +1,15 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GetSalaryDto } from 'src/production/dto/get-salary.dto';
-import { Production } from 'src/production/entities/production.entity';
+import { DepartmentsService } from 'src/departments/departments.service';
 import { UserDocument } from 'src/users/entities/user.entity';
+import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
-import { CreateWorkerDto } from './dto/create-worker.dto';
-import { Worker, WorkerDocument } from './entities/worker.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { QueryDto } from 'src/utils/dtos/query.dto';
-import { DepartmentsService } from 'src/departments/departments.service';
-import { WorkerType } from './enums/workerType.enum';
+import { CreateWorkerDto } from './dto/create-worker.dto';
+import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { Worker, WorkerDocument } from './entities/worker.entity';
 
 @Injectable()
 export class WorkersService extends BaseService {
@@ -66,6 +64,12 @@ export class WorkersService extends BaseService {
     await this.workersModel.create(inputDate);
   }
 
+  /**
+   * Find all workers.
+   * @param queryParams The query parameters.
+   * @param user The user who is finding the workers.
+   * @returns The workers.
+   */
   async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
     const queryBuilder = this.getQueryBuilder(queryParams);
     const data = await queryBuilder
@@ -104,7 +108,7 @@ export class WorkersService extends BaseService {
    * @param user The user who is updating the worker.
    * @throws ConflictException if the name is already exist.
    */
-  async update(worker: WorkerDocument, updateWorkerDto: CreateWorkerDto, user: UserDocument) {
+  async update(worker: WorkerDocument, updateWorkerDto: UpdateWorkerDto, user: UserDocument) {
     const existWorker = await this.findOne({
       $and: [
         { name: updateWorkerDto.name },
@@ -112,103 +116,12 @@ export class WorkersService extends BaseService {
       ]
     });
     if (existWorker) throw new ConflictException('إسم العامل موجود بالفعل');
-    
+
     const inputData: Partial<Worker> = {
       ...updateWorkerDto,
       updatedBy: user._id
     }
 
     await worker.set(inputData).save();
-  }
-
-
-  async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string) {
-    const salaries = await this.workersModel.aggregate([
-      {
-        $lookup: {
-          from: Production.name, // Replace 'productions' with your actual Production collection name
-          localField: "_id",
-          foreignField: "worker",
-          as: "productions"
-        }
-      },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          salary: 1,
-          department: 1,
-          workerType: {
-            $cond: { if: { $eq: ["$salary", 0] }, then: WorkerType.Production, else: WorkerType.Daily }
-          },
-          productions: {
-            $filter: {
-              input: "$productions",
-              as: "production",
-              cond: {
-                $and: [
-                  { $gte: ["$$production.date", getSalaryDto.from] },
-                  { $lte: ["$$production.date", getSalaryDto.to] }
-                ]
-              }
-            }
-          }
-        }
-      },
-      {
-        $addFields: {
-          totalProductionCost: {
-            $cond: {
-              if: { $eq: ["$workerType", WorkerType.Production] },
-              then: { $sum: "$productions.cost" }, // Sum cost for production workers
-              else: 0
-            }
-          },
-          attendedDays: {
-            $cond: {
-              if: { $eq: ["$workerType", WorkerType.Daily] },
-              then: {
-                $size: {
-                  $setUnion: {
-                    $map: {
-                      input: "$productions",
-                      as: "production",
-                      in: "$$production.date"
-                    }
-                  }
-                }
-              },
-              else: 0
-            }
-          }
-        }
-      },
-      {
-        $addFields: {
-          pureSalary: {
-            $cond: {
-              if: { $eq: ["$workerType", WorkerType.Production] },
-              then: { $ifNull: ["$totalProductionCost", 0] }, // Default to 0 if null
-              else: { 
-                $multiply: [
-                  { $ifNull: ["$salary", 0] }, 
-                  { $ifNull: ["$attendedDays", 0] }
-                ] 
-              } // Default to 0 if null
-            }
-          }
-        }
-      },
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          department: 1,
-          workerType: 1,
-          pureSalary: 1
-        }
-      }
-    ]);
-    return salaries;
   }
 }

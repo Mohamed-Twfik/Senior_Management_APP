@@ -1,0 +1,13 @@
+<td scope="col">
+  <select class="form-select" name="worker" form="filter-form">
+    <option value="" selected <%=(!filters.worker) ? "selected" : "" %>>إختر</option>
+    <% workers.forEach(worker=> { %>
+      <option value="objectid:<%= worker._id %>" <%=(filters.worker===worker._id.toString() ) ? "selected" : "" %>>
+        <%= worker.name %>
+      </option>
+      <% }) %>
+  </select>
+</td>
+<td scope="col">
+  <input type="text" class="form-control" name="arabicDate" form="filter-form" placeholder="إبحث" value='<%= (filters.arabicDate) ? filters.arabicDate : '' %>'>
+</td>

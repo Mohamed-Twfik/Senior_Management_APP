@@ -13,6 +13,7 @@ exports.WorkerDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const departments_service_1 = require("../../departments/departments.service");
 const mongoose_1 = require("mongoose");
+const workerType_enum_1 = require("../enums/workerType.enum");
 let WorkerDataPipe = class WorkerDataPipe {
     constructor(departmentsService) {
         this.departmentsService = departmentsService;
@@ -24,6 +25,8 @@ let WorkerDataPipe = class WorkerDataPipe {
                 throw new common_1.NotFoundException('خطأ في معرف القسم.');
             workerData.department = new mongoose_1.Types.ObjectId(workerData.department);
         }
+        if (workerData.type === workerType_enum_1.WorkerType.Production)
+            workerData.salary = undefined;
         return workerData;
     }
 };

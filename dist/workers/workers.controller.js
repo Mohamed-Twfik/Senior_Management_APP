@@ -21,6 +21,7 @@ const create_worker_dto_1 = require("./dto/create-worker.dto");
 const worker_id_pipe_1 = require("./pipes/worker-id.pipe");
 const workers_service_1 = require("./workers.service");
 const worker_data_pipe_1 = require("./pipes/worker-data.pipe");
+const update_worker_dto_1 = require("./dto/update-worker.dto");
 let WorkersController = class WorkersController {
     constructor(workersService) {
         this.workersService = workersService;
@@ -64,7 +65,7 @@ __decorate([
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __param(2, (0, common_1.Body)(worker_data_pipe_1.WorkerDataPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, create_worker_dto_1.CreateWorkerDto]),
+    __metadata("design:paramtypes", [Object, Object, update_worker_dto_1.UpdateWorkerDto]),
     __metadata("design:returntype", void 0)
 ], WorkersController.prototype, "update", null);
 __decorate([

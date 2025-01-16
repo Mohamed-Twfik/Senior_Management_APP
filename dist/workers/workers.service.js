@@ -16,12 +16,10 @@ exports.WorkersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const production_entity_1 = require("../production/entities/production.entity");
+const departments_service_1 = require("../departments/departments.service");
 const users_service_1 = require("../users/users.service");
 const base_service_1 = require("../utils/classes/base.service");
 const worker_entity_1 = require("./entities/worker.entity");
-const departments_service_1 = require("../departments/departments.service");
-const workerType_enum_1 = require("./enums/workerType.enum");
 let WorkersService = class WorkersService extends base_service_1.BaseService {
     constructor(workersModel, usersService, departmentsService) {
         super();
@@ -98,95 +96,6 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
             updatedBy: user._id
         };
         await worker.set(inputData).save();
-    }
-    async getSalary(getSalaryDto, user, error) {
-        const salaries = await this.workersModel.aggregate([
-            {
-                $lookup: {
-                    from: production_entity_1.Production.name,
-                    localField: "_id",
-                    foreignField: "worker",
-                    as: "productions"
-                }
-            },
-            {
-                $project: {
-                    _id: 1,
-                    name: 1,
-                    salary: 1,
-                    department: 1,
-                    workerType: {
-                        $cond: { if: { $eq: ["$salary", 0] }, then: workerType_enum_1.WorkerType.Production, else: workerType_enum_1.WorkerType.Daily }
-                    },
-                    productions: {
-                        $filter: {
-                            input: "$productions",
-                            as: "production",
-                            cond: {
-                                $and: [
-                                    { $gte: ["$$production.date", getSalaryDto.from] },
-                                    { $lte: ["$$production.date", getSalaryDto.to] }
-                                ]
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                $addFields: {
-                    totalProductionCost: {
-                        $cond: {
-                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Production] },
-                            then: { $sum: "$productions.cost" },
-                            else: 0
-                        }
-                    },
-                    attendedDays: {
-                        $cond: {
-                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Daily] },
-                            then: {
-                                $size: {
-                                    $setUnion: {
-                                        $map: {
-                                            input: "$productions",
-                                            as: "production",
-                                            in: "$$production.date"
-                                        }
-                                    }
-                                }
-                            },
-                            else: 0
-                        }
-                    }
-                }
-            },
-            {
-                $addFields: {
-                    pureSalary: {
-                        $cond: {
-                            if: { $eq: ["$workerType", workerType_enum_1.WorkerType.Production] },
-                            then: { $ifNull: ["$totalProductionCost", 0] },
-                            else: {
-                                $multiply: [
-                                    { $ifNull: ["$salary", 0] },
-                                    { $ifNull: ["$attendedDays", 0] }
-                                ]
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                $project: {
-                    _id: 1,
-                    name: 1,
-                    department: 1,
-                    workerType: 1,
-                    pureSalary: 1
-                }
-            }
-        ]);
-        return salaries;
     }
 };
 exports.WorkersService = WorkersService;

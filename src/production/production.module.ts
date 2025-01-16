@@ -22,8 +22,7 @@ import { BonusModule } from 'src/bonus/bonus.module';
     ProductPriceModule,
     ProductsModule,
     WorkersModule,
-    DepartmentsModule,
-    BonusModule
+    DepartmentsModule
   ],
   controllers: [ProductionController],
   providers: [ProductionService],

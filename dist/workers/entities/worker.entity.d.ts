@@ -1,8 +1,9 @@
 import { Document, Types } from "mongoose";
 export declare class Worker {
     name: string;
+    type: string;
     department: Types.ObjectId;
-    salary: number;
+    salary?: number;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     createdBy: Types.ObjectId;

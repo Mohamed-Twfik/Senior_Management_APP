@@ -1,0 +1,4 @@
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.from , name: 'from' , type: 'number' , label: 'الحد الأدنى'}) %>
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.to , name: 'to' , type: 'number' , label: 'الحد الاعلى'}) %>
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.percentage , name: 'percentage', type: 'number' , label: 'النسبة المئوية (%)'}) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.department._id.toString(), name: 'department' , label: 'القسم' , data: departments}) %>

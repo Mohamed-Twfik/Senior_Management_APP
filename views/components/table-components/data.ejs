@@ -22,7 +22,7 @@
       <% if(dataItem.role !== 'مدير') { %>
         <button class="btn btn-dark-golden" data-bs-toggle="modal"
         data-bs-target="#update-<%= type %>-modal-<%=index %>"><i class="fa-solid fa-pen-to-square"></i></button>
-        <%- include('../form-modal', {index, dataItem, operation: 'update'}) %>
+        <%- include('../form-modals/update', {index, dataItem}) %>
       <% } %>
     </td>
     <td>
