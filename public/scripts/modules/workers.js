@@ -1,3 +1,9 @@
+const workerTypes = {
+  Production: 'إنتاج',
+  Weekly: 'أسبوعي',
+  Hybrid: 'مختلط',
+};
+
 /**
  * Worker Form Validation
  * Used to validate worker form data before submitting it to the server
@@ -34,7 +40,7 @@ const Validation = (formSelector) => {
     typeError.textContent = 'يجب إختيار نوع العامل';
     typeError.style.display = 'block';
     isValid = false;
-  } else if(type === 'أسبوعي') {
+  } else if(type === workerTypes.Weekly || type === workerTypes.Hybrid) {
     const salaryElement = form.querySelector('input[name="salary"]');
     const salary = parseInt(salaryElement.value);
     const salaryError = form.querySelector('.text-danger-salary');
@@ -50,14 +56,14 @@ const Validation = (formSelector) => {
 };
 
 const toggleSalaryDisabled = (typeSelect, salaryInput) => {
-  if (typeSelect.value === 'أسبوعي') {
+  if (typeSelect.value === workerTypes.Weekly || typeSelect.value === workerTypes.Hybrid) {
     salaryInput.removeAttribute('disabled');
     salaryInput.removeAttribute('placeholder');
     salaryInput.setAttribute("name", "salary")
   } else {
     salaryInput.setAttribute('disabled', 'disabled');
     salaryInput.setAttribute('value', '');
-    salaryInput.setAttribute('placeholder', 'لإدخال الراتب يجب وضع نوع العامل "أسبوعي" أولاً');
+    salaryInput.setAttribute('placeholder', `لإدخال الراتب يجب وضع نوع العامل '${workerTypes.Weekly}' أو '${workerTypes.Hybrid}' أولاً`);
     salaryInput.removeAttribute('name');
   }
 }
@@ -75,7 +81,7 @@ document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
   });
 });
 
-// Disable salary input when worker type is not 'أسبوعي'
+// Disable salary input when worker type is not workerTypes.Weekly
 document.querySelectorAll('form:not(#filter-form)').forEach((form, index) => {
   const typeSelect = form.querySelector('select[name="type"]');
   const salaryInput = form.querySelector('input[name="salary"]');

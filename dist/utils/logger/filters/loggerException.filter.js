@@ -29,7 +29,7 @@ let LoggerExceptionFilter = class LoggerExceptionFilter extends core_1.BaseExcep
         const response = host.switchToHttp().getResponse();
         if (url.startsWith("/auth/login"))
             response.redirect(`/auth/login?error=${errorMessage}`);
-        if (url.startsWith("/users"))
+        else if (url.startsWith("/users"))
             response.redirect(`/users?error=${errorMessage}`);
         else if (url.startsWith("/workers"))
             response.redirect(`/workers?error=${errorMessage}`);
@@ -43,6 +43,8 @@ let LoggerExceptionFilter = class LoggerExceptionFilter extends core_1.BaseExcep
             response.redirect(`/productPrice?error=${errorMessage}`);
         else if (url.startsWith("/production"))
             response.redirect(`/production?error=${errorMessage}`);
+        else if (url.startsWith("/attendance"))
+            response.redirect(`/attendance?error=${errorMessage}`);
     }
 };
 exports.LoggerExceptionFilter = LoggerExceptionFilter;

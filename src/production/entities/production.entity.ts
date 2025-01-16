@@ -11,7 +11,7 @@ export class Production {
   quantity: number;
 
   @Prop({ required: true })
-  cost: number;
+  price: number;
 
   @Prop({
     required: true,
@@ -54,6 +54,8 @@ export class Production {
 }
 
 const ProductionSchema = SchemaFactory.createForClass(Production);
+ProductionSchema.index({ date: 1, worker: 1, product: 1, department: 1 }, { unique: true });
+
 ProductionSchema.pre('save', async function (next) {
   if (this.isNew) {
     this.createdAtArabic = arabicDateFormatter.format(new Date());

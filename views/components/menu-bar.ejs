@@ -17,7 +17,7 @@
           <% } else if (type==='production' ) { %>
             <option value="quantity" <%=(sort.replace('-', '' )==="quantity" ) ? 'selected' : '' %>>كمية الإنتاج</option>
             <option value="date" <%=(sort.replace('-', '' )==="date" ) ? 'selected' : '' %>>تاريخ الإنتاج</option>
-            <option value="cost" <%=(sort.replace('-', '' )==="cost" ) ? 'selected' : '' %>>سعر الإنتاج</option>
+            <option value="price" <%=(sort.replace('-', '' )==="price" ) ? 'selected' : '' %>>سعر الإنتاج</option>
           <% } else if (type==='productPrice' ) { %>
             <option value="price" <%=(sort.replace('-', '' )==="price" ) ? 'selected' : '' %>>سعر المنتج</option>
           <% } else if (type==='bonus' ) { %>

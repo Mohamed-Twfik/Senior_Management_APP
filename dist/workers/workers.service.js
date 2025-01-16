@@ -16,10 +16,10 @@ exports.WorkersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const departments_service_1 = require("../departments/departments.service");
 const users_service_1 = require("../users/users.service");
 const base_service_1 = require("../utils/classes/base.service");
 const worker_entity_1 = require("./entities/worker.entity");
-const departments_service_1 = require("../departments/departments.service");
 let WorkersService = class WorkersService extends base_service_1.BaseService {
     constructor(workersModel, usersService, departmentsService) {
         super();

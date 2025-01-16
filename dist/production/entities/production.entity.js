@@ -27,7 +27,7 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", Number)
-], Production.prototype, "cost", void 0);
+], Production.prototype, "price", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
@@ -80,6 +80,7 @@ exports.Production = Production = __decorate([
 ], Production);
 const ProductionSchema = mongoose_1.SchemaFactory.createForClass(Production);
 exports.ProductionSchema = ProductionSchema;
+ProductionSchema.index({ date: 1, worker: 1, product: 1, department: 1 }, { unique: true });
 ProductionSchema.pre('save', async function (next) {
     if (this.isNew) {
         this.createdAtArabic = arabic_date_formatter_1.arabicDateFormatter.format(new Date());

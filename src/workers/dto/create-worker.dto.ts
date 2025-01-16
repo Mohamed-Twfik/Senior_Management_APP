@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsMongoId, IsNotEmpty, IsOptional, IsString, Matches, ValidateIf } from "class-validator";
+import { IsEnum, IsInt, IsMongoId, IsNotEmpty, IsString, Matches, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 import { Types } from "mongoose";
 import { WorkerType } from "../enums/workerType.enum";
@@ -17,7 +17,7 @@ export class CreateWorkerDto {
   @IsMongoId()
   department: Types.ObjectId;
   
-  @ValidateIf(o => o.type === WorkerType.Weekly)
+  @ValidateIf(o => (o.type === WorkerType.Weekly || o.type === WorkerType.Hybrid))
   @IsNotEmpty()
   @Transform(({ value }) => parseInt(value))
   @IsInt()

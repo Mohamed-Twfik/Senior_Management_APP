@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", mongoose_1.Types.ObjectId)
 ], CreateWorkerDto.prototype, "department", void 0);
 __decorate([
-    (0, class_validator_1.ValidateIf)(o => o.type === workerType_enum_1.WorkerType.Weekly),
+    (0, class_validator_1.ValidateIf)(o => (o.type === workerType_enum_1.WorkerType.Weekly || o.type === workerType_enum_1.WorkerType.Hybrid)),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
     (0, class_validator_1.IsInt)(),

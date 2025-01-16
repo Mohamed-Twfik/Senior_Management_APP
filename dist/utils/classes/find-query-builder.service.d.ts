@@ -36,7 +36,6 @@ export declare class FindQueryBuilderService {
         department: string;
         quantity: string;
         arabicDate: string;
-        cost: string;
         price: string;
         name: string;
         createdBy: string;

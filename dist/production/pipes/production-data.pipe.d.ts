@@ -4,7 +4,7 @@ import { ProductsService } from '../../products/products.service';
 import { CreateProductionDto } from "../dto/create-production.dto";
 import { ProductionService } from "../production.service";
 import { WorkersService } from '../../workers/workers.service';
-export declare class CreateProductionPipe {
+export declare class ProductionDataPipe {
     private readonly productionService;
     private readonly productsService;
     private readonly workersService;

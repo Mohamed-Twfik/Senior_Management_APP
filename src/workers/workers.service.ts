@@ -1,18 +1,15 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GetSalaryDto } from 'src/production/dto/get-salary.dto';
-import { Production } from 'src/production/entities/production.entity';
+import { DepartmentsService } from 'src/departments/departments.service';
 import { UserDocument } from 'src/users/entities/user.entity';
+import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
-import { CreateWorkerDto } from './dto/create-worker.dto';
-import { Worker, WorkerDocument } from './entities/worker.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { QueryDto } from 'src/utils/dtos/query.dto';
-import { DepartmentsService } from 'src/departments/departments.service';
-import { WorkerType } from './enums/workerType.enum';
+import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { Worker, WorkerDocument } from './entities/worker.entity';
 
 @Injectable()
 export class WorkersService extends BaseService {

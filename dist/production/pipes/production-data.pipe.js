@@ -9,13 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateProductionPipe = void 0;
+exports.ProductionDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const departments_service_1 = require("../../departments/departments.service");
 const products_service_1 = require("../../products/products.service");
 const production_service_1 = require("../production.service");
 const workers_service_1 = require("../../workers/workers.service");
-let CreateProductionPipe = class CreateProductionPipe {
+const mongoose_1 = require("mongoose");
+let ProductionDataPipe = class ProductionDataPipe {
     constructor(productionService, productsService, workersService, departmentsService) {
         this.productionService = productionService;
         this.productsService = productsService;
@@ -23,25 +24,33 @@ let CreateProductionPipe = class CreateProductionPipe {
         this.departmentsService = departmentsService;
     }
     transform(data, metadata) {
-        const { product, department, worker } = data;
-        const productExists = this.productsService.findById(product.toString());
-        if (!productExists)
-            throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
-        const departmentExists = this.departmentsService.findById(department.toString());
-        if (!departmentExists)
-            throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
-        const workerExists = this.workersService.findById(worker.toString());
-        if (!workerExists)
-            throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
+        if (data.product) {
+            const productExists = this.productsService.findById(data.product.toString());
+            if (!productExists)
+                throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
+            data.product = new mongoose_1.Types.ObjectId(data.product);
+        }
+        if (data.department) {
+            const departmentExists = this.departmentsService.findById(data.department.toString());
+            if (!departmentExists)
+                throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
+            data.department = new mongoose_1.Types.ObjectId(data.department);
+        }
+        if (data.worker) {
+            const workerExists = this.workersService.findById(data.worker.toString());
+            if (!workerExists)
+                throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
+            data.worker = new mongoose_1.Types.ObjectId(data.worker);
+        }
         return data;
     }
 };
-exports.CreateProductionPipe = CreateProductionPipe;
-exports.CreateProductionPipe = CreateProductionPipe = __decorate([
+exports.ProductionDataPipe = ProductionDataPipe;
+exports.ProductionDataPipe = ProductionDataPipe = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [production_service_1.ProductionService,
         products_service_1.ProductsService,
         workers_service_1.WorkersService,
         departments_service_1.DepartmentsService])
-], CreateProductionPipe);
-//# sourceMappingURL=create-production-price.pipe.js.map
+], ProductionDataPipe);
+//# sourceMappingURL=production-data.pipe.js.map

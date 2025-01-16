@@ -8,7 +8,6 @@ import {
   Redirect,
   Render
 } from '@nestjs/common';
-import { GetSalaryDto } from 'src/production/dto/get-salary.dto';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
@@ -16,7 +15,7 @@ import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
 import { CreateProductionDto } from './dto/create-production.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { ProductionDocument } from './entities/production.entity';
-import { CreateProductionPipe } from './pipes/create-production-price.pipe';
+import { ProductionDataPipe } from './pipes/production-data.pipe';
 import { ProductionIdPipe } from './pipes/production-id.pipe';
 import { ProductionService } from './production.service';
 
@@ -27,7 +26,7 @@ export class ProductionController {
   @Post()
   @Redirect('/production')
   create(
-    @Body(CreateProductionPipe) createProductionDto: CreateProductionDto,
+    @Body(ProductionDataPipe) createProductionDto: CreateProductionDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productionService.create(createProductionDto, user);
@@ -43,10 +42,10 @@ export class ProductionController {
   }
 
   @Post('update/:productionId')
-  @Redirect('/production')
+  @Redirect('/production?sort=-updatedAt')
   update(
     @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument,
-    @Body() updateProductionDto: UpdateProductionDto,
+    @Body(ProductionDataPipe) updateProductionDto: UpdateProductionDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productionService.update(production, updateProductionDto, user);

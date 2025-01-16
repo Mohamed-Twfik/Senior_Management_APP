@@ -4,12 +4,13 @@ import { ProductsService } from '../../products/products.service';
 import { CreateProductionDto } from "../dto/create-production.dto";
 import { ProductionService } from "../production.service";
 import { WorkersService } from '../../workers/workers.service';
+import { Types } from "mongoose";
 
 /**
  * Create production pipe.
  */
 @Injectable()
-export class CreateProductionPipe {
+export class ProductionDataPipe {
   constructor(
     private readonly productionService: ProductionService,
     private readonly productsService: ProductsService,
@@ -24,17 +25,23 @@ export class CreateProductionPipe {
    * @returns transformed production  data
    */
   transform(data: CreateProductionDto, metadata: ArgumentMetadata) {
+    if (data.product) {
+      const productExists = this.productsService.findById(data.product.toString());
+      if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
+      data.product = new Types.ObjectId(data.product);
+    }
     
-    const { product, department, worker } = data;
-
-    const productExists = this.productsService.findById(product.toString());
-    if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
-
-    const departmentExists = this.departmentsService.findById(department.toString());
-    if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
-
-    const workerExists = this.workersService.findById(worker.toString());
-    if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
+    if (data.department) {
+      const departmentExists = this.departmentsService.findById(data.department.toString());
+      if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
+      data.department = new Types.ObjectId(data.department);
+    }
+    
+    if (data.worker) {
+      const workerExists = this.workersService.findById(data.worker.toString());
+      if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
+      data.worker = new Types.ObjectId(data.worker);
+    }
 
     return data;
   }

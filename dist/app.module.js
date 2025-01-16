@@ -28,6 +28,7 @@ const product_price_module_1 = require("./product-price/product-price.module");
 const production_module_1 = require("./production/production.module");
 const un_auth_filter_1 = require("./auth/filters/un-auth.filter");
 const fall_back_module_1 = require("./fall-back/fall-back.module");
+const attendance_module_1 = require("./attendance/attendance.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(requestTiming_middleware_1.RequestTimingMiddleware).forRoutes('*');
@@ -66,6 +67,7 @@ exports.AppModule = AppModule = __decorate([
             bonus_module_1.BonusModule,
             product_price_module_1.ProductPriceModule,
             production_module_1.ProductionModule,
+            attendance_module_1.AttendanceModule,
             fall_back_module_1.FallBackModule,
         ],
         controllers: [app_controller_1.AppController],

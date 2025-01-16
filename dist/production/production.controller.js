@@ -19,7 +19,7 @@ const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const create_production_dto_1 = require("./dto/create-production.dto");
 const update_production_dto_1 = require("./dto/update-production.dto");
-const create_production_price_pipe_1 = require("./pipes/create-production-price.pipe");
+const production_data_pipe_1 = require("./pipes/production-data.pipe");
 const production_id_pipe_1 = require("./pipes/production-id.pipe");
 const production_service_1 = require("./production.service");
 let ProductionController = class ProductionController {
@@ -43,7 +43,7 @@ exports.ProductionController = ProductionController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.Redirect)('/production'),
-    __param(0, (0, common_1.Body)(create_production_price_pipe_1.CreateProductionPipe)),
+    __param(0, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_production_dto_1.CreateProductionDto, Object]),
@@ -60,9 +60,9 @@ __decorate([
 ], ProductionController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:productionId'),
-    (0, common_1.Redirect)('/production'),
+    (0, common_1.Redirect)('/production?sort=-updatedAt'),
     __param(0, (0, common_1.Param)('productionId', ObjectId_pipe_1.ObjectIdPipe, production_id_pipe_1.ProductionIdPipe)),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, update_production_dto_1.UpdateProductionDto, Object]),

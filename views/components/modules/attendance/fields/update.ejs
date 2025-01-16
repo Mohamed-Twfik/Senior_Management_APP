@@ -1,0 +1,2 @@
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.date.toISOString().split('T')[0], name: 'date' , type: 'date' , label: 'تاريخ الحضور' }) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.worker._id.toString(), name: 'worker' , label: 'العامل' , data: workers}) %>

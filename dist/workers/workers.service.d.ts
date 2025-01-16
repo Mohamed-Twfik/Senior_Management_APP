@@ -1,13 +1,13 @@
 import { Model } from 'mongoose';
+import { DepartmentsService } from 'src/departments/departments.service';
 import { UserDocument } from 'src/users/entities/user.entity';
+import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
-import { CreateWorkerDto } from './dto/create-worker.dto';
-import { Worker, WorkerDocument } from './entities/worker.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { QueryDto } from 'src/utils/dtos/query.dto';
-import { DepartmentsService } from 'src/departments/departments.service';
+import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { Worker, WorkerDocument } from './entities/worker.entity';
 export declare class WorkersService extends BaseService {
     private workersModel;
     private readonly usersService;

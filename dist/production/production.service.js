@@ -19,13 +19,13 @@ const mongoose_2 = require("mongoose");
 const departments_service_1 = require("../departments/departments.service");
 const products_service_1 = require("../products/products.service");
 const users_service_1 = require("../users/users.service");
+const base_service_1 = require("../utils/classes/base.service");
+const workerType_enum_1 = require("../workers/enums/workerType.enum");
 const workers_service_1 = require("../workers/workers.service");
 const product_price_service_1 = require("../product-price/product-price.service");
 const production_entity_1 = require("./entities/production.entity");
-const base_service_1 = require("../utils/classes/base.service");
-const bonus_service_1 = require("../bonus/bonus.service");
 let ProductionService = class ProductionService extends base_service_1.BaseService {
-    constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService, bonusService) {
+    constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService) {
         super();
         this.productionModel = productionModel;
         this.usersService = usersService;
@@ -33,9 +33,10 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         this.workersService = workersService;
         this.departmentsService = departmentsService;
         this.productPriceService = productPriceService;
-        this.bonusService = bonusService;
         this.searchableKeys = [
-            "arabicDate"
+            "arabicDate",
+            "createdAtArabic",
+            "updatedAtArabic",
         ];
     }
     getModuleModel() {
@@ -52,16 +53,24 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
     }
     async create(createProductionDto, user) {
-        createProductionDto.worker = new mongoose_2.Types.ObjectId(createProductionDto.worker);
-        createProductionDto.product = new mongoose_2.Types.ObjectId(createProductionDto.product);
-        createProductionDto.department = new mongoose_2.Types.ObjectId(createProductionDto.department);
+        const existProduction = await this.productionModel.findOne({
+            worker: createProductionDto.worker,
+            date: createProductionDto.date,
+            product: createProductionDto.product,
+            department: createProductionDto.department
+        });
+        if (existProduction)
+            throw new common_1.ConflictException('تم إضافة الإنتاج مسبقا.');
         const productPrice = await this.productPriceService.findOne({ product: createProductionDto.product, department: createProductionDto.department });
         if (!productPrice)
             throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-        const cost = (productPrice.price / 100) * createProductionDto.quantity;
+        const worker = await this.workersService.findById(createProductionDto.worker.toString());
+        let price = undefined;
+        if (worker.type !== workerType_enum_1.WorkerType.Weekly)
+            price = (productPrice.price / 100) * createProductionDto.quantity;
         const inputDate = {
             ...createProductionDto,
-            cost,
+            price,
             createdBy: user._id,
             updatedBy: user._id,
         };
@@ -97,29 +106,73 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
     }
-    async update(Production, updateProductionDto, user) {
-        if (updateProductionDto.worker)
-            updateProductionDto.worker = new mongoose_2.Types.ObjectId(updateProductionDto.worker);
-        else
-            updateProductionDto.worker = Production.worker;
-        if (updateProductionDto.product)
-            updateProductionDto.product = new mongoose_2.Types.ObjectId(updateProductionDto.product);
-        else
-            updateProductionDto.product = Production.product;
-        if (updateProductionDto.department)
-            updateProductionDto.department = new mongoose_2.Types.ObjectId(updateProductionDto.department);
-        else
-            updateProductionDto.department = Production.department;
+    async update(production, updateProductionDto, user) {
+        const existProduction = await this.productionModel.findOne({
+            worker: updateProductionDto.worker,
+            date: updateProductionDto.date,
+            product: updateProductionDto.product,
+            department: updateProductionDto.department,
+            _id: { $ne: production._id }
+        });
+        if (existProduction)
+            throw new common_1.ConflictException('تم إضافة الإنتاج مسبقا.');
         const productPrice = await this.productPriceService.findOne({ product: updateProductionDto.product, department: updateProductionDto.department });
         if (!productPrice)
             throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-        const cost = (productPrice.price / 100) * updateProductionDto.quantity;
+        const worker = await this.workersService.findById(updateProductionDto.worker.toString());
+        let price = undefined;
+        if (worker.type !== workerType_enum_1.WorkerType.Weekly)
+            price = (productPrice.price / 100) * updateProductionDto.quantity;
         const inputData = {
             ...updateProductionDto,
-            cost,
+            price,
             updatedBy: user._id
         };
-        await Production.set(inputData).save();
+        await production.set(inputData).save();
+    }
+    getSalaryData(startDate, endDate) {
+        return this.productionModel.aggregate([
+            {
+                $match: {
+                    date: {
+                        $gte: new Date(startDate),
+                        $lte: new Date(endDate),
+                    },
+                },
+            },
+            {
+                $lookup: {
+                    from: 'workers',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'workerDetails',
+                },
+            },
+            {
+                $unwind: '$workerDetails',
+            },
+            {
+                $match: {
+                    'workerDetails.type': { $ne: workerType_enum_1.WorkerType.Weekly },
+                },
+            },
+            {
+                $group: {
+                    _id: '$worker',
+                    totalPrice: { $sum: { $ifNull: ['$price', 0] } },
+                    name: { $first: '$workerDetails.name' },
+                    department: { $first: '$workerDetails.department' },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: 1,
+                    department: 1,
+                    totalPrice: 1,
+                },
+            },
+        ]);
     }
 };
 exports.ProductionService = ProductionService;
@@ -131,7 +184,6 @@ exports.ProductionService = ProductionService = __decorate([
         products_service_1.ProductsService,
         workers_service_1.WorkersService,
         departments_service_1.DepartmentsService,
-        product_price_service_1.ProductPriceService,
-        bonus_service_1.BonusService])
+        product_price_service_1.ProductPriceService])
 ], ProductionService);
 //# sourceMappingURL=production.service.js.map

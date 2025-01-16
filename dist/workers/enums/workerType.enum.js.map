@@ -1,1 +1,1 @@
-{"version":3,"file":"workerType.enum.js","sourceRoot":"","sources":["../../../src/workers/enums/workerType.enum.ts"],"names":[],"mappings":";;;AAAA,IAAY,UAGX;AAHD,WAAY,UAAU;IACpB,2DAAoB,CAAA;IACpB,6DAAiB,CAAA;AACnB,CAAC,EAHW,UAAU,0BAAV,UAAU,QAGrB"}
+{"version":3,"file":"workerType.enum.js","sourceRoot":"","sources":["../../../src/workers/enums/workerType.enum.ts"],"names":[],"mappings":";;;AAAA,IAAY,UAIX;AAJD,WAAY,UAAU;IACpB,2DAAoB,CAAA;IACpB,6DAAiB,CAAA;IACjB,uDAAgB,CAAA;AAClB,CAAC,EAJW,UAAU,0BAAV,UAAU,QAIrB"}

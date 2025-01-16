@@ -40,12 +40,13 @@ export class LoggerExceptionFilter extends BaseExceptionFilter implements Except
 
     const response = host.switchToHttp().getResponse();
     if(url.startsWith("/auth/login")) response.redirect(`/auth/login?error=${errorMessage}`);
-    if (url.startsWith("/users")) response.redirect(`/users?error=${errorMessage}`);
+    else if (url.startsWith("/users")) response.redirect(`/users?error=${errorMessage}`);
     else if (url.startsWith("/workers")) response.redirect(`/workers?error=${errorMessage}`);
     else if (url.startsWith("/products")) response.redirect(`/products?error=${errorMessage}`);
     else if (url.startsWith("/departments")) response.redirect(`/departments?error=${errorMessage}`);
     else if (url.startsWith("/bonus")) response.redirect(`/bonus?error=${errorMessage}`);
     else if (url.startsWith("/productPrice")) response.redirect(`/productPrice?error=${errorMessage}`);
     else if (url.startsWith("/production")) response.redirect(`/production?error=${errorMessage}`);
+    else if (url.startsWith("/attendance")) response.redirect(`/attendance?error=${errorMessage}`);
   }
 }

@@ -1,25 +1,27 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
+import { BonusService } from 'src/bonus/bonus.service';
 import { DepartmentsService } from 'src/departments/departments.service';
 import { ProductsService } from 'src/products/products.service';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
+import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
+import { WorkerType } from 'src/workers/enums/workerType.enum';
 import { WorkersService } from 'src/workers/workers.service';
 import { ProductPriceService } from '../product-price/product-price.service';
 import { CreateProductionDto } from './dto/create-production.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
-import { BaseService } from 'src/utils/classes/base.service';
-import { GetSalaryDto } from './dto/get-salary.dto';
-import { BonusService } from 'src/bonus/bonus.service';
 
 @Injectable()
 export class ProductionService extends BaseService {
   searchableKeys: string[] = [
-    "arabicDate"
+    "arabicDate",
+    "createdAtArabic",
+    "updatedAtArabic",
   ];
 
   constructor(
@@ -28,8 +30,7 @@ export class ProductionService extends BaseService {
     private readonly productsService: ProductsService,
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
-    private readonly productPriceService: ProductPriceService,
-    private readonly bonusService: BonusService
+    private readonly productPriceService: ProductPriceService
   ) {
     super();
   }
@@ -64,17 +65,25 @@ export class ProductionService extends BaseService {
    * @throws NotFoundException if the product price not found.
    */
   async create(createProductionDto: CreateProductionDto, user: UserDocument) {
-    createProductionDto.worker = new Types.ObjectId(createProductionDto.worker);
-    createProductionDto.product = new Types.ObjectId(createProductionDto.product);
-    createProductionDto.department = new Types.ObjectId(createProductionDto.department);
+    const existProduction = await this.productionModel.findOne({
+      worker: createProductionDto.worker,
+      date: createProductionDto.date,
+      product: createProductionDto.product,
+      department: createProductionDto.department
+    });
+    if(existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
 
     const productPrice = await this.productPriceService.findOne({ product: createProductionDto.product, department: createProductionDto.department });
     if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-    const cost = (productPrice.price / 100) * createProductionDto.quantity;
+
+    const worker = await this.workersService.findById(createProductionDto.worker.toString());
+    let price = undefined;
+    if (worker.type !== WorkerType.Weekly) price = (productPrice.price / 100) * createProductionDto.quantity;
+    
     
     const inputDate: Production = {
       ...createProductionDto,
-      cost,
+      price,
       createdBy: user._id,
       updatedBy: user._id,
     }
@@ -126,50 +135,74 @@ export class ProductionService extends BaseService {
    * @param user The user who is updating the Production.
    * @Throws NotFoundException if the product price not found.
    */
-  async update(Production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument) {
-    if (updateProductionDto.worker) updateProductionDto.worker = new Types.ObjectId(updateProductionDto.worker);
-    else updateProductionDto.worker = Production.worker;
-
-    if (updateProductionDto.product) updateProductionDto.product = new Types.ObjectId(updateProductionDto.product);
-    else updateProductionDto.product = Production.product;
-
-    if (updateProductionDto.department) updateProductionDto.department = new Types.ObjectId(updateProductionDto.department);
-    else updateProductionDto.department = Production.department;
+  async update(production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument) {
+    const existProduction = await this.productionModel.findOne({
+      worker: updateProductionDto.worker,
+      date: updateProductionDto.date,
+      product: updateProductionDto.product,
+      department: updateProductionDto.department,
+      _id: { $ne: production._id }
+    });
+    if (existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
     
     const productPrice = await this.productPriceService.findOne({ product: updateProductionDto.product, department: updateProductionDto.department });
     if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-    const cost = (productPrice.price / 100) * updateProductionDto.quantity;
+
+    const worker = await this.workersService.findById(updateProductionDto.worker.toString());
+    let price = undefined;
+    if (worker.type !== WorkerType.Weekly) price = (productPrice.price / 100) * updateProductionDto.quantity;
     
     const inputData: Partial<Production> = {
       ...updateProductionDto,
-      cost,
+      price,
       updatedBy: user._id
     }
 
-    await Production.set(inputData).save();
+    await production.set(inputData).save();
   }
 
-  // async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string) {
-  //   const salaries = await this.workersService.getSalary(getSalaryDto, user, error);
-  //   console.log(salaries);
-  //   for (const salary of salaries) {
-  //     salary.bonus = 0;
-  //     if(salary.workerType === 'production') {
-  //       const bonusPresent = await this.bonusService.findOne({
-  //         from: { $lte: salary.salary },
-  //         to: { $gte: salary.salary },
-  //         department: salary.department
-  //       });
-  //       const department = await this.departmentsService.findById(salary.department);
-  //       if (bonusPresent) {
-  //         let bonus = (bonusPresent.percentage / 100) * salary.pureSalary;
-  //         salary.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
-  //       } else {
-  //         salary.bonus = 0;
-  //       }
-  //     }
-  //     salary.totalSalary = salary.pureSalary + salary.bonus;
-  //   };
-  //   return { data: salaries, user, error: error || null };
-  // }
+  getSalaryData(startDate: Date, endDate: Date) {
+    return this.productionModel.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate),
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'workers',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'workerDetails',
+        },
+      },
+      {
+        $unwind: '$workerDetails',
+      },
+      {
+        $match: {
+          'workerDetails.type': { $ne: WorkerType.Weekly },
+        },
+      },
+      {
+        $group: {
+          _id: '$worker',
+          totalPrice: { $sum: { $ifNull: ['$price', 0] } },
+          name: { $first: '$workerDetails.name' },
+          department: { $first: '$workerDetails.department' },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          name: 1,
+          department: 1,
+          totalPrice: 1,
+        },
+      },
+    ]);
+  }
 }
