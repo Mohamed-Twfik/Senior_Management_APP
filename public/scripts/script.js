@@ -34,6 +34,7 @@ document.querySelectorAll('form:not(#login-form)').forEach(form => {
   });
 });
 
+// Search in select fields
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('select.modify').forEach(select => {
     new Choices(select, {

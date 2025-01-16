@@ -11,22 +11,7 @@
         <select class="form-select" id="sort" name="sort" form="filter-form">
           <option value="createdAt" <%=(sort.replace('-', '' )==="createdAt" ) ? 'selected' : '' %>>تاريخ الإنشاء</option>
           <option value="updatedAt" <%=(sort.replace('-', '' )==="updatedAt" ) ? 'selected' : '' %>>تاريخ آخر تحديث</option>
-          <% if(type==='users' ) { %>
-            <option value="username" <%=(sort.replace('-', '' )==="username" ) ? 'selected' : '' %>>إسم المستخدم</option>
-            <option value="role" <%=(sort.replace('-', '' )==="role" ) ? 'selected' : '' %>>الدور الوظيفي</option>
-          <% } else if (type==='production' ) { %>
-            <option value="quantity" <%=(sort.replace('-', '' )==="quantity" ) ? 'selected' : '' %>>كمية الإنتاج</option>
-            <option value="date" <%=(sort.replace('-', '' )==="date" ) ? 'selected' : '' %>>تاريخ الإنتاج</option>
-            <option value="price" <%=(sort.replace('-', '' )==="price" ) ? 'selected' : '' %>>سعر الإنتاج</option>
-          <% } else if (type==='productPrice' ) { %>
-            <option value="price" <%=(sort.replace('-', '' )==="price" ) ? 'selected' : '' %>>سعر المنتج</option>
-          <% } else if (type==='bonus' ) { %>
-            <option value="from" <%=(sort.replace('-', '' )==="from" ) ? 'selected' : '' %>>من</option>
-            <option value="to" <%=(sort.replace('-', '' )==="to" ) ? 'selected' : '' %>>إلى</option>
-            <option value="percentage" <%=(sort.replace('-', '' )==='percentage' ) ? 'selected' : '' %>>النسبة</option>
-          <% } else { %>
-            <option value="name" <%=(sort.replace('-', '' )==="name" ) ? 'selected' : '' %>>الإسم</option>
-          <% } %>
+          <%- include(`./modules/${type}/sort-options`) %>
         </select>
       </div>
     </div>

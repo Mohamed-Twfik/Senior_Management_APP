@@ -10,4 +10,4 @@
   <div class="text-danger text-danger-type mt-1" style="display: none;"></div>
 </div>
 <%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: (dataItem.department && dataItem.department._id )? dataItem.department._id.toString() : '' , name: 'department' , label: 'القسم' , data: departments}) %>
-<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.salary , name: 'salary' , type: 'number' , label: 'مرتب اليوم'}) %>
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.salary , name: 'salary' , type: 'number' , label: 'المرتب الأسبوعي (جنيه)'}) %>

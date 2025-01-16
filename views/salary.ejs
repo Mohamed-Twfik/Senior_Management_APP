@@ -2,19 +2,16 @@
   <a class="btn my-5" href="/production">رجوع لصفحة الإنتاج</a>
 
   <% if(data.attendenceWorkers.length !== 0) { %>
-    <h1 class="fs-5">عمال المرتب الأسبوعي</h1>
     <div class="table-responsive">
       <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
         <caption class="mx-4 fs-5">
-          <span>العدد: <%= data.length %></span>
+          <span>عمال المرتب الأسبوعي</span>
         </caption>
         <thead>
           <tr class="table-dark">
             <th scope="col">الرقم</th>
             <th scope="col">إسم العامل</th>
-            <th scope="col">المرتب بدون الحافز</th>
-            <th scope="col">قيمة الحافز</th>
-            <th scope="col">المجموع</th>
+            <th scope="col">المرتب</th>
             <th scope="col">تم</th>
           </tr>
         </thead>
@@ -28,13 +25,7 @@
                 <%= worker.name %>
               </td>
               <td>
-                <%= worker.pureSalary %>
-              </td>
-              <td>
-                <%= worker.bonus %>
-              </td>
-              <td>
-                <%= worker.totalSalary %>
+                <%= worker.totalPrice %>
               </td>
               <td>
                 <div class="form-check form-switch">
@@ -51,11 +42,10 @@
   <% } %>
 
   <% if(data.productionWorkers.length !== 0) { %>
-    <h1 class="fs-5">عمال الإنتاج</h1>
     <div class="table-responsive">
       <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
         <caption class="mx-4 fs-5">
-          <span>العدد: <%= data.length %></span>
+          <span>عمال الإنتاج</span>
         </caption>
         <thead>
           <tr class="table-dark">
@@ -77,7 +67,7 @@
                 <%= worker.name %>
               </td>
               <td>
-                <%= worker.pureSalary %>
+                <%= worker.totalPrice %>
               </td>
               <td>
                 <%= worker.bonus %>

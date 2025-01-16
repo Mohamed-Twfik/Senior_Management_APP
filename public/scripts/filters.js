@@ -44,4 +44,4 @@ document.querySelectorAll('.page-link').forEach(link => {
   });
 });
 
-const PAGE_TYPE = document.querySelector('body').getAttribute('data-page-type');
+const PAGE_TYPE = document.querySelector('body').getAttribute('page-type');
