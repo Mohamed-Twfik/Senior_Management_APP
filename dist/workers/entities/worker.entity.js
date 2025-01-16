@@ -13,6 +13,7 @@ exports.WorkerSchema = exports.Worker = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const arabic_date_formatter_1 = require("../../utils/arabic-date-formatter");
+const workerType_enum_1 = require("../enums/workerType.enum");
 let Worker = class Worker {
 };
 exports.Worker = Worker;
@@ -26,15 +27,19 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
+        enum: workerType_enum_1.WorkerType
+    }),
+    __metadata("design:type", String)
+], Worker.prototype, "type", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
         ref: 'Department'
     }),
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Worker.prototype, "department", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({
-        required: true,
-        default: 0
-    }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
 ], Worker.prototype, "salary", void 0);
 __decorate([

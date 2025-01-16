@@ -121,31 +121,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         await Production.set(inputData).save();
     }
-    async getSalary(getSalaryDto, user, error) {
-        const salaries = await this.workersService.getSalary(getSalaryDto, user, error);
-        console.log(salaries);
-        for (const salary of salaries) {
-            salary.bonus = 0;
-            if (salary.workerType === 'production') {
-                const bonusPresent = await this.bonusService.findOne({
-                    from: { $lte: salary.salary },
-                    to: { $gte: salary.salary },
-                    department: salary.department
-                });
-                const department = await this.departmentsService.findById(salary.department);
-                if (bonusPresent) {
-                    let bonus = (bonusPresent.percentage / 100) * salary.pureSalary;
-                    salary.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
-                }
-                else {
-                    salary.bonus = 0;
-                }
-            }
-            salary.totalSalary = salary.pureSalary + salary.bonus;
-        }
-        ;
-        return { data: salaries, user, error: error || null };
-    }
 };
 exports.ProductionService = ProductionService;
 exports.ProductionService = ProductionService = __decorate([

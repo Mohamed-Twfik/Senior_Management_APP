@@ -13,6 +13,7 @@ exports.CreateWorkerDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 const mongoose_1 = require("mongoose");
+const workerType_enum_1 = require("../enums/workerType.enum");
 class CreateWorkerDto {
 }
 exports.CreateWorkerDto = CreateWorkerDto;
@@ -24,11 +25,17 @@ __decorate([
 ], CreateWorkerDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsEnum)(workerType_enum_1.WorkerType),
+    __metadata("design:type", String)
+], CreateWorkerDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", mongoose_1.Types.ObjectId)
 ], CreateWorkerDto.prototype, "department", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.ValidateIf)(o => o.type === workerType_enum_1.WorkerType.Weekly),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)

@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductionController = void 0;
 const common_1 = require("@nestjs/common");
-const get_salary_dto_1 = require("./dto/get-salary.dto");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
@@ -38,9 +37,6 @@ let ProductionController = class ProductionController {
     }
     remove(production) {
         return this.productionService.remove(production);
-    }
-    getSalary(getSalaryDto, user, error) {
-        return this.productionService.getSalary(getSalaryDto, user, error);
     }
 };
 exports.ProductionController = ProductionController;
@@ -80,16 +76,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "remove", null);
-__decorate([
-    (0, common_1.Post)('salary'),
-    (0, common_1.Render)('salary'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, get_user_decorator_1.GetUser)()),
-    __param(2, (0, common_1.Query)('error')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [get_salary_dto_1.GetSalaryDto, Object, String]),
-    __metadata("design:returntype", void 0)
-], ProductionController.prototype, "getSalary", null);
 exports.ProductionController = ProductionController = __decorate([
     (0, common_1.Controller)('production'),
     __metadata("design:paramtypes", [production_service_1.ProductionService])

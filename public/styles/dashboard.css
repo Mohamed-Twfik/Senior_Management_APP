@@ -79,6 +79,7 @@ i {
 }
 
 .form-control:focus,
+.form-control:disabled,
 .form-select:focus {
   background-color: #4ac6ff;
   color: #000217;

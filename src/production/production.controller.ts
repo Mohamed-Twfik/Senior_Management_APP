@@ -60,13 +60,13 @@ export class ProductionController {
     return this.productionService.remove(production);
   }
 
-  @Post('salary')
-  @Render('salary')
-  getSalary(
-    @Body() getSalaryDto: GetSalaryDto,
-    @GetUser() user: UserDocument,
-    @Query('error') error: string
-  ) {
-    return this.productionService.getSalary(getSalaryDto, user, error);
-  }
+  // @Post('salary')
+  // @Render('salary')
+  // getSalary(
+  //   @Body() getSalaryDto: GetSalaryDto,
+  //   @GetUser() user: UserDocument,
+  //   @Query('error') error: string
+  // ) {
+  //   return this.productionService.getSalary(getSalaryDto, user, error);
+  // }
 }

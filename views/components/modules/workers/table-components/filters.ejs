@@ -2,6 +2,13 @@
   <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
 </td>
 <td scope="col">
+  <select class="form-select" name="type" form="filter-form">
+    <option value="" <%=(!filters.type) ? "selected" : "" %>>اختر</option>
+    <option value="إنتاج" <%=(filters.type==='إنتاج' ) ? "selected" : "" %>>إنتاج</option>
+    <option value="أسبوعي" <%=(filters.type==='أسبوعي' ) ? "selected" : "" %>>أسبوعي</option>
+  </select>
+</td>
+<td scope="col">
   <select class="form-select" name="department" form="filter-form">
     <option value="" selected <%=(!filters.department) ? "selected" : "" %>>إختر</option>
     <% departments.forEach(department=> { %>

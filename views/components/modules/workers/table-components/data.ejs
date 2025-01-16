@@ -2,8 +2,11 @@
   <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
 </td>
 <td scope="col">
+  <%= (dataItem.type) ? dataItem.type : 'لايوجد' %>
+</td>
+<td scope="col">
   <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
 </td>
 <td scope="col">
-  <%= (dataItem.salary) ? dataItem.salary : '0' %>
+  <%= (dataItem.salary) ? dataItem.salary : 'إنتاج' %>
 </td>

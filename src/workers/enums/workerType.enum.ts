@@ -1,4 +1,4 @@
 export enum WorkerType {
-  Production = 'production',
-  Daily = 'daily'
+  Production = 'إنتاج',
+  Weekly = 'أسبوعي',
 }

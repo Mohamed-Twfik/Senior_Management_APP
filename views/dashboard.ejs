@@ -25,13 +25,13 @@
       <%- include('components/menu-bar', {...filters}) %>
 
       <div class="row g-4 my-4" style="max-width: 400px;">
-        <%- include(`components/form-modal`, {operation: 'create' }) %>
+        <%- include(`components/form-modals/create`) %>
         <div class="col-sm-6 col-12">
           <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
         </div>
           
         <% if (type==='production' ) { %>
-          <%- include('components/form-modal', {operation: 'salary' }) %>
+          <%- include('components/form-modals/get-salary') %>
           <div class="col-sm-6 col-12">
             <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
           </div>
@@ -59,8 +59,8 @@
     <script src="/scripts/bootstrap.bundle.min.js"></script>
     <script src="/scripts/choices.js"></script>
     <script src="/scripts/filters.js"></script>
+    <script src="/scripts/modules/<%= type %>.js"></script>
     <script src="/scripts/script.js"></script>
-    <script src="/scripts/validation.js"></script>
   </body>
 
 </html>

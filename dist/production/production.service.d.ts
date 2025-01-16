@@ -10,7 +10,6 @@ import { CreateProductionDto } from './dto/create-production.dto';
 import { UpdateProductionDto } from './dto/update-production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 import { BaseService } from 'src/utils/classes/base.service';
-import { GetSalaryDto } from './dto/get-salary.dto';
 import { BonusService } from 'src/bonus/bonus.service';
 export declare class ProductionService extends BaseService {
     private productionModel;
@@ -58,9 +57,4 @@ export declare class ProductionService extends BaseService {
         };
     }>;
     update(Production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
-    getSalary(getSalaryDto: GetSalaryDto, user: UserDocument, error: string): Promise<{
-        data: any[];
-        user: UserDocument;
-        error: string;
-    }>;
 }

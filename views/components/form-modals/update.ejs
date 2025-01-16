@@ -1,0 +1,19 @@
+<div class="modal fade" id="<%= `update-${type}-modal-${index}` %>" tabindex="-1" aria-labelledby="<%= `update-${type}-modal-label-${index}` %>" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="<%= `update-${type}-modal-label-${index}` %>">تحديث بيانات</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="<%= `/${type}/update/${dataItem._id}` %>" method="post" id="<%= `update-${type}-form-${dataItem._id}` %>">
+          <%- include(`../modules/${type}/fields/update`) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">إغلاق</button>
+        <button type="button" class="btn btn-dark-golden <%= `update-${type}` %>" dataItemId="<%= dataItem._id %>">حفظ</button>
+      </div>
+    </div>
+  </div>
+</div>

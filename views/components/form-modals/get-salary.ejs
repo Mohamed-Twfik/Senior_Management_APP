@@ -1,0 +1,20 @@
+<div class="modal fade" id="salary-modal" tabindex="-1" aria-labelledby="salary-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="salary-modal-label">حساب المرتبات</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/production/salary" method="post" id="salary-form">
+          <%- include('../inputs-fields/create/input', {name: 'from' , type: 'date' , label: 'من'}) %>
+          <%- include('../inputs-fields/create/input', {name: 'to' , type: 'date' , label: 'إلى'}) %>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">إغلاق</button>
+        <button type="button" class="btn btn-dark-golden get-salary">حفظ</button>
+      </div>
+    </div>
+  </div>
+</div>

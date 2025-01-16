@@ -17,6 +17,7 @@ import { WorkerDocument } from './entities/worker.entity';
 import { WorkerIdPipe } from './pipes/worker-id.pipe';
 import { WorkersService } from './workers.service';
 import { WorkerDataPipe } from './pipes/worker-data.pipe';
+import { UpdateWorkerDto } from './dto/update-worker.dto';
 
 @Controller('workers')
 export class WorkersController {
@@ -45,7 +46,7 @@ export class WorkersController {
   update(
     @Param('workerId', ObjectIdPipe, WorkerIdPipe) worker: WorkerDocument,
     @GetUser() user: UserDocument,
-    @Body(WorkerDataPipe) updateWorkerDto: CreateWorkerDto,
+    @Body(WorkerDataPipe) updateWorkerDto: UpdateWorkerDto,
 
   ) {
     return this.workersService.update(worker, updateWorkerDto, user);

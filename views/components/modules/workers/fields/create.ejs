@@ -1,0 +1,12 @@
+<%- include('../../../inputs-fields/create/input', {name: 'name' , type: 'text' , label: 'الإسم'}) %>
+<div class="mb-3 form-group">
+  <label for="worker-type" class="col-form-label fs-4 px-4">النوع</label>
+  <select name="type" id="worker-type" class="form-select px-4">
+    <option value="" selected>اختر</option>
+    <option value="إنتاج">إنتاج</option>
+    <option value="أسبوعي">أسبوعي</option>
+  </select>
+  <div class="text-danger text-danger-type mt-1" style="display: none;"></div>
+</div>
+<%- include('../../../inputs-fields/create/select', {name: 'department' , label: 'القسم' , data: departments}) %>
+<%- include('../../../inputs-fields/create/input', {name: 'salary' , type: 'number' , label: 'مرتب اليوم'}) %>

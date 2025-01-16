@@ -1,0 +1,5 @@
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.date.toISOString().split('T')[0], name: 'date' , type: 'date' , label: 'تاريخ الإنتاج'}) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.worker._id.toString(), name: 'worker' , label: 'العامل' , data: workers}) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.product._id.toString(), name: 'product' , label: 'المنتج' , data: products}) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.department._id.toString(), name: 'department' , label: 'القسم' , data: departments}) %>
+<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.quantity, name: 'quantity' , type: 'number' , label: 'كمية الإنتاج'}) %>
