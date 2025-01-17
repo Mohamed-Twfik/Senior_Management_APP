@@ -25,6 +25,7 @@ import { ProductionModule } from './production/production.module';
 import { UnauthorizedFilter } from './auth/filters/un-auth.filter';
 import { FallBackModule } from './fall-back/fall-back.module';
 import { AttendanceModule } from './attendance/attendance.module';
+import { SalaryModule } from './salary/salary.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { AttendanceModule } from './attendance/attendance.module';
     ProductPriceModule,
     ProductionModule,
     AttendanceModule,
+    SalaryModule,
     FallBackModule,
   ],
   controllers: [AppController],

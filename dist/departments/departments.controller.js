@@ -18,7 +18,7 @@ const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const departments_service_1 = require("./departments.service");
-const create_department_dto_1 = require("./dto/create-department.dto");
+const department_dto_1 = require("./dto/department.dto");
 const department_id_pipe_1 = require("./pipes/department-id.pipe");
 let DepartmentsController = class DepartmentsController {
     constructor(departmentsService) {
@@ -44,7 +44,7 @@ __decorate([
     __param(0, (0, get_user_decorator_1.GetUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_department_dto_1.CreateDepartmentDto]),
+    __metadata("design:paramtypes", [Object, department_dto_1.DepartmentDto]),
     __metadata("design:returntype", void 0)
 ], DepartmentsController.prototype, "create", null);
 __decorate([
@@ -63,7 +63,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_department_dto_1.CreateDepartmentDto, Object]),
+    __metadata("design:paramtypes", [Object, department_dto_1.DepartmentDto, Object]),
     __metadata("design:returntype", void 0)
 ], DepartmentsController.prototype, "update", null);
 __decorate([

@@ -14,14 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttendanceController = void 0;
 const common_1 = require("@nestjs/common");
-const attendance_service_1 = require("./attendance.service");
-const create_attendance_dto_1 = require("./dto/create-attendance.dto");
-const update_attendance_dto_1 = require("./dto/update-attendance.dto");
-const attendance_data_pipe_1 = require("./pipes/attendance-data.pipe");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
-const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
-const attendance_id_pipe_1 = require("./pipes/attendance-id.pipe");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
+const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
+const attendance_service_1 = require("./attendance.service");
+const attendance_dto_1 = require("./dto/attendance.dto");
+const attendance_data_pipe_1 = require("./pipes/attendance-data.pipe");
+const attendance_id_pipe_1 = require("./pipes/attendance-id.pipe");
 let AttendanceController = class AttendanceController {
     constructor(attendanceService) {
         this.attendanceService = attendanceService;
@@ -46,7 +45,7 @@ __decorate([
     __param(0, (0, common_1.Body)(attendance_data_pipe_1.AttendanceDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_attendance_dto_1.CreateAttendanceDto, Object]),
+    __metadata("design:paramtypes", [attendance_dto_1.AttendanceDto, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "create", null);
 __decorate([
@@ -65,7 +64,7 @@ __decorate([
     __param(1, (0, common_1.Body)(attendance_data_pipe_1.AttendanceDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_attendance_dto_1.UpdateAttendanceDto, Object]),
+    __metadata("design:paramtypes", [Object, attendance_dto_1.AttendanceDto, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "update", null);
 __decorate([

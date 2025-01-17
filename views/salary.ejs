@@ -1,7 +1,7 @@
 <div class="container-xl">
   <a class="btn my-5" href="/production">رجوع لصفحة الإنتاج</a>
 
-  <% if(data.attendenceWorkers.length !== 0) { %>
+  <% if(productionWorkers.length !== 0) { %>
     <div class="table-responsive">
       <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
         <caption class="mx-4 fs-5">
@@ -41,7 +41,7 @@
     <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
   <% } %>
 
-  <% if(data.productionWorkers.length !== 0) { %>
+  <% if(attendanceWorkers.length !== 0) { %>
     <div class="table-responsive">
       <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
         <caption class="mx-4 fs-5">

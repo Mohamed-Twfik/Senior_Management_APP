@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { Department, DepartmentDocument } from './entities/department.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { DepartmentDto } from './dto/department.dto';
+import { Department, DepartmentDocument } from './entities/department.entity';
 export declare class DepartmentsService extends BaseService {
     private departmentsModel;
     private readonly usersService;
@@ -19,6 +19,6 @@ export declare class DepartmentsService extends BaseService {
         type: string;
         title: string;
     }>;
-    create(createDepartmentDto: CreateDepartmentDto, user: UserDocument): Promise<void>;
-    update(department: DepartmentDocument, updateDepartmentDto: CreateDepartmentDto, user: UserDocument): Promise<void>;
+    create(createDepartmentDto: DepartmentDto, user: UserDocument): Promise<void>;
+    update(department: DepartmentDocument, updateDepartmentDto: DepartmentDto, user: UserDocument): Promise<void>;
 }

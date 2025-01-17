@@ -1,23 +1,22 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Query,
-    Redirect,
-    Render
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render
 } from '@nestjs/common';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
 import { BonusService } from './bonus.service';
-import { CreateBonusDto } from './dto/create-bonus.dto';
-import { UpdateBonusDto } from './dto/update-bonus.dto';
+import { BonusDto } from './dto/bonus.dto';
 import { BonusDocument } from './entities/bonus.entity';
-import { BonusIdPipe } from './pipes/bonus-id.pipe';
 import { BonusDataPipe } from './pipes/bonus-data.pipe';
+import { BonusIdPipe } from './pipes/bonus-id.pipe';
 
 @Controller('bonus')
 export class BonusController {
@@ -26,7 +25,7 @@ export class BonusController {
   @Post()
   @Redirect('/bonus')
   create(
-    @Body(BonusDataPipe) createBonusDto: CreateBonusDto,
+    @Body(BonusDataPipe) createBonusDto: BonusDto,
     @GetUser() user: UserDocument
   ) {
     return this.bonusService.create(createBonusDto, user);
@@ -45,7 +44,7 @@ export class BonusController {
   @Redirect('/bonus?sort=-updatedAt')
   update(
     @Param('bonusId', ObjectIdPipe, BonusIdPipe) bonus: BonusDocument,
-    @Body(BonusDataPipe) updateBonusDto: UpdateBonusDto,
+    @Body(BonusDataPipe) updateBonusDto: BonusDto,
     @GetUser() user: UserDocument,
   ) {
     return this.bonusService.update(bonus, updateBonusDto, user);

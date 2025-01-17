@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { Product, ProductDocument } from './entities/product.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { ProductDto } from './dto/product.dto';
+import { Product, ProductDocument } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService extends BaseService {
@@ -45,9 +45,8 @@ export class ProductsService extends BaseService {
    * @param createProductsDto The data for the new Product.
    * @param user The user who is creating the new Product.
    */
-  async create(createProductDto: CreateProductDto, user: UserDocument) {
-    const { name } = createProductDto;
-    const existProducts = await this.findOne({ name });
+  async create(createProductDto: ProductDto, user: UserDocument) {
+    const existProducts = await this.findOne({ name: createProductDto.name });
     if (existProducts) throw new ConflictException('إسم المنتج موجود بالفعل');
 
     const inputDate: Product = {
@@ -65,7 +64,7 @@ export class ProductsService extends BaseService {
    * @param user The user who is updating the product.
    * @throws ConflictException if the name is already exist.
    */
-  async update(product: ProductDocument, updateProductDto: CreateProductDto, user: UserDocument) {
+  async update(product: ProductDocument, updateProductDto: ProductDto, user: UserDocument) {
     const existProduct = await this.findOne({
       $and: [
         { name: updateProductDto.name },

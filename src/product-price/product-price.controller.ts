@@ -1,19 +1,18 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Query,
-    Redirect,
-    Render
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render
 } from '@nestjs/common';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
-import { CreateProductPriceDto } from './dto/create-product-price.dto';
-import { UpdateProductPriceDto } from './dto/update-product-price.dto';
+import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPriceDocument } from './entities/product-price.entity';
 import { ProductPriceIdPipe } from './pipes/product-price-id.pipe';
 import { ProductPriceService } from './product-price.service';
@@ -25,7 +24,7 @@ export class ProductPriceController {
   @Post()
   @Redirect('/productPrice')
   create(
-    @Body() createProductPriceDto: CreateProductPriceDto,
+    @Body() createProductPriceDto: ProductPriceDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productPriceService.create(createProductPriceDto, user);
@@ -44,7 +43,7 @@ export class ProductPriceController {
   @Redirect('/productPrice?sort=-updatedAt')
   update(
     @Param('productPriceId', ObjectIdPipe, ProductPriceIdPipe) productPrice: ProductPriceDocument,
-    @Body() updateProductPriceDto: UpdateProductPriceDto,
+    @Body() updateProductPriceDto: ProductPriceDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productPriceService.update(productPrice, updateProductPriceDto, user);

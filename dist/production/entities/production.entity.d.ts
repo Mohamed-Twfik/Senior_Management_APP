@@ -2,7 +2,7 @@ import { Document, Types } from "mongoose";
 export declare class Production {
     date: Date;
     quantity: number;
-    price: number;
+    price?: number;
     product: Types.ObjectId;
     worker: Types.ObjectId;
     department: Types.ObjectId;

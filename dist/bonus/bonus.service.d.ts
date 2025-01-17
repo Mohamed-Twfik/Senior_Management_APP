@@ -1,12 +1,11 @@
 import { Model, Types } from 'mongoose';
+import { DepartmentsService } from 'src/departments/departments.service';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { CreateBonusDto } from './dto/create-bonus.dto';
-import { UpdateBonusDto } from './dto/update-bonus.dto';
-import { Bonus, BonusDocument } from './entities/bonus.entity';
 import { BaseService } from 'src/utils/classes/base.service';
-import { DepartmentsService } from 'src/departments/departments.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
+import { BonusDto } from './dto/bonus.dto';
+import { Bonus, BonusDocument } from './entities/bonus.entity';
 export declare class BonusService extends BaseService {
     private bonusModel;
     private readonly usersService;
@@ -24,7 +23,7 @@ export declare class BonusService extends BaseService {
         type: string;
         title: string;
     }>;
-    create(createBonusDto: CreateBonusDto, user: UserDocument): Promise<void>;
+    create(createBonusDto: BonusDto, user: UserDocument): Promise<void>;
     findAll(queryParams: QueryDto, user: UserDocument): Promise<{
         users: any[];
         departments: any[];
@@ -44,5 +43,5 @@ export declare class BonusService extends BaseService {
             };
         };
     }>;
-    update(bonus: BonusDocument, updateBonusDto: UpdateBonusDto, user: UserDocument): Promise<void>;
+    update(bonus: BonusDocument, updateBonusDto: BonusDto, user: UserDocument): Promise<void>;
 }

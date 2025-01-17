@@ -28,9 +28,7 @@ __decorate([
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Attendance.prototype, "worker", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({
-        required: true
-    }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
 ], Attendance.prototype, "price", void 0);
 __decorate([

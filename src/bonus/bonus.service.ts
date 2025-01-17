@@ -1,15 +1,14 @@
 import { ConflictException, Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { UserDocument } from 'src/users/entities/user.entity';
-import { UsersService } from 'src/users/users.service';
-import { CreateBonusDto } from './dto/create-bonus.dto';
-import { UpdateBonusDto } from './dto/update-bonus.dto';
-import { Bonus, BonusDocument } from './entities/bonus.entity';
-import { BaseService } from 'src/utils/classes/base.service';
 import { DepartmentsService } from 'src/departments/departments.service';
+import { UserDocument } from 'src/users/entities/user.entity';
 import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { UsersService } from 'src/users/users.service';
+import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
+import { BonusDto } from './dto/bonus.dto';
+import { Bonus, BonusDocument } from './entities/bonus.entity';
 
 
 @Injectable()
@@ -50,12 +49,7 @@ export class BonusService extends BaseService {
    * @param createBonusDto The data for the new bonus.
    * @param user The user who is creating the new bonus.
    */
-  async create(createBonusDto: CreateBonusDto, user: UserDocument) {
-    createBonusDto.to = (createBonusDto.to === 0)? Infinity : createBonusDto.to;
-    if (createBonusDto.from >= createBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
-    
-    createBonusDto.department = new Types.ObjectId(createBonusDto.department);
-    
+  async create(createBonusDto: BonusDto, user: UserDocument) {
     const existBonus = await this.bonusModel.findOne({
       $and: [
             {
@@ -120,13 +114,7 @@ export class BonusService extends BaseService {
    * @param user The user who is updating the Bonus.
    * @throws ConflictException if the name is already exist.
    */
-  async update(bonus: BonusDocument, updateBonusDto: UpdateBonusDto, user: UserDocument) {
-    updateBonusDto.to = (updateBonusDto.to === 0)? Infinity : (updateBonusDto.to || bonus.to);
-    if (updateBonusDto.from >= updateBonusDto.to) throw new NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
-    
-    if (updateBonusDto.department) updateBonusDto.department = new Types.ObjectId(updateBonusDto.department);
-    else updateBonusDto.department = bonus.department;
-    
+  async update(bonus: BonusDocument, updateBonusDto: BonusDto, user: UserDocument) {
     const existBonus = await this.bonusModel.findOne({
       $and: [
         { _id: { $ne: bonus._id } },
@@ -144,6 +132,7 @@ export class BonusService extends BaseService {
       ]
     });
     if (existBonus) throw new ConflictException('أحد أطراف الحافز مكرر');
+
     const inputData: Partial<Bonus> = {
       ...updateBonusDto,
       updatedBy: user._id

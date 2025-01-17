@@ -34,6 +34,9 @@ export class SalaryService {
       worker.totalSalary = worker.totalPrice + worker.bonus;
     };
 
-    return { data: {productionWorkers, attendanceWorkers}, user, type: 'salary', title: 'المرتبات' };
+    const renderData = { productionWorkers, attendanceWorkers, user, type: 'salary', title: 'المرتبات' };
+    console.log(renderData);
+
+    return renderData;
   }
 }

@@ -1,19 +1,18 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  Redirect,
-  Render
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Query,
+    Redirect,
+    Render
 } from '@nestjs/common';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
-import { CreateProductionDto } from './dto/create-production.dto';
-import { UpdateProductionDto } from './dto/update-production.dto';
+import { ProductionDto } from './dto/production.dto';
 import { ProductionDocument } from './entities/production.entity';
 import { ProductionDataPipe } from './pipes/production-data.pipe';
 import { ProductionIdPipe } from './pipes/production-id.pipe';
@@ -26,7 +25,7 @@ export class ProductionController {
   @Post()
   @Redirect('/production')
   create(
-    @Body(ProductionDataPipe) createProductionDto: CreateProductionDto,
+    @Body(ProductionDataPipe) createProductionDto: ProductionDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productionService.create(createProductionDto, user);
@@ -45,7 +44,7 @@ export class ProductionController {
   @Redirect('/production?sort=-updatedAt')
   update(
     @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument,
-    @Body(ProductionDataPipe) updateProductionDto: UpdateProductionDto,
+    @Body(ProductionDataPipe) updateProductionDto: ProductionDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productionService.update(production, updateProductionDto, user);
@@ -58,14 +57,4 @@ export class ProductionController {
   ) {
     return this.productionService.remove(production);
   }
-
-  // @Post('salary')
-  // @Render('salary')
-  // getSalary(
-  //   @Body() getSalaryDto: GetSalaryDto,
-  //   @GetUser() user: UserDocument,
-  //   @Query('error') error: string
-  // ) {
-  //   return this.productionService.getSalary(getSalaryDto, user, error);
-  // }
 }

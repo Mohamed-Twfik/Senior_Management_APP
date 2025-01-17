@@ -1,9 +1,9 @@
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { Product, ProductDocument } from './entities/product.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { ProductDto } from './dto/product.dto';
+import { Product, ProductDocument } from './entities/product.entity';
 export declare class ProductsService extends BaseService {
     private productsModel;
     private readonly usersService;
@@ -19,6 +19,6 @@ export declare class ProductsService extends BaseService {
         type: string;
         title: string;
     }>;
-    create(createProductDto: CreateProductDto, user: UserDocument): Promise<void>;
-    update(product: ProductDocument, updateProductDto: CreateProductDto, user: UserDocument): Promise<void>;
+    create(createProductDto: ProductDto, user: UserDocument): Promise<void>;
+    update(product: ProductDocument, updateProductDto: ProductDto, user: UserDocument): Promise<void>;
 }

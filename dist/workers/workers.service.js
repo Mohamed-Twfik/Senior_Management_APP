@@ -42,8 +42,7 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
         };
     }
     async create(createWorkerDto, user) {
-        const { name } = createWorkerDto;
-        const existWorker = await this.findOne({ name });
+        const existWorker = await this.findOne({ name: createWorkerDto.name });
         if (existWorker)
             throw new common_1.ConflictException('إسم العامل موجود بالفعل');
         const inputDate = {

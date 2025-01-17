@@ -17,8 +17,7 @@ const common_1 = require("@nestjs/common");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
-const create_production_dto_1 = require("./dto/create-production.dto");
-const update_production_dto_1 = require("./dto/update-production.dto");
+const production_dto_1 = require("./dto/production.dto");
 const production_data_pipe_1 = require("./pipes/production-data.pipe");
 const production_id_pipe_1 = require("./pipes/production-id.pipe");
 const production_service_1 = require("./production.service");
@@ -46,7 +45,7 @@ __decorate([
     __param(0, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_production_dto_1.CreateProductionDto, Object]),
+    __metadata("design:paramtypes", [production_dto_1.ProductionDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "create", null);
 __decorate([
@@ -65,7 +64,7 @@ __decorate([
     __param(1, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_production_dto_1.UpdateProductionDto, Object]),
+    __metadata("design:paramtypes", [Object, production_dto_1.ProductionDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "update", null);
 __decorate([

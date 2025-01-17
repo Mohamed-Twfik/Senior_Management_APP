@@ -27,7 +27,7 @@ let SalaryController = class SalaryController {
 };
 exports.SalaryController = SalaryController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)(),
     (0, common_1.Render)('index'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, get_user_decorator_1.GetUser)()),

@@ -17,8 +17,8 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const users_service_1 = require("../users/users.service");
-const department_entity_1 = require("./entities/department.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const department_entity_1 = require("./entities/department.entity");
 let DepartmentsService = class DepartmentsService extends base_service_1.BaseService {
     constructor(departmentsModel, usersService) {
         super();
@@ -39,8 +39,7 @@ let DepartmentsService = class DepartmentsService extends base_service_1.BaseSer
         };
     }
     async create(createDepartmentDto, user) {
-        const { name } = createDepartmentDto;
-        const existDepartments = await this.findOne({ name });
+        const existDepartments = await this.findOne({ name: createDepartmentDto.name });
         if (existDepartments)
             throw new common_1.ConflictException('إسم القسم موجود بالفعل');
         const inputDate = {

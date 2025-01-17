@@ -10,8 +10,8 @@ export class Production {
   @Prop({ required: true })
   quantity: number;
 
-  @Prop({ required: true })
-  price: number;
+  @Prop()
+  price?: number;
 
   @Prop({
     required: true,

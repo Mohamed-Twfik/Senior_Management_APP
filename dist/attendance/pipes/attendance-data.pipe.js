@@ -11,18 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttendanceDataPipe = void 0;
 const common_1 = require("@nestjs/common");
+const workerType_enum_1 = require("../../workers/enums/workerType.enum");
 const workers_service_1 = require("../../workers/workers.service");
-const mongoose_1 = require("mongoose");
 let AttendanceDataPipe = class AttendanceDataPipe {
     constructor(workersService) {
         this.workersService = workersService;
     }
-    transform(data, metadata) {
+    async transform(data, metadata) {
         if (data.worker) {
-            const workerExists = this.workersService.findById(data.worker.toString());
+            const workerExists = await this.workersService.findById(data.worker.toString());
             if (!workerExists)
                 throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
-            data.worker = new mongoose_1.Types.ObjectId(data.worker);
+            data.worker = workerExists._id;
+            if (workerExists.type !== workerType_enum_1.WorkerType.Production) {
+                if (!workerExists.salary)
+                    throw new common_1.NotFoundException('يجب تحديد الراتب للعامل أولا.');
+                data.price = workerExists.salary / 6;
+            }
         }
         return data;
     }

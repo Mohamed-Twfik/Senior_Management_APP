@@ -6,9 +6,7 @@ import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkersService } from 'src/workers/workers.service';
-import { ProductPriceService } from '../product-price/product-price.service';
-import { CreateProductionDto } from './dto/create-production.dto';
-import { UpdateProductionDto } from './dto/update-production.dto';
+import { ProductionDto } from './dto/production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 export declare class ProductionService extends BaseService {
     private productionModel;
@@ -16,9 +14,8 @@ export declare class ProductionService extends BaseService {
     private readonly productsService;
     private readonly workersService;
     private readonly departmentsService;
-    private readonly productPriceService;
     searchableKeys: string[];
-    constructor(productionModel: Model<Production>, usersService: UsersService, productsService: ProductsService, workersService: WorkersService, departmentsService: DepartmentsService, productPriceService: ProductPriceService);
+    constructor(productionModel: Model<Production>, usersService: UsersService, productsService: ProductsService, workersService: WorkersService, departmentsService: DepartmentsService);
     getModuleModel(): Model<Production, {}, {}, {}, import("mongoose").Document<unknown, {}, Production> & Production & {
         _id: import("mongoose").Types.ObjectId;
     } & {
@@ -32,7 +29,7 @@ export declare class ProductionService extends BaseService {
         type: string;
         title: string;
     }>;
-    create(createProductionDto: CreateProductionDto, user: UserDocument): Promise<void>;
+    create(createProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     findAll(queryParams: QueryDto, user: UserDocument): Promise<{
         users: any[];
         workers: any[];
@@ -54,6 +51,6 @@ export declare class ProductionService extends BaseService {
             };
         };
     }>;
-    update(production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
+    update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     getSalaryData(startDate: Date, endDate: Date): import("mongoose").Aggregate<any[]>;
 }

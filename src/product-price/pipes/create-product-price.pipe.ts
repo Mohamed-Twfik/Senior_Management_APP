@@ -1,7 +1,7 @@
 import { ArgumentMetadata, ConflictException, Injectable, NotAcceptableException } from "@nestjs/common";
-import { CreateProductPriceDto } from "../dto/create-product-price.dto";
-import { ProductsService } from '../../products/products.service';
 import { DepartmentsService } from "src/departments/departments.service";
+import { ProductsService } from '../../products/products.service';
+import { ProductPriceDto } from "../dto/product-price.dto";
 import { ProductPriceService } from "../product-price.service";
 
 /**
@@ -21,17 +21,14 @@ export class CreateProductPricePipe {
    * @param metadata metadata
    * @returns transformed product price data
    */
-  transform(data: CreateProductPriceDto, metadata: ArgumentMetadata) {
-    const { product, department } = data;
-
-    const productExists = this.productsService.findById(product.toString());
+  async transform(data: ProductPriceDto, metadata: ArgumentMetadata) {
+    const productExists = await this.productsService.findById(data.product.toString());
     if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
+    data.product = productExists._id;
 
-    const departmentExists = this.departmentsService.findById(department.toString());
+    const departmentExists = await this.departmentsService.findById(data.department.toString());
     if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
-
-    const productPriceExists = this.productPriceService.findOne({ product, department });
-    if (productPriceExists) throw new ConflictException('سعر المنتج موجود بالفعل.');
+    data.department = departmentExists._id;
 
     return data;
   }

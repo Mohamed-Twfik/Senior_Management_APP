@@ -1,8 +1,12 @@
 import { ArgumentMetadata } from "@nestjs/common";
 import { WorkersService } from '../../workers/workers.service';
-import { CreateAttendanceDto } from "../dto/create-attendance.dto";
+import { AttendanceDto } from "../dto/attendance.dto";
 export declare class AttendanceDataPipe {
     private readonly workersService;
     constructor(workersService: WorkersService);
-    transform(data: CreateAttendanceDto, metadata: ArgumentMetadata): CreateAttendanceDto;
+    transform(data: AttendanceDto & {
+        price: number;
+    }, metadata: ArgumentMetadata): Promise<AttendanceDto & {
+        price: number;
+    }>;
 }

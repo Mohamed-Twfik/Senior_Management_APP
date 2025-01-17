@@ -1,12 +1,11 @@
 import { UserDocument } from 'src/users/entities/user.entity';
-import { CreateProductionDto } from './dto/create-production.dto';
-import { UpdateProductionDto } from './dto/update-production.dto';
+import { ProductionDto } from './dto/production.dto';
 import { ProductionDocument } from './entities/production.entity';
 import { ProductionService } from './production.service';
 export declare class ProductionController {
     private readonly productionService;
     constructor(productionService: ProductionService);
-    create(createProductionDto: CreateProductionDto, user: UserDocument): Promise<void>;
+    create(createProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<{
         users: any[];
         workers: any[];
@@ -28,6 +27,6 @@ export declare class ProductionController {
             };
         };
     }>;
-    update(production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument): Promise<void>;
+    update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     remove(production: ProductionDocument): Promise<void>;
 }
