@@ -10,9 +10,7 @@ const Validation = (formSelector) => {
   const productError = form.querySelector('.text-danger-product');
   productError.style.display = 'none';
 
-  const department = form.querySelector('select[name="department"').value;
-  const departmentError = form.querySelector('.text-danger-department');
-  departmentError.style.display = 'none';
+  const department = form.querySelector('select[name="department"');
 
   const worker = form.querySelector('select[name="worker"]').value;
   const workerError = form.querySelector('.text-danger-worker');
@@ -34,10 +32,8 @@ const Validation = (formSelector) => {
     isValid = false;
   }
 
-  if (!department) {
-    departmentError.textContent = 'يجب إختيار القسم';
-    departmentError.style.display = 'block';
-    isValid = false;
+  if (!department.value) {
+    department.removeAttribute('name');
   }
 
   if (!worker) {

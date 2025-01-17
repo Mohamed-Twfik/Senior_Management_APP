@@ -52,14 +52,10 @@
           </div>
         <% } %>
 
-        <% if(data.length> 0) { %>
-          <%- include(`components/table`) %>
+        <%- include(`components/table`) %>
 
-          <% if(filters.pagination.totalPages> 1) { %>
-            <%- include('components/pagination', filters.pagination) %>
-          <% } %>
-        <% } else { %>
-          <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
+        <% if(filters.pagination.totalPages> 1) { %>
+          <%- include('components/pagination', filters.pagination) %>
         <% } %>
       </div>
     <% } %>

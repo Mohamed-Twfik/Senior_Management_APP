@@ -28,14 +28,19 @@ let ProductionDataPipe = class ProductionDataPipe {
         if (!productExists)
             throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
         data.product = productExists._id;
-        const departmentExists = await this.departmentsService.findById(data.department.toString());
-        if (!departmentExists)
-            throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
-        data.department = departmentExists._id;
         const workerExists = await this.workersService.findById(data.worker.toString());
         if (!workerExists)
             throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
         data.worker = workerExists._id;
+        if (data.department) {
+            const departmentExists = await this.departmentsService.findById(data.department.toString());
+            if (!departmentExists)
+                throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
+            data.department = departmentExists._id;
+        }
+        else {
+            data.department = workerExists.department;
+        }
         if (workerExists.type !== workerType_enum_1.WorkerType.Weekly) {
             const productPrice = await this.productPriceService.findOne({ product: data.product, department: data.department });
             if (!productPrice)

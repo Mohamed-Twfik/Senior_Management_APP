@@ -39,7 +39,7 @@ __decorate([
     __metadata("design:type", mongoose_1.Types.ObjectId)
 ], ProductionDto.prototype, "worker", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", mongoose_1.Types.ObjectId)
 ], ProductionDto.prototype, "department", void 0);

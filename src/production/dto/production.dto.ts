@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsDate, IsInt, IsMongoId, IsNotEmpty } from "class-validator";
+import { IsDate, IsInt, IsMongoId, IsNotEmpty, IsOptional } from "class-validator";
 import { Types } from "mongoose";
 
 export class ProductionDto {
@@ -21,7 +21,7 @@ export class ProductionDto {
   @IsMongoId()
   worker: Types.ObjectId;
   
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
   department: Types.ObjectId;
 }
