@@ -17,10 +17,10 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const users_service_1 = require("../users/users.service");
+const base_service_1 = require("../utils/classes/base.service");
 const departments_service_1 = require("../departments/departments.service");
 const products_service_1 = require("../products/products.service");
 const product_price_entity_1 = require("./entities/product-price.entity");
-const base_service_1 = require("../utils/classes/base.service");
 let ProductPriceService = class ProductPriceService extends base_service_1.BaseService {
     constructor(productPriceModel, usersService, productsService, departmentsService) {
         super();
@@ -43,8 +43,6 @@ let ProductPriceService = class ProductPriceService extends base_service_1.BaseS
         };
     }
     async create(createProductPriceDto, user) {
-        createProductPriceDto.product = new mongoose_2.Types.ObjectId(createProductPriceDto.product);
-        createProductPriceDto.department = new mongoose_2.Types.ObjectId(createProductPriceDto.department);
         const existPrice = await this.productPriceModel.findOne({ department: createProductPriceDto.department, product: createProductPriceDto.product });
         if (existPrice)
             throw new common_1.ConflictException('سعر المنتج في هذا القسم موجود بالفعل');
@@ -85,14 +83,6 @@ let ProductPriceService = class ProductPriceService extends base_service_1.BaseS
         return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
     }
     async update(productPrice, updateProductPriceDto, user) {
-        if (updateProductPriceDto.product)
-            updateProductPriceDto.product = new mongoose_2.Types.ObjectId(updateProductPriceDto.product);
-        else
-            updateProductPriceDto.product = productPrice.product;
-        if (updateProductPriceDto.department)
-            updateProductPriceDto.department = new mongoose_2.Types.ObjectId(updateProductPriceDto.department);
-        else
-            updateProductPriceDto.department = productPrice.department;
         const existPrice = await this.productPriceModel.findOne({
             $and: [
                 { department: updateProductPriceDto.department },

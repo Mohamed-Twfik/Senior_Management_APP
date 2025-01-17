@@ -14,13 +14,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttendanceService = void 0;
 const common_1 = require("@nestjs/common");
-const base_service_1 = require("../utils/classes/base.service");
-const mongoose_1 = require("mongoose");
-const mongoose_2 = require("@nestjs/mongoose");
-const attendance_entity_1 = require("./entities/attendance.entity");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
 const users_service_1 = require("../users/users.service");
-const workers_service_1 = require("../workers/workers.service");
+const base_service_1 = require("../utils/classes/base.service");
 const workerType_enum_1 = require("../workers/enums/workerType.enum");
+const workers_service_1 = require("../workers/workers.service");
+const attendance_entity_1 = require("./entities/attendance.entity");
 let AttendanceService = class AttendanceService extends base_service_1.BaseService {
     constructor(attendanceModel, usersService, workersService) {
         super();
@@ -48,15 +48,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker, date: createDto.date });
         if (existAttendance)
             throw new common_1.ConflictException('تم إضافة حضور العامل مسبقا.');
-        const worker = await this.workersService.findById(createDto.worker.toString());
-        if (!worker.salary)
-            throw new common_1.NotFoundException('يجب تحديد الراتب للعامل أولا.');
-        let price = undefined;
-        if (worker.type !== workerType_enum_1.WorkerType.Production)
-            price = worker.salary / 6;
         const inputData = {
             ...createDto,
-            price,
             createdBy: userDocument._id,
             updatedBy: userDocument._id
         };
@@ -94,15 +87,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         const existAttendance = await this.attendanceModel.findOne({ worker: updateDto.worker, date: updateDto.date, _id: { $ne: entity._id } });
         if (existAttendance)
             throw new common_1.ConflictException('تم إضافة حضور العامل مسبقا.');
-        const worker = await this.workersService.findById(updateDto.worker.toString());
-        if (!worker.salary)
-            throw new common_1.NotFoundException('يجب تحديد الراتب للعامل أولا.');
-        let price = undefined;
-        if (worker.type !== workerType_enum_1.WorkerType.Production)
-            price = worker.salary / 6;
         const inputData = {
             ...updateDto,
-            price,
             updatedBy: userDocument._id
         };
         await entity.set(inputData).save();
@@ -153,8 +139,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
 exports.AttendanceService = AttendanceService;
 exports.AttendanceService = AttendanceService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_2.InjectModel)(attendance_entity_1.Attendance.name)),
-    __metadata("design:paramtypes", [mongoose_1.Model,
+    __param(0, (0, mongoose_1.InjectModel)(attendance_entity_1.Attendance.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
         users_service_1.UsersService,
         workers_service_1.WorkersService])
 ], AttendanceService);

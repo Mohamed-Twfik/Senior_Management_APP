@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { Department, DepartmentDocument } from './entities/department.entity';
 import { BaseService } from 'src/utils/classes/base.service';
+import { DepartmentDto } from './dto/department.dto';
+import { Department, DepartmentDocument } from './entities/department.entity';
 
 @Injectable()
 export class DepartmentsService extends BaseService {
@@ -45,9 +45,8 @@ export class DepartmentsService extends BaseService {
    * @param createDepartmentDto The data for the new department.
    * @param user The user who is creating the new department.
    */
-  async create(createDepartmentDto: CreateDepartmentDto, user: UserDocument) {
-    const { name } = createDepartmentDto;
-    const existDepartments = await this.findOne({ name });
+  async create(createDepartmentDto: DepartmentDto, user: UserDocument) {
+    const existDepartments = await this.findOne({ name: createDepartmentDto.name });
     if (existDepartments) throw new ConflictException('إسم القسم موجود بالفعل');
 
     const inputDate: Department = {
@@ -65,7 +64,7 @@ export class DepartmentsService extends BaseService {
    * @param user The user who is updating the department.
    * @throws ConflictException if the name is already exist.
    */
-  async update(department: DepartmentDocument, updateDepartmentDto: CreateDepartmentDto, user: UserDocument) {
+  async update(department: DepartmentDocument, updateDepartmentDto: DepartmentDto, user: UserDocument) {
     const existDepartment = await this.findOne({
       $and: [
         { name: updateDepartmentDto.name },

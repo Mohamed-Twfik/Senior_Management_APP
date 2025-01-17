@@ -7,8 +7,7 @@ import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.t
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
-import { CreateWorkerDto } from './dto/create-worker.dto';
-import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { WorkerDto } from './dto/worker.dto';
 import { Worker, WorkerDocument } from './entities/worker.entity';
 
 @Injectable()
@@ -51,9 +50,8 @@ export class WorkersService extends BaseService {
    * @param createWorkerDto The data for the new worker.
    * @param user The user who is creating the new worker.
    */
-  async create(createWorkerDto: CreateWorkerDto, user: UserDocument) {
-    const { name } = createWorkerDto;
-    const existWorker = await this.findOne({ name });
+  async create(createWorkerDto: WorkerDto, user: UserDocument) {
+    const existWorker = await this.findOne({ name: createWorkerDto.name });
     if (existWorker) throw new ConflictException('إسم العامل موجود بالفعل');
 
     const inputDate: Worker = {
@@ -108,7 +106,7 @@ export class WorkersService extends BaseService {
    * @param user The user who is updating the worker.
    * @throws ConflictException if the name is already exist.
    */
-  async update(worker: WorkerDocument, updateWorkerDto: UpdateWorkerDto, user: UserDocument) {
+  async update(worker: WorkerDocument, updateWorkerDto: WorkerDto, user: UserDocument) {
     const existWorker = await this.findOne({
       $and: [
         { name: updateWorkerDto.name },

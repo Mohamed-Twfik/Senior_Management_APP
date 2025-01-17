@@ -1,23 +1,22 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Query,
-    Redirect,
-    Render,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render,
 } from '@nestjs/common';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
-import { CreateWorkerDto } from './dto/create-worker.dto';
+import { WorkerDto } from './dto/worker.dto';
 import { WorkerDocument } from './entities/worker.entity';
+import { WorkerDataPipe } from './pipes/worker-data.pipe';
 import { WorkerIdPipe } from './pipes/worker-id.pipe';
 import { WorkersService } from './workers.service';
-import { WorkerDataPipe } from './pipes/worker-data.pipe';
-import { UpdateWorkerDto } from './dto/update-worker.dto';
 
 @Controller('workers')
 export class WorkersController {
@@ -27,7 +26,7 @@ export class WorkersController {
   @Redirect('/workers')
   create(
     @GetUser() user: UserDocument,
-    @Body(WorkerDataPipe) createWorkerDto: CreateWorkerDto
+    @Body(WorkerDataPipe) createWorkerDto: WorkerDto
   ) {
     return this.workersService.create(createWorkerDto, user);
   }
@@ -46,7 +45,7 @@ export class WorkersController {
   update(
     @Param('workerId', ObjectIdPipe, WorkerIdPipe) worker: WorkerDocument,
     @GetUser() user: UserDocument,
-    @Body(WorkerDataPipe) updateWorkerDto: UpdateWorkerDto,
+    @Body(WorkerDataPipe) updateWorkerDto: WorkerDto,
 
   ) {
     return this.workersService.update(worker, updateWorkerDto, user);

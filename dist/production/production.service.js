@@ -22,17 +22,15 @@ const users_service_1 = require("../users/users.service");
 const base_service_1 = require("../utils/classes/base.service");
 const workerType_enum_1 = require("../workers/enums/workerType.enum");
 const workers_service_1 = require("../workers/workers.service");
-const product_price_service_1 = require("../product-price/product-price.service");
 const production_entity_1 = require("./entities/production.entity");
 let ProductionService = class ProductionService extends base_service_1.BaseService {
-    constructor(productionModel, usersService, productsService, workersService, departmentsService, productPriceService) {
+    constructor(productionModel, usersService, productsService, workersService, departmentsService) {
         super();
         this.productionModel = productionModel;
         this.usersService = usersService;
         this.productsService = productsService;
         this.workersService = workersService;
         this.departmentsService = departmentsService;
-        this.productPriceService = productPriceService;
         this.searchableKeys = [
             "arabicDate",
             "createdAtArabic",
@@ -61,16 +59,8 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         });
         if (existProduction)
             throw new common_1.ConflictException('تم إضافة الإنتاج مسبقا.');
-        const productPrice = await this.productPriceService.findOne({ product: createProductionDto.product, department: createProductionDto.department });
-        if (!productPrice)
-            throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-        const worker = await this.workersService.findById(createProductionDto.worker.toString());
-        let price = undefined;
-        if (worker.type !== workerType_enum_1.WorkerType.Weekly)
-            price = (productPrice.price / 100) * createProductionDto.quantity;
         const inputDate = {
             ...createProductionDto,
-            price,
             createdBy: user._id,
             updatedBy: user._id,
         };
@@ -116,16 +106,8 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         });
         if (existProduction)
             throw new common_1.ConflictException('تم إضافة الإنتاج مسبقا.');
-        const productPrice = await this.productPriceService.findOne({ product: updateProductionDto.product, department: updateProductionDto.department });
-        if (!productPrice)
-            throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-        const worker = await this.workersService.findById(updateProductionDto.worker.toString());
-        let price = undefined;
-        if (worker.type !== workerType_enum_1.WorkerType.Weekly)
-            price = (productPrice.price / 100) * updateProductionDto.quantity;
         const inputData = {
             ...updateProductionDto,
-            price,
             updatedBy: user._id
         };
         await production.set(inputData).save();
@@ -183,7 +165,6 @@ exports.ProductionService = ProductionService = __decorate([
         users_service_1.UsersService,
         products_service_1.ProductsService,
         workers_service_1.WorkersService,
-        departments_service_1.DepartmentsService,
-        product_price_service_1.ProductPriceService])
+        departments_service_1.DepartmentsService])
 ], ProductionService);
 //# sourceMappingURL=production.service.js.map

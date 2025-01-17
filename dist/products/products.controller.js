@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
-const create_product_dto_1 = require("./dto/create-product.dto");
+const product_dto_1 = require("./dto/product.dto");
 const product_id_pipe_1 = require("./pipes/product-id.pipe");
 const products_service_1 = require("./products.service");
 let ProductsController = class ProductsController {
@@ -44,7 +44,7 @@ __decorate([
     __param(0, (0, get_user_decorator_1.GetUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_product_dto_1.CreateProductDto]),
+    __metadata("design:paramtypes", [Object, product_dto_1.ProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "create", null);
 __decorate([
@@ -63,7 +63,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, create_product_dto_1.CreateProductDto, Object]),
+    __metadata("design:paramtypes", [Object, product_dto_1.ProductDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([

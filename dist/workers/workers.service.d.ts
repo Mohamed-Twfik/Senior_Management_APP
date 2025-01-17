@@ -5,8 +5,7 @@ import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.t
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
-import { CreateWorkerDto } from './dto/create-worker.dto';
-import { UpdateWorkerDto } from './dto/update-worker.dto';
+import { WorkerDto } from './dto/worker.dto';
 import { Worker, WorkerDocument } from './entities/worker.entity';
 export declare class WorkersService extends BaseService {
     private workersModel;
@@ -25,7 +24,7 @@ export declare class WorkersService extends BaseService {
         type: string;
         title: string;
     }>;
-    create(createWorkerDto: CreateWorkerDto, user: UserDocument): Promise<void>;
+    create(createWorkerDto: WorkerDto, user: UserDocument): Promise<void>;
     findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType>;
-    update(worker: WorkerDocument, updateWorkerDto: UpdateWorkerDto, user: UserDocument): Promise<void>;
+    update(worker: WorkerDocument, updateWorkerDto: WorkerDto, user: UserDocument): Promise<void>;
 }

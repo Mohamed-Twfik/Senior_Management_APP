@@ -12,35 +12,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductionDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const departments_service_1 = require("../../departments/departments.service");
+const workerType_enum_1 = require("../../workers/enums/workerType.enum");
+const product_price_service_1 = require("../../product-price/product-price.service");
 const products_service_1 = require("../../products/products.service");
-const production_service_1 = require("../production.service");
 const workers_service_1 = require("../../workers/workers.service");
-const mongoose_1 = require("mongoose");
 let ProductionDataPipe = class ProductionDataPipe {
-    constructor(productionService, productsService, workersService, departmentsService) {
-        this.productionService = productionService;
+    constructor(productPriceService, productsService, workersService, departmentsService) {
+        this.productPriceService = productPriceService;
         this.productsService = productsService;
         this.workersService = workersService;
         this.departmentsService = departmentsService;
     }
-    transform(data, metadata) {
-        if (data.product) {
-            const productExists = this.productsService.findById(data.product.toString());
-            if (!productExists)
-                throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
-            data.product = new mongoose_1.Types.ObjectId(data.product);
-        }
+    async transform(data, metadata) {
+        const productExists = await this.productsService.findById(data.product.toString());
+        if (!productExists)
+            throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
+        data.product = productExists._id;
+        const workerExists = await this.workersService.findById(data.worker.toString());
+        if (!workerExists)
+            throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
+        data.worker = workerExists._id;
         if (data.department) {
-            const departmentExists = this.departmentsService.findById(data.department.toString());
+            const departmentExists = await this.departmentsService.findById(data.department.toString());
             if (!departmentExists)
                 throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
-            data.department = new mongoose_1.Types.ObjectId(data.department);
+            data.department = departmentExists._id;
         }
-        if (data.worker) {
-            const workerExists = this.workersService.findById(data.worker.toString());
-            if (!workerExists)
-                throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
-            data.worker = new mongoose_1.Types.ObjectId(data.worker);
+        else {
+            data.department = workerExists.department;
+        }
+        if (workerExists.type !== workerType_enum_1.WorkerType.Weekly) {
+            const productPrice = await this.productPriceService.findOne({ product: data.product, department: data.department });
+            if (!productPrice)
+                throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
+            data.price = (productPrice.price / 100) * data.quantity;
         }
         return data;
     }
@@ -48,7 +53,7 @@ let ProductionDataPipe = class ProductionDataPipe {
 exports.ProductionDataPipe = ProductionDataPipe;
 exports.ProductionDataPipe = ProductionDataPipe = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [production_service_1.ProductionService,
+    __metadata("design:paramtypes", [product_price_service_1.ProductPriceService,
         products_service_1.ProductsService,
         workers_service_1.WorkersService,
         departments_service_1.DepartmentsService])

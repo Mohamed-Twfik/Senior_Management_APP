@@ -18,10 +18,9 @@ const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const bonus_service_1 = require("./bonus.service");
-const create_bonus_dto_1 = require("./dto/create-bonus.dto");
-const update_bonus_dto_1 = require("./dto/update-bonus.dto");
-const bonus_id_pipe_1 = require("./pipes/bonus-id.pipe");
+const bonus_dto_1 = require("./dto/bonus.dto");
 const bonus_data_pipe_1 = require("./pipes/bonus-data.pipe");
+const bonus_id_pipe_1 = require("./pipes/bonus-id.pipe");
 let BonusController = class BonusController {
     constructor(bonusService) {
         this.bonusService = bonusService;
@@ -46,7 +45,7 @@ __decorate([
     __param(0, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_bonus_dto_1.CreateBonusDto, Object]),
+    __metadata("design:paramtypes", [bonus_dto_1.BonusDto, Object]),
     __metadata("design:returntype", void 0)
 ], BonusController.prototype, "create", null);
 __decorate([
@@ -65,7 +64,7 @@ __decorate([
     __param(1, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_bonus_dto_1.UpdateBonusDto, Object]),
+    __metadata("design:paramtypes", [Object, bonus_dto_1.BonusDto, Object]),
     __metadata("design:returntype", void 0)
 ], BonusController.prototype, "update", null);
 __decorate([

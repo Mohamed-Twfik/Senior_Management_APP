@@ -13,10 +13,8 @@ export class Attendance {
   })
   worker: Types.ObjectId;
 
-  @Prop({
-    required: true
-  })
-  price: number;
+  @Prop()
+  price?: number;
 
   @Prop()
   createdAtArabic?: string;

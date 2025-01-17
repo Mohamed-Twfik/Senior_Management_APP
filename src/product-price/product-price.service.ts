@@ -1,20 +1,15 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import e, { Response } from 'express';
-import { Model, RootFilterQuery, Types } from 'mongoose';
-import { DepartmentDocument } from 'src/departments/entities/department.entity';
-import { ProductDocument } from 'src/products/entities/product.entity';
+import { Model, Types } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
-import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
+import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { DepartmentsService } from '../departments/departments.service';
 import { ProductsService } from '../products/products.service';
-import { CreateProductPriceDto } from './dto/create-product-price.dto';
-import { UpdateProductPriceDto } from './dto/update-product-price.dto';
+import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPrice, ProductPriceDocument } from './entities/product-price.entity';
-import { BaseService } from 'src/utils/classes/base.service';
 
 @Injectable()
 export class ProductPriceService extends BaseService {
@@ -57,10 +52,7 @@ export class ProductPriceService extends BaseService {
    * @param createProductPriceDto the data for the new productPrice
    * @param user the user who is creating the new productPrice
    */
-  async create(createProductPriceDto: CreateProductPriceDto, user: UserDocument) {
-    createProductPriceDto.product = new Types.ObjectId(createProductPriceDto.product);
-    createProductPriceDto.department = new Types.ObjectId(createProductPriceDto.department);
-
+  async create(createProductPriceDto: ProductPriceDto, user: UserDocument) {
     const existPrice = await this.productPriceModel.findOne({ department: createProductPriceDto.department, product: createProductPriceDto.product });
     if (existPrice) throw new ConflictException('سعر المنتج في هذا القسم موجود بالفعل');
     
@@ -115,11 +107,7 @@ export class ProductPriceService extends BaseService {
    * @param user The user who is updating the productPrice.
    * @throws ConflictException if the product price is already exist.
    */
-  async update(productPrice: ProductPriceDocument, updateProductPriceDto: UpdateProductPriceDto, user: UserDocument) {
-    if (updateProductPriceDto.product) updateProductPriceDto.product = new Types.ObjectId(updateProductPriceDto.product);
-    else updateProductPriceDto.product = productPrice.product;
-    if (updateProductPriceDto.department) updateProductPriceDto.department = new Types.ObjectId(updateProductPriceDto.department);
-    else updateProductPriceDto.department = productPrice.department;
+  async update(productPrice: ProductPriceDocument, updateProductPriceDto: ProductPriceDto, user: UserDocument) {
     const existPrice = await this.productPriceModel.findOne({
       $and: [
         { department: updateProductPriceDto.department },

@@ -11,10 +11,8 @@ export declare class SalaryService {
     private readonly departmentsService;
     constructor(productionService: ProductionService, attendanceService: AttendanceService, bonusService: BonusService, departmentsService: DepartmentsService);
     getSalary(getSalaryDto: GetSalaryDto, user: UserDocument): Promise<{
-        data: {
-            productionWorkers: any[];
-            attendanceWorkers: any[];
-        };
+        productionWorkers: any[];
+        attendanceWorkers: any[];
         user: UserDocument;
         type: string;
         title: string;

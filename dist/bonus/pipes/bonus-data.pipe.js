@@ -17,11 +17,13 @@ let BonusDataPipe = class BonusDataPipe {
         this.departmentsService = departmentsService;
     }
     async transform(BonusData, metadata) {
-        if (BonusData.department) {
-            const department = await this.departmentsService.findById(BonusData.department);
-            if (!department)
-                throw new common_1.NotFoundException('خطأ في معرف القسم.');
-        }
+        const department = await this.departmentsService.findById(BonusData.department.toString());
+        if (!department)
+            throw new common_1.NotFoundException('خطأ في معرف القسم.');
+        BonusData.department = department._id;
+        BonusData.to = (BonusData.to === 0) ? Infinity : BonusData.to;
+        if (BonusData.from >= BonusData.to)
+            throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
         return BonusData;
     }
 };

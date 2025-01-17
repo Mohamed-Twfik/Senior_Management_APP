@@ -16,10 +16,10 @@ exports.BonusService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const users_service_1 = require("../users/users.service");
-const bonus_entity_1 = require("./entities/bonus.entity");
-const base_service_1 = require("../utils/classes/base.service");
 const departments_service_1 = require("../departments/departments.service");
+const users_service_1 = require("../users/users.service");
+const base_service_1 = require("../utils/classes/base.service");
+const bonus_entity_1 = require("./entities/bonus.entity");
 let BonusService = class BonusService extends base_service_1.BaseService {
     constructor(bonusModel, usersService, departmentsService) {
         super();
@@ -40,10 +40,6 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         };
     }
     async create(createBonusDto, user) {
-        createBonusDto.to = (createBonusDto.to === 0) ? Infinity : createBonusDto.to;
-        if (createBonusDto.from >= createBonusDto.to)
-            throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
-        createBonusDto.department = new mongoose_2.Types.ObjectId(createBonusDto.department);
         const existBonus = await this.bonusModel.findOne({
             $and: [
                 {
@@ -93,13 +89,6 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
     }
     async update(bonus, updateBonusDto, user) {
-        updateBonusDto.to = (updateBonusDto.to === 0) ? Infinity : (updateBonusDto.to || bonus.to);
-        if (updateBonusDto.from >= updateBonusDto.to)
-            throw new common_1.NotAcceptableException('الحد الأدنى يجب أن يكون أقل من الحد الأعلى');
-        if (updateBonusDto.department)
-            updateBonusDto.department = new mongoose_2.Types.ObjectId(updateBonusDto.department);
-        else
-            updateBonusDto.department = bonus.department;
         const existBonus = await this.bonusModel.findOne({
             $and: [
                 { _id: { $ne: bonus._id } },

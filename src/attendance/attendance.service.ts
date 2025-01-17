@@ -1,16 +1,15 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAttendanceDto } from './dto/create-attendance.dto';
-import { UpdateAttendanceDto } from './dto/update-attendance.dto';
-import { BaseService } from 'src/utils/classes/base.service';
-import { Model, Document } from 'mongoose';
-import { UserDocument } from 'src/users/entities/user.entity';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Attendance, AttendanceDocument } from './entities/attendance.entity';
-import { UsersService } from 'src/users/users.service';
-import { WorkersService } from 'src/workers/workers.service';
-import { QueryDto } from 'src/utils/dtos/query.dto';
+import { Model } from 'mongoose';
+import { UserDocument } from 'src/users/entities/user.entity';
 import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { UsersService } from 'src/users/users.service';
+import { BaseService } from 'src/utils/classes/base.service';
+import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkerType } from 'src/workers/enums/workerType.enum';
+import { WorkersService } from 'src/workers/workers.service';
+import { AttendanceDto } from './dto/attendance.dto';
+import { Attendance, AttendanceDocument } from './entities/attendance.entity';
 
 @Injectable()
 export class AttendanceService extends BaseService {
@@ -46,18 +45,12 @@ export class AttendanceService extends BaseService {
    * @param createDto Attendance data.
    * @param userDocument The user who is create attendance.
    */
-  async create(createDto: CreateAttendanceDto, userDocument: UserDocument): Promise<void> {
+  async create(createDto: AttendanceDto, userDocument: UserDocument): Promise<void> {
     const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker, date: createDto.date });
     if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
-
-    const worker = await this.workersService.findById(createDto.worker.toString());
-    if(!worker.salary) throw new NotFoundException('يجب تحديد الراتب للعامل أولا.');
-    let price = undefined;
-    if(worker.type !== WorkerType.Production) price = worker.salary / 6;
     
     const inputData: Attendance = {
       ...createDto,
-      price,
       createdBy: userDocument._id,
       updatedBy: userDocument._id
     };
@@ -106,18 +99,12 @@ export class AttendanceService extends BaseService {
    * @param updateDto Attendance update data.
    * @param userDocument The user who is update attendance.
    */
-  async update(entity: AttendanceDocument, updateDto: any, userDocument: UserDocument): Promise<void> {
+  async update(entity: AttendanceDocument, updateDto: AttendanceDto, userDocument: UserDocument): Promise<void> {
     const existAttendance = await this.attendanceModel.findOne({ worker: updateDto.worker, date: updateDto.date, _id: { $ne: entity._id } });
     if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
 
-    const worker = await this.workersService.findById(updateDto.worker.toString());
-    if(!worker.salary) throw new NotFoundException('يجب تحديد الراتب للعامل أولا.');
-    let price = undefined;
-    if(worker.type !== WorkerType.Production) price = worker.salary / 6;
-
     const inputData: Partial<Attendance> = {
       ...updateDto,
-      price,
       updatedBy: userDocument._id
     };
     await entity.set(inputData).save();

@@ -1,12 +1,11 @@
 import { UserDocument } from 'src/users/entities/user.entity';
 import { BonusService } from './bonus.service';
-import { CreateBonusDto } from './dto/create-bonus.dto';
-import { UpdateBonusDto } from './dto/update-bonus.dto';
+import { BonusDto } from './dto/bonus.dto';
 import { BonusDocument } from './entities/bonus.entity';
 export declare class BonusController {
     private readonly bonusService;
     constructor(bonusService: BonusService);
-    create(createBonusDto: CreateBonusDto, user: UserDocument): Promise<void>;
+    create(createBonusDto: BonusDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<{
         users: any[];
         departments: any[];
@@ -26,6 +25,6 @@ export declare class BonusController {
             };
         };
     }>;
-    update(bonus: BonusDocument, updateBonusDto: UpdateBonusDto, user: UserDocument): Promise<void>;
+    update(bonus: BonusDocument, updateBonusDto: BonusDto, user: UserDocument): Promise<void>;
     remove(bonus: BonusDocument): Promise<void>;
 }

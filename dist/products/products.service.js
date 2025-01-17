@@ -17,8 +17,8 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const users_service_1 = require("../users/users.service");
-const product_entity_1 = require("./entities/product.entity");
 const base_service_1 = require("../utils/classes/base.service");
+const product_entity_1 = require("./entities/product.entity");
 let ProductsService = class ProductsService extends base_service_1.BaseService {
     constructor(productsModel, usersService) {
         super();
@@ -39,8 +39,7 @@ let ProductsService = class ProductsService extends base_service_1.BaseService {
         };
     }
     async create(createProductDto, user) {
-        const { name } = createProductDto;
-        const existProducts = await this.findOne({ name });
+        const existProducts = await this.findOne({ name: createProductDto.name });
         if (existProducts)
             throw new common_1.ConflictException('إسم المنتج موجود بالفعل');
         const inputDate = {

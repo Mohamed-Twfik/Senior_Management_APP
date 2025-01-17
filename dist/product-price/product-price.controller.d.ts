@@ -1,12 +1,11 @@
 import { UserDocument } from 'src/users/entities/user.entity';
-import { CreateProductPriceDto } from './dto/create-product-price.dto';
-import { UpdateProductPriceDto } from './dto/update-product-price.dto';
+import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPriceDocument } from './entities/product-price.entity';
 import { ProductPriceService } from './product-price.service';
 export declare class ProductPriceController {
     private readonly productPriceService;
     constructor(productPriceService: ProductPriceService);
-    create(createProductPriceDto: CreateProductPriceDto, user: UserDocument): Promise<void>;
+    create(createProductPriceDto: ProductPriceDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<{
         users: any[];
         products: any[];
@@ -27,6 +26,6 @@ export declare class ProductPriceController {
             };
         };
     }>;
-    update(productPrice: ProductPriceDocument, updateProductPriceDto: UpdateProductPriceDto, user: UserDocument): Promise<void>;
+    update(productPrice: ProductPriceDocument, updateProductPriceDto: ProductPriceDto, user: UserDocument): Promise<void>;
     remove(productPrice: ProductPriceDocument): Promise<void>;
 }

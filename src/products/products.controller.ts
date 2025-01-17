@@ -1,18 +1,18 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    Query,
-    Redirect,
-    Render
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Redirect,
+  Render
 } from '@nestjs/common';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
-import { CreateProductDto } from './dto/create-product.dto';
+import { ProductDto } from './dto/product.dto';
 import { ProductDocument } from './entities/product.entity';
 import { ProductIdPipe } from './pipes/product-id.pipe';
 import { ProductsService } from './products.service';
@@ -25,7 +25,7 @@ export class ProductsController {
   @Redirect('/products')
   create(
     @GetUser() user: UserDocument,
-    @Body() createProductDto: CreateProductDto
+    @Body() createProductDto: ProductDto
   ) {
     return this.productsService.create(createProductDto, user);
   }
@@ -43,7 +43,7 @@ export class ProductsController {
   @Redirect('/products?sort=-updatedAt')
   update(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
-    @Body() updateProductDto: CreateProductDto,
+    @Body() updateProductDto: ProductDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productsService.update(product, updateProductDto, user);

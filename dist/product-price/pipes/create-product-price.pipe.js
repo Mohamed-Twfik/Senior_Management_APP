@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductPricePipe = void 0;
 const common_1 = require("@nestjs/common");
-const products_service_1 = require("../../products/products.service");
 const departments_service_1 = require("../../departments/departments.service");
+const products_service_1 = require("../../products/products.service");
 const product_price_service_1 = require("../product-price.service");
 let CreateProductPricePipe = class CreateProductPricePipe {
     constructor(productsService, departmentsService, productPriceService) {
@@ -20,17 +20,15 @@ let CreateProductPricePipe = class CreateProductPricePipe {
         this.departmentsService = departmentsService;
         this.productPriceService = productPriceService;
     }
-    transform(data, metadata) {
-        const { product, department } = data;
-        const productExists = this.productsService.findById(product.toString());
+    async transform(data, metadata) {
+        const productExists = await this.productsService.findById(data.product.toString());
         if (!productExists)
             throw new common_1.NotAcceptableException('خطأ في معرف المنتج.');
-        const departmentExists = this.departmentsService.findById(department.toString());
+        data.product = productExists._id;
+        const departmentExists = await this.departmentsService.findById(data.department.toString());
         if (!departmentExists)
             throw new common_1.NotAcceptableException('خطأ في معرف القسم.');
-        const productPriceExists = this.productPriceService.findOne({ product, department });
-        if (productPriceExists)
-            throw new common_1.ConflictException('سعر المنتج موجود بالفعل.');
+        data.department = departmentExists._id;
         return data;
     }
 };

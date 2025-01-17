@@ -14,5 +14,6 @@ import { WorkersModule } from 'src/workers/workers.module';
   ],
   controllers: [AttendanceController],
   providers: [AttendanceService],
+  exports: [AttendanceService]
 })
 export class AttendanceModule {}

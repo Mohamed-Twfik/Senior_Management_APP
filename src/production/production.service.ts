@@ -1,7 +1,6 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { BonusService } from 'src/bonus/bonus.service';
 import { DepartmentsService } from 'src/departments/departments.service';
 import { ProductsService } from 'src/products/products.service';
 import { UserDocument } from 'src/users/entities/user.entity';
@@ -11,9 +10,7 @@ import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkerType } from 'src/workers/enums/workerType.enum';
 import { WorkersService } from 'src/workers/workers.service';
-import { ProductPriceService } from '../product-price/product-price.service';
-import { CreateProductionDto } from './dto/create-production.dto';
-import { UpdateProductionDto } from './dto/update-production.dto';
+import { ProductionDto } from './dto/production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
 
 @Injectable()
@@ -30,7 +27,6 @@ export class ProductionService extends BaseService {
     private readonly productsService: ProductsService,
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
-    private readonly productPriceService: ProductPriceService
   ) {
     super();
   }
@@ -64,7 +60,7 @@ export class ProductionService extends BaseService {
    * @param user The user who is creating the new Production.
    * @throws NotFoundException if the product price not found.
    */
-  async create(createProductionDto: CreateProductionDto, user: UserDocument) {
+  async create(createProductionDto: ProductionDto, user: UserDocument) {
     const existProduction = await this.productionModel.findOne({
       worker: createProductionDto.worker,
       date: createProductionDto.date,
@@ -72,18 +68,9 @@ export class ProductionService extends BaseService {
       department: createProductionDto.department
     });
     if(existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
-
-    const productPrice = await this.productPriceService.findOne({ product: createProductionDto.product, department: createProductionDto.department });
-    if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-
-    const worker = await this.workersService.findById(createProductionDto.worker.toString());
-    let price = undefined;
-    if (worker.type !== WorkerType.Weekly) price = (productPrice.price / 100) * createProductionDto.quantity;
-    
     
     const inputDate: Production = {
       ...createProductionDto,
-      price,
       createdBy: user._id,
       updatedBy: user._id,
     }
@@ -135,7 +122,7 @@ export class ProductionService extends BaseService {
    * @param user The user who is updating the Production.
    * @Throws NotFoundException if the product price not found.
    */
-  async update(production: ProductionDocument, updateProductionDto: UpdateProductionDto, user: UserDocument) {
+  async update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument) {
     const existProduction = await this.productionModel.findOne({
       worker: updateProductionDto.worker,
       date: updateProductionDto.date,
@@ -145,16 +132,8 @@ export class ProductionService extends BaseService {
     });
     if (existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
     
-    const productPrice = await this.productPriceService.findOne({ product: updateProductionDto.product, department: updateProductionDto.department });
-    if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-
-    const worker = await this.workersService.findById(updateProductionDto.worker.toString());
-    let price = undefined;
-    if (worker.type !== WorkerType.Weekly) price = (productPrice.price / 100) * updateProductionDto.quantity;
-    
     const inputData: Partial<Production> = {
       ...updateProductionDto,
-      price,
       updatedBy: user._id
     }
 

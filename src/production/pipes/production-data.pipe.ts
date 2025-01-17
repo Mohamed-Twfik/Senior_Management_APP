@@ -1,10 +1,11 @@
-import { ArgumentMetadata, ConflictException, Injectable, NotAcceptableException } from "@nestjs/common";
-import { DepartmentsService } from "src/departments/departments.service";
-import { ProductsService } from '../../products/products.service';
-import { CreateProductionDto } from "../dto/create-production.dto";
-import { ProductionService } from "../production.service";
-import { WorkersService } from '../../workers/workers.service';
+import { ArgumentMetadata, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { Types } from "mongoose";
+import { DepartmentsService } from "src/departments/departments.service";
+import { WorkerType } from "src/workers/enums/workerType.enum";
+import { ProductPriceService } from '../../product-price/product-price.service';
+import { ProductsService } from '../../products/products.service';
+import { WorkersService } from '../../workers/workers.service';
+import { ProductionDto } from "../dto/production.dto";
 
 /**
  * Create production pipe.
@@ -12,7 +13,7 @@ import { Types } from "mongoose";
 @Injectable()
 export class ProductionDataPipe {
   constructor(
-    private readonly productionService: ProductionService,
+    private readonly productPriceService: ProductPriceService,
     private readonly productsService: ProductsService,
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
@@ -24,23 +25,27 @@ export class ProductionDataPipe {
    * @param metadata metadata
    * @returns transformed production  data
    */
-  transform(data: CreateProductionDto, metadata: ArgumentMetadata) {
-    if (data.product) {
-      const productExists = this.productsService.findById(data.product.toString());
-      if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
-      data.product = new Types.ObjectId(data.product);
-    }
+  async transform(data: ProductionDto & {price: number}, metadata: ArgumentMetadata) {
+    const productExists = await this.productsService.findById(data.product.toString());
+    if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
+    data.product = productExists._id;
     
+    const workerExists = await this.workersService.findById(data.worker.toString());
+    if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
+    data.worker = workerExists._id;
+
     if (data.department) {
-      const departmentExists = this.departmentsService.findById(data.department.toString());
+      const departmentExists = await this.departmentsService.findById(data.department.toString());
       if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
-      data.department = new Types.ObjectId(data.department);
+      data.department = departmentExists._id;
+    } else {
+      data.department = workerExists.department;
     }
-    
-    if (data.worker) {
-      const workerExists = this.workersService.findById(data.worker.toString());
-      if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
-      data.worker = new Types.ObjectId(data.worker);
+
+    if (workerExists.type !== WorkerType.Weekly) {
+      const productPrice = await this.productPriceService.findOne({ product: data.product, department: data.department });
+      if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
+      data.price = (productPrice.price / 100) * data.quantity;
     }
 
     return data;

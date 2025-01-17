@@ -5,10 +5,8 @@ export declare class SalaryController {
     private readonly salaryService;
     constructor(salaryService: SalaryService);
     getSalary(getSalaryDto: GetSalaryDto, user: UserDocument): Promise<{
-        data: {
-            productionWorkers: any[];
-            attendanceWorkers: any[];
-        };
+        productionWorkers: any[];
+        attendanceWorkers: any[];
         user: UserDocument;
         type: string;
         title: string;

@@ -2,7 +2,7 @@ import { Document, Types } from "mongoose";
 export declare class Attendance {
     date: Date;
     worker: Types.ObjectId;
-    price: number;
+    price?: number;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     arabicDate?: string;

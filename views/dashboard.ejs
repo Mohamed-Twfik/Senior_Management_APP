@@ -1,36 +1,70 @@
-<form action="/<%= type %>" id="filter-form" method="get"></form>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
-<div class="container overflow-hidden">
-  <%- include('components/menu-bar', {...filters}) %>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="/styles/choices.css" />
+    <link rel="stylesheet" href="/styles/all.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Harmattan:wght@400;500;700&display=swap" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+    <link rel="stylesheet" href="/styles/menu-bar.css" />
+    <link rel="stylesheet" href="/styles/pagination.css" />
+    <link rel="stylesheet" href="/styles/table.css" />
+    <link rel="stylesheet" href="/styles/logo.css" />
+    <title><%= title %></title>
+  </head>
 
-  <div class="row g-4 my-4" style="max-width: 400px;">
-    <%- include(`components/form-modals/create`) %>
-    <div class="col-sm-6 col-12">
-      <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
-    </div>
-      
-    <% if (type === 'production' || type === 'attendance') { %>
-      <%- include('components/form-modals/get-salary') %>
-      <div class="col-sm-6 col-12">
-        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
+  <body page-type="<%= type %>">
+    <div class="logo"><%- include("components/logo", {bottomColor: '#003f58' , topColor: '#5fd3ff' }) %></div>
+    <%- include('components/header') %>
+
+    <% if(type === 'salary') { %>
+      <%- include('salary') %>
+    <% } else { %>
+      <form action="/<%= type %>" id="filter-form" method="get"></form>
+
+      <div class="container overflow-hidden">
+        <%- include('components/menu-bar', {...filters}) %>
+
+        <div class="row g-4 my-4" style="max-width: 400px;">
+          <%- include(`components/form-modals/create`) %>
+          <div class="col-sm-6 col-12">
+            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
+          </div>
+
+          <% if (type==='production' || type==='attendance' ) { %>
+            <%- include('components/form-modals/get-salary') %>
+            <div class="col-sm-6 col-12">
+              <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
+            </div>
+          <% } %>
+        </div>
+
+        <% if(error) { %>
+          <div class="alert alert-danger alert-dismissible" role="alert">
+            <div>
+              <%= error %>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% } %>
+
+        <%- include(`components/table`) %>
+
+        <% if(filters.pagination.totalPages> 1) { %>
+          <%- include('components/pagination', filters.pagination) %>
+        <% } %>
       </div>
     <% } %>
-  </div>
 
-  <% if(error) { %>
-    <div class="alert alert-danger alert-dismissible" role="alert">
-      <div><%= error %></div>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% } %>
+    <script src="/scripts/bootstrap.bundle.min.js"></script>
+    <script src="/scripts/choices.js"></script>
+    <script src="/scripts/filters.js"></script>
+    <script src="/scripts/modules/<%= type %>.js"></script>
+    <script src="/scripts/script.js"></script>
+  </body>
 
-  <% if(data.length > 0) { %>
-    <%- include(`components/table`) %>
-
-    <% if(filters.pagination.totalPages> 1) { %>
-      <%- include('components/pagination', filters.pagination) %>
-    <% } %>
-  <% } else { %>
-    <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
-  <% } %>
-</div>
+</html>
