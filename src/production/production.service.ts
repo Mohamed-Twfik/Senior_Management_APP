@@ -183,7 +183,6 @@ export class ProductionService extends BaseService {
         },
       },
     ]);
-    console.log("production: ", workers);
     return workers;
   }
 }

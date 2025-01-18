@@ -151,7 +151,6 @@ export class AttendanceService extends BaseService {
         },
       },
     ]);
-    console.log("attendance: ", workers);
     return workers;
   }
 }

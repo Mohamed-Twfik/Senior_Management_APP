@@ -16,7 +16,6 @@ export class SalaryService {
   ) { }
   
   async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument) {
-    console.log('getSalaryDto', getSalaryDto);
     const attendanceWorkers = await this.attendanceService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
     const productionWorkers = await this.productionService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
 
