@@ -52,5 +52,5 @@ export declare class ProductionService extends BaseService {
         };
     }>;
     update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument): Promise<void>;
-    getSalaryData(startDate: Date, endDate: Date): import("mongoose").Aggregate<any[]>;
+    getSalaryData(startDate: Date, endDate: Date): Promise<any[]>;
 }

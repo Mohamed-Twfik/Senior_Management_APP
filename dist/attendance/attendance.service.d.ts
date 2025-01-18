@@ -31,5 +31,5 @@ export declare class AttendanceService extends BaseService {
         };
     }>;
     update(entity: AttendanceDocument, updateDto: AttendanceDto, userDocument: UserDocument): Promise<void>;
-    getSalaryData(startDate: Date, endDate: Date): import("mongoose").Aggregate<any[]>;
+    getSalaryData(startDate: Date, endDate: Date): Promise<any[]>;
 }

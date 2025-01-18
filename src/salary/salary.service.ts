@@ -16,6 +16,7 @@ export class SalaryService {
   ) { }
   
   async getSalary(getSalaryDto: GetSalaryDto, user: UserDocument) {
+    console.log('getSalaryDto', getSalaryDto);
     const attendanceWorkers = await this.attendanceService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
     const productionWorkers = await this.productionService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
 
@@ -28,15 +29,13 @@ export class SalaryService {
       });
       const department = await this.departmentsService.findById(worker.department);
       if (bonusPresent) {
-        let bonus = (bonusPresent.percentage / 100) * worker.totalPrice;
+        let bonus = Math.ceil((bonusPresent.percentage / 100) * worker.totalPrice);
         worker.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
       }
       worker.totalSalary = worker.totalPrice + worker.bonus;
     };
 
     const renderData = { productionWorkers, attendanceWorkers, user, type: 'salary', title: 'المرتبات' };
-    console.log(renderData);
-
     return renderData;
   }
 }
