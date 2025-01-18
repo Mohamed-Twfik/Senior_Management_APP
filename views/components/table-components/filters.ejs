@@ -1,5 +1,5 @@
 <tr class="table-dark">
-  <th scope="col"><i class="fa-solid fa-magnifying-glass"></i></th>
+  <th class="table-dark" scope="col"><i class="fa-solid fa-magnifying-glass"></i></th>
 
   <%- include(`../modules/${type}/table-components/filters`) %>
 
@@ -10,7 +10,7 @@
         <option value="objectid:<%= user._id %>" <%= (filters.createdBy===user._id.toString() ) ? "selected" : "" %>>
           <%= user.username %>
         </option>
-        <% }) %>
+      <% }) %>
     </select>
   </td>
   <td scope="col">
@@ -30,6 +30,6 @@
     <input type="text" class="form-control" name="updatedAtArabic" form="filter-form" placeholder="إبحث" value='<%= (filters.updatedAtArabic) ? filters.updatedAtArabic : '' %>'>
   </td>
   <td scope="col" colspan="2">
-    <button type="submit" class="btn w-4" form="filter-form"><i class="fa-solid fa-magnifying-glass"></i>&nbsp&nbsp&nbspبحث</button>
+    <button type="submit" class="btn w-4 search" form="filter-form"><i class="fa-solid fa-magnifying-glass me-3"></i>بحث</button>
   </td>
 </tr>

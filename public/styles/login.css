@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
-  padding: 2em 1em;
-  background-color: #5fd3ff;
+  padding: 3em 2em;
+  background-color: #000217;
   border-radius: 50px;
   transition: 0.4s ease-in-out;
   margin: 4rem auto;
@@ -12,9 +12,8 @@
 
 .form h1 {
   text-align: center;
-  color: #000217;
+  color: #bdecff;
   font-size: 2.5em;
-  margin: 10px;
 }
 
 .form .error{
@@ -28,14 +27,14 @@
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  border-radius: 25px;
-  padding: 1em;
+  border-radius: 10px;
+  padding: .5em;
   border: none;
   outline: none;
-  color: #5fd3ff;
-  background-color: #000217;
-  box-shadow: inset 2px 5px 10px #000217;
+  color: #000217;
+  background-color: #bdecff;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .form .field .toggle-password {
@@ -48,7 +47,6 @@
 .form .field .input-icon {
   height: 1.3em;
   width: 1.3em;
-  fill: #5fd3ff;
 }
 
 .form .field .input-field {
@@ -56,41 +54,27 @@
   border: none;
   outline: none;
   width: 100%;
-  color: #5fd3ff;
   font-size: 1.2em;
 }
 
 .form .field .input-field::placeholder {
-  color: #4ac6ff;
+  color: #00021794;
 }
 
 .form .submit {
   display: block;
   width: 50%;
   padding: .7em;
-  border-radius: 25px;
-  margin: 2em auto 0;
+  border-radius: 10px;
+  margin: 2em auto 1em;
   border: none;
   outline: none;
   transition: 0.4s ease-in-out;
-  background-color: #000217;
-  color: #5fd3ff;
+  background-color: #bdecff;
+  color: #000217;
   cursor: pointer;
 }
 
 .form .submit:hover {
   transform: translateY(-3px);
-}
-
-.form .reset-password {
-  cursor: pointer;
-  text-align: center;
-  color: #000217;
-  text-decoration: none;
-  font-size: large;
-  margin-bottom: 30px;
-}
-
-.form .reset-password:hover {
-  text-decoration: underline;
 }

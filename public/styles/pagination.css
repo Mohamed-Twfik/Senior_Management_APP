@@ -11,8 +11,8 @@
 
 .pagination-nav .pagination .page-item .page-link,
 .pagination-nav .pagination .page-item span {
-  color: #000217;
-  background-color: #5fd3ff;
+  color: #bdecff;
+  background-color: #000217;
   border: none;
   transition: all 300ms ease-in-out;
 }
@@ -31,5 +31,5 @@
 }
 
 .pagination-nav .pagination .page-item.disabled .page-link {
-  background-color: #4ac6ff;
+  background-color: #000217a4;
 }
