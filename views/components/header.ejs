@@ -1,3 +1,4 @@
+<%- include('form-modals/get-salary') %>
 <header>
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
     <div class="position-sticky">
@@ -7,7 +8,9 @@
         </a>
         <div class="icon">
           <a href="/auth/logout" type="button" class="btn icon"><i class="fa-solid fa-arrow-right-from-bracket logout"></i></a>
-          <a class="btn icon" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i></a>
+          <% if(type !== 'salary') { %>
+            <a class="btn icon" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i></a>
+          <% } %>
         </div>
         <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list me-3" style="transform: rotate(180deg);"></i>إظهارالمرتبات</button>
         <!-- <a href="#" class="list-group-item list-group-item-action ripple <%if(type === 'main'){%>active<%}%>" aria-current="true">

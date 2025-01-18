@@ -26,7 +26,7 @@ let AttendanceDataPipe = class AttendanceDataPipe {
             if (workerExists.type !== workerType_enum_1.WorkerType.Production) {
                 if (!workerExists.salary)
                     throw new common_1.NotFoundException('يجب تحديد الراتب للعامل أولا.');
-                data.price = workerExists.salary / 6;
+                data.price = Math.ceil(workerExists.salary / 6);
             }
         }
         return data;

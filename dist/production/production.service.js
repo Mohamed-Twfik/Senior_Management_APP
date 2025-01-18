@@ -112,8 +112,8 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         await production.set(inputData).save();
     }
-    getSalaryData(startDate, endDate) {
-        return this.productionModel.aggregate([
+    async getSalaryData(startDate, endDate) {
+        const workers = await this.productionModel.aggregate([
             {
                 $match: {
                     date: {
@@ -125,7 +125,7 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
             {
                 $lookup: {
                     from: 'workers',
-                    localField: '_id',
+                    localField: 'worker',
                     foreignField: '_id',
                     as: 'workerDetails',
                 },
@@ -155,6 +155,8 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
                 },
             },
         ]);
+        console.log("production: ", workers);
+        return workers;
     }
 };
 exports.ProductionService = ProductionService;

@@ -1,5 +1,9 @@
 <% try { %>
-  <%- include('dashboard') %>
-<% } catch(error) { %>
+  <% if(type==='salary' ) { %>
+    <%- include('salary') %>
+  <% } else { %>
+    <%- include('dashboard') %>
+  <% } %>
+<% } catch(error) { console.log(error); %>
   <%- include('error', { error }) %>
 <% } %>

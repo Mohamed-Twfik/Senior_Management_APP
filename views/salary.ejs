@@ -1,91 +1,118 @@
-<div class="container-xl">
-  <a class="btn my-5" href="/production">رجوع لصفحة الإنتاج</a>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="/styles/all.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Harmattan:wght@400;500;700&display=swap" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+    <link rel="stylesheet" href="/styles/table.css" />
+    <link rel="stylesheet" href="/styles/logo.css" />
+    <title>
+      <%= title %>
+    </title>
+  </head>
 
-  <% if(productionWorkers.length !== 0) { %>
-    <div class="table-responsive">
-      <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
-        <caption class="mx-4 fs-5">
-          <span>عمال المرتب الأسبوعي</span>
-        </caption>
-        <thead>
-          <tr class="table-dark">
-            <th scope="col">الرقم</th>
-            <th scope="col">إسم العامل</th>
-            <th scope="col">المرتب</th>
-            <th scope="col">تم</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% data.forEach((worker, index)=>{ %>
-            <tr>
-              <th class="table-dark" scope="row">
-                <%= index+1 %>
-              </th>
-              <td>
-                <%= worker.name %>
-              </td>
-              <td>
-                <%= worker.totalPrice %>
-              </td>
-              <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch">
-                </div>
-              </td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  <% } else { %>
-    <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
-  <% } %>
+  <body page-type="<%= type %>">
+    <%- include('components/header') %>
+    <main style="margin-top: 10px">
+      <div class="container pt-4">
+        <div class="container-xl">
+          <% if(attendanceWorkers.length !== 0) { %>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
+                <caption class="mx-4 fs-5">
+                  <span>عمال المرتب الأسبوعي</span>
+                </caption>
+                <thead>
+                  <tr class="table-dark">
+                    <th scope="col">الرقم</th>
+                    <th scope="col">إسم العامل</th>
+                    <th scope="col">المرتب</th>
+                    <th scope="col">تم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% attendanceWorkers.forEach((worker, index)=>{ %>
+                    <tr>
+                      <th class="table-dark" scope="row">
+                        <%= index+1 %>
+                      </th>
+                      <td>
+                        <%= worker.name %>
+                      </td>
+                      <td>
+                        <%= worker.totalPrice %>
+                      </td>
+                      <td>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" role="switch">
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else { %>
+            <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
+          <% } %>
 
-  <% if(attendanceWorkers.length !== 0) { %>
-    <div class="table-responsive">
-      <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
-        <caption class="mx-4 fs-5">
-          <span>عمال الإنتاج</span>
-        </caption>
-        <thead>
-          <tr class="table-dark">
-            <th scope="col">الرقم</th>
-            <th scope="col">إسم العامل</th>
-            <th scope="col">المرتب بدون الحافز</th>
-            <th scope="col">قيمة الحافز</th>
-            <th scope="col">المجموع</th>
-            <th scope="col">تم</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% data.forEach((worker, index)=>{ %>
-            <tr>
-              <th class="table-dark" scope="row">
-                <%= index+1 %>
-              </th>
-              <td>
-                <%= worker.name %>
-              </td>
-              <td>
-                <%= worker.totalPrice %>
-              </td>
-              <td>
-                <%= worker.bonus %>
-              </td>
-              <td>
-                <%= worker.totalSalary %>
-              </td>
-              <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch">
-                </div>
-              </td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-  <% } else { %>
-    <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
-  <% } %>
-</div>
+          <% if(productionWorkers.length !== 0) { %>
+            <div class="table-responsive">
+              <table class="table table-hover table-striped-columns table-bordered border-dark align-middle caption-top">
+                <caption class="mx-4 fs-5">
+                  <span>عمال الإنتاج</span>
+                </caption>
+                <thead>
+                  <tr class="table-dark">
+                    <th scope="col">الرقم</th>
+                    <th scope="col">إسم العامل</th>
+                    <th scope="col">المرتب بدون الحافز</th>
+                    <th scope="col">قيمة الحافز</th>
+                    <th scope="col">المجموع</th>
+                    <th scope="col">تم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% productionWorkers.forEach((worker, index)=>{ %>
+                    <tr>
+                      <th class="table-dark" scope="row">
+                        <%= index+1 %>
+                      </th>
+                      <td>
+                        <%= worker.name %>
+                      </td>
+                      <td>
+                        <%= worker.totalPrice %>
+                      </td>
+                      <td>
+                        <%= worker.bonus %>
+                      </td>
+                      <td>
+                        <%= worker.totalSalary %>
+                      </td>
+                      <td>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" role="switch">
+                        </div>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else { %>
+            <div class="alert alert-warning" role="alert">لا يوجد بيانات</div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+      
+    <script src="/scripts/bootstrap.bundle.min.js"></script>
+    <script src="/scripts/modules/salary.js"></script>
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>

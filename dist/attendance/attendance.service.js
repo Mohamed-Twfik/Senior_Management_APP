@@ -93,8 +93,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         };
         await entity.set(inputData).save();
     }
-    getSalaryData(startDate, endDate) {
-        return this.attendanceModel.aggregate([
+    async getSalaryData(startDate, endDate) {
+        const workers = await this.attendanceModel.aggregate([
             {
                 $match: {
                     date: {
@@ -106,7 +106,7 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
             {
                 $lookup: {
                     from: 'workers',
-                    localField: '_id',
+                    localField: 'worker',
                     foreignField: '_id',
                     as: 'workerDetails',
                 },
@@ -134,6 +134,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
                 },
             },
         ]);
+        console.log("attendance: ", workers);
+        return workers;
     }
 };
 exports.AttendanceService = AttendanceService;

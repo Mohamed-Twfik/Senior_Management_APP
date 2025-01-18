@@ -19,42 +19,35 @@
 
   <body page-type="<%= type %>">
     <%- include('components/header') %>
+    <%- include(`components/form-modals/create`) %>
     <main style="margin-top: 10px">
-    <div class="container pt-4">
-    <% if(type === 'salary') { %>
-      <%- include('salary') %>
-    <% } else { %>
-      <form action="/<%= type %>" id="filter-form" method="get"></form>
-      <%- include('components/form-modals/get-salary') %>
-      <%- include(`components/form-modals/create`) %>
+      <div class="container pt-4">
+        <form action="/<%= type %>" id="filter-form" method="get"></form>
 
-      <div class="container overflow-hidden">
+        <div class="container overflow-hidden">
 
-        <%- include('components/menu-bar', {...filters}) %>
+          <%- include('components/menu-bar', {filters}) %>
 
-        <div class="row g-4 my-4" style="max-width: 400px;">
-          <div class="col-sm-6 col-12">
-          </div>
-        </div>
-
-        <% if(error) { %>
-          <div class="alert alert-danger alert-dismissible" role="alert">
-            <div>
-              <%= error %>
+          <div class="row g-4 my-4" style="max-width: 400px;">
+            <div class="col-sm-6 col-12">
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
-        <% } %>
 
-        <%- include(`components/table`) %>
+          <% if(error) { %>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <div>
+                <%= error %>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <% } %>
 
-        <% if(filters.pagination.totalPages> 1) { %>
-          <%- include('components/pagination', filters.pagination) %>
-        <% } %>
-      </div>
-    <% } %>
+          <%- include(`components/table`) %>
 
-    
+          <% if(filters.pagination.totalPages> 1) { %>
+            <%- include('components/pagination', filters.pagination) %>
+          <% } %>
+        </div>
       </div>
     </main>
 
@@ -62,6 +55,7 @@
     <script src="/scripts/choices.js"></script>
     <script src="/scripts/filters.js"></script>
     <script src="/scripts/modules/<%= type %>.js"></script>
+    <script src="/scripts/modules/salary.js"></script>
     <script src="/scripts/script.js"></script>
   </body>
 

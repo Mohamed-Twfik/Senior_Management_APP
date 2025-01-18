@@ -82,10 +82,9 @@ document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
 });
 
 // Disable salary input when worker type is not workerTypes.Weekly
-document.querySelectorAll('form:not(#filter-form)').forEach((form, index) => {
+document.querySelectorAll('form:not(#filter-form):not(#salary-form)').forEach((form, index) => {
   const typeSelect = form.querySelector('select[name="type"]');
   const salaryInput = form.querySelector('input[name="salary"]');
-
   toggleSalaryDisabled(typeSelect, salaryInput);
   typeSelect.addEventListener('change', (e) => {
     toggleSalaryDisabled(e.target, salaryInput);

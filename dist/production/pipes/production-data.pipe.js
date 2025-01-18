@@ -45,7 +45,7 @@ let ProductionDataPipe = class ProductionDataPipe {
             const productPrice = await this.productPriceService.findOne({ product: data.product, department: data.department });
             if (!productPrice)
                 throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-            data.price = (productPrice.price / 100) * data.quantity;
+            data.price = Math.ceil((productPrice.price / 100) * data.quantity);
         }
         return data;
     }
