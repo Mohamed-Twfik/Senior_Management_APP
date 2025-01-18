@@ -134,7 +134,6 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
                 },
             },
         ]);
-        console.log("attendance: ", workers);
         return workers;
     }
 };

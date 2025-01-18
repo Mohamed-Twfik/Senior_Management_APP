@@ -61,6 +61,10 @@ document.querySelectorAll("input[name='percentage']").forEach(input => {
   input.setAttribute('min', 1);
 });
 
-document.querySelectorAll("form input[name='from'], form input[name='to']").forEach(input => {
+document.querySelectorAll("form input[name='from']").forEach(input => {
   input.setAttribute('placeholder', 0);
+});
+
+document.querySelectorAll("form input[name='to']").forEach(input => {
+  input.setAttribute('placeholder', 'ما لا نهاية');
 });
