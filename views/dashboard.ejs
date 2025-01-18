@@ -18,29 +18,23 @@
   </head>
 
   <body page-type="<%= type %>">
-    <div class="logo"><%- include("components/logo", {bottomColor: '#003f58' , topColor: '#5fd3ff' }) %></div>
     <%- include('components/header') %>
-
+    <main style="margin-top: 10px">
+    <div class="container pt-4">
     <% if(type === 'salary') { %>
       <%- include('salary') %>
     <% } else { %>
       <form action="/<%= type %>" id="filter-form" method="get"></form>
+      <%- include('components/form-modals/get-salary') %>
+      <%- include(`components/form-modals/create`) %>
 
       <div class="container overflow-hidden">
+
         <%- include('components/menu-bar', {...filters}) %>
 
         <div class="row g-4 my-4" style="max-width: 400px;">
-          <%- include(`components/form-modals/create`) %>
           <div class="col-sm-6 col-12">
-            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i>&nbsp&nbspإضافة بيانات</button>
           </div>
-
-          <% if (type==='production' || type==='attendance' ) { %>
-            <%- include('components/form-modals/get-salary') %>
-            <div class="col-sm-6 col-12">
-              <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list" style="transform: rotate(180deg);"></i>&nbsp&nbspإظهارالمرتبات</button>
-            </div>
-          <% } %>
         </div>
 
         <% if(error) { %>
@@ -59,6 +53,10 @@
         <% } %>
       </div>
     <% } %>
+
+    
+      </div>
+    </main>
 
     <script src="/scripts/bootstrap.bundle.min.js"></script>
     <script src="/scripts/choices.js"></script>

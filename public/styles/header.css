@@ -1,49 +1,107 @@
-header {
-  background-color: #5fd3ff;
-  color: #000217;
+@media (min-width: 991.98px) {
+  main {
+    padding-right: 240px;
+  }
+}
 
+nav.sidebar,
+nav.navbar {
+  background-color: #000217;
+  color: #bdecff;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 240px;
+  z-index: 600;
+}
+
+.sidebar .btn {
+  width: 80%;
+  padding: 10px;
+  background-color: #bdecff;
+  color: #000217;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.sidebar .btn:hover {
+  background-color: #bdecff;
+  color: #000217;
+}
+
+.sidebar .icon {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar .icon a {
+  display: inline;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.list-group-item {
+  background-color: #000217;
+  color: #bdecff;
+  border-color: #bdecff;
+  transition: all 200ms ease-in-out;
+  padding: 10px 0;
+}
+
+.list-group-item:active,
+.list-group-item.active {
+  background-color: #bdecff;
+  color: #000217;
+  border-radius: 5px;
+  border: none;
+}
+
+.list-group-item:not(.active):hover {
+  background-color: #000217;
+  color: #bdecff;
+}
+
+.list-group-item i {
+  margin-right: 10px;
+}
+
+.logo {
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.navbar-toggler {
+  background-color: #bdecff;
+  color: #000217;
+  padding: 0 10px;
+  line-height: normal;
+}
+
+.sidebar-brand {
+  font-weight: bold;
+  padding-bottom: 0;
+  font-size: 1.8em !important;
+}
+
+.position-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
 }
 
 .navbar {
-  padding: 0;
-  margin: 0;
-  border: none;
-}
-
-.navbar .navbar-brand {
-  font-weight: bold;
-  padding-bottom: 0;
-  font-size: 2em;
-}
-
-.navbar .nav-tabs {
-  border: none;
-}
-
-.navbar .nav-tabs .nav-item {
-  font-size: 1.1rem;
-  padding: .5em;
-}
-
-.navbar .nav-tabs .nav-item .nav-link {
-  color: #000217;
-  transition: all .3s ease-in-out;
-  padding: 10px;
-}
-
-.navbar .nav-tabs .nav-item .nav-link.active,
-.navbar .nav-tabs .nav-item .nav-link:hover {
-  background-color: #000217;
-  color: #5fd3ff;
-  transform: translateY(11px);
-  border: none;
-}
-
-.navbar .nav-tabs .nav-item .nav-link i{
-  margin-right: .5em;
-  margin-left: .3em;
-}
-
-.navbar .nav-tabs .nav-item .nav-link .logout{
-  transform: rotateY(180deg);
+  z-index: 400;
 }
