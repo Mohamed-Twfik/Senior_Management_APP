@@ -36,4 +36,4 @@ exports.ProductPricePipe = ProductPricePipe = __decorate([
     __metadata("design:paramtypes", [products_service_1.ProductsService,
         departments_service_1.DepartmentsService])
 ], ProductPricePipe);
-//# sourceMappingURL=create-product-price.pipe.js.map
+//# sourceMappingURL=product-price.pipe.js.map
