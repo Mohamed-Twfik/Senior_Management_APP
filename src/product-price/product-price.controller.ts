@@ -16,6 +16,7 @@ import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPriceDocument } from './entities/product-price.entity';
 import { ProductPriceIdPipe } from './pipes/product-price-id.pipe';
 import { ProductPriceService } from './product-price.service';
+import { ProductPricePipe } from './pipes/product-price.pipe';
 
 @Controller('productPrice')
 export class ProductPriceController {
@@ -24,7 +25,7 @@ export class ProductPriceController {
   @Post()
   @Redirect('/productPrice')
   create(
-    @Body() createProductPriceDto: ProductPriceDto,
+    @Body(ProductPricePipe) createProductPriceDto: ProductPriceDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productPriceService.create(createProductPriceDto, user);
@@ -43,7 +44,7 @@ export class ProductPriceController {
   @Redirect('/productPrice?sort=-updatedAt')
   update(
     @Param('productPriceId', ObjectIdPipe, ProductPriceIdPipe) productPrice: ProductPriceDocument,
-    @Body() updateProductPriceDto: ProductPriceDto,
+    @Body(ProductPricePipe) updateProductPriceDto: ProductPriceDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productPriceService.update(productPrice, updateProductPriceDto, user);

@@ -8,11 +8,10 @@ import { ProductPriceService } from "../product-price.service";
  * Create product price pipe.
  */
 @Injectable()
-export class CreateProductPricePipe {
+export class ProductPricePipe {
   constructor(
     private readonly productsService: ProductsService,
     private readonly departmentsService: DepartmentsService,
-    private readonly productPriceService: ProductPriceService,
   ) { }
   /**
    * Transform product price data to save it in the database.
