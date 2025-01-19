@@ -155,7 +155,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
                 },
             },
         ]);
-        console.log("production: ", workers);
         return workers;
     }
 };

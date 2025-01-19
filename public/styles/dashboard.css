@@ -101,9 +101,10 @@ i {
 }
 
 .toggle-password {
-  top: 30%;
+  top: 35%;
   left: 4%;
   cursor: pointer;
+  color: #000217;
 }
 
 #menu-bar {

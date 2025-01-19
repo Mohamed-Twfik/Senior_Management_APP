@@ -23,7 +23,6 @@ let SalaryService = class SalaryService {
         this.departmentsService = departmentsService;
     }
     async getSalary(getSalaryDto, user) {
-        console.log('getSalaryDto', getSalaryDto);
         const attendanceWorkers = await this.attendanceService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
         const productionWorkers = await this.productionService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
         for (const worker of productionWorkers) {
