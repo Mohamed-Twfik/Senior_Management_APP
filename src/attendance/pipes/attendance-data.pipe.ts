@@ -26,7 +26,7 @@ export class AttendanceDataPipe {
       data.worker = workerExists._id;
       if (workerExists.type !== WorkerType.Production) {
         if (!workerExists.salary) throw new NotFoundException('يجب تحديد الراتب للعامل أولا.');
-        data.price = Math.ceil(workerExists.salary / 6);
+        data.price = workerExists.salary / 6;
       }
     }
     return data;
