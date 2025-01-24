@@ -68,41 +68,48 @@ export class FindQueryBuilderService {
    * @returns The query builder instance.
    */
   filter() {
-    const filterObj = { ...this.queryParams };
-    delete filterObj.page;
-    delete filterObj.pageSize;
-    delete filterObj.sort;
-    delete filterObj.fields;
-    delete filterObj.search;
-    delete filterObj.error;
+    const { page, pageSize, sort, fields, search, ...filterObj } = this.queryParams;
 
     if (Object.keys(filterObj).length === 0) return this;
 
     for (const e of Object.entries(filterObj)) {
-      let value: string = e[1];
-      if (e[1].startsWith("objectid:")) {
-        value = e[1].replace("objectid:", "");
-        e[1] = new Types.ObjectId(value);
-      } else if (e[1].startsWith("gt:")) {
-        e[1] = { $gt: e[1].replace("gt:", "") };
-      } else if (e[1].startsWith("gte:")) {
-        e[1] = { $gte: e[1].replace("gte:", "") };
-      } else if(e[1].startsWith("lt:")) {
-        e[1] = { $lt: e[1].replace("lt:", "") };
-      } else if(e[1].startsWith("lte:")) {
-        e[1] = { $lte: e[1].replace("lte:", "") };
-      } else if (e[1].startsWith("in:")) {
-        value = e[1].replace("in:", "").split(",")
-        e[1] = { $in: value };
-      } else if (e[1].startsWith("search:")) {
-        value = e[1].replace("search:", "");
-        e[1] = new RegExp(value, 'i')
-      }
-      filterObj[e[0]] = e[1];
-      this.customFilters[e[0]] = value;
+      const filterKey = e[0];
+      let queryValue = e[1].split(":");
+      let filterValue = queryValue[0]; 
+      let customFilterValue = queryValue[0];
+      if (queryValue.length > 1) {
+        filterValue = this.filterQueryInterpreter(queryValue);
+        customFilterValue = queryValue[1];
+      };
+      filterObj[filterKey] = filterValue;
+      this.customFilters[filterKey] = customFilterValue;
     }
     this.query = this.query.find(filterObj);
     return this;
+  }
+
+  private filterQueryInterpreter(queryValue: string[]) {
+    const filterKeyWords = {
+      "objectid": (value: string) => {
+        return new Types.ObjectId(value)
+      },
+      "gt": (value: string) => {
+        return { $gt: value };
+      },
+      "gte": (value: string) => {
+        return { $gte: value };
+      },
+      "lt": (value: string) => {
+        return { $lt: value };
+      },
+      "lte": (value: string) => {
+        return { $lte: value };
+      },
+      "search": (value: string) => {
+        return new RegExp(value, 'i');
+      }
+    };
+    return filterKeyWords[queryValue[0]](queryValue[1])
   }
   
   /**

@@ -15,6 +15,7 @@ export declare class FindQueryBuilderService {
     constructor(query: Query<any, any>, queryParams: QueryDto);
     resetParameters(query: Query<any, any>, queryParams: QueryDto): void;
     filter(): this;
+    private filterQueryInterpreter;
     paginate(): this;
     sort(): this;
     selectFields(): this;
