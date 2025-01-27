@@ -98,7 +98,7 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
             },
             {
                 $project: {
-                    _id: 0,
+                    _id: 1,
                     name: 1,
                     totalPrice: 1,
                 },

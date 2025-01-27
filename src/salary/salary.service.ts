@@ -5,6 +5,7 @@ import { GetSalaryDto } from './dto/get-salary.dto';
 import { UserDocument } from "src/users/entities/user.entity";
 import { BonusService } from '../bonus/bonus.service';
 import { DepartmentsService } from "src/departments/departments.service";
+import { arabicDateFormatter } from "src/utils/arabic-date-formatter";
 
 @Injectable()
 export class SalaryService {
@@ -34,7 +35,17 @@ export class SalaryService {
       worker.totalSalary = worker.totalPrice + worker.bonus;
     };
 
-    const renderData = { productionWorkers, attendanceWorkers, user, type: 'salary', title: 'المرتبات' };
+    const renderData = {
+      productionWorkers,
+      attendanceWorkers,
+      fromDate: getSalaryDto.from,
+      toDate: getSalaryDto.to,
+      arabicFromDate: arabicDateFormatter.format(getSalaryDto.from),
+      arabicToDate: arabicDateFormatter.format(getSalaryDto.to),
+      user,
+      type: 'salary',
+      title: 'المرتبات'
+    };
     return renderData;
   }
 }

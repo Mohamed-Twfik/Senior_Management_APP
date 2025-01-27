@@ -137,7 +137,7 @@ export class ProductionService extends BaseService {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           name: 1,
           department: 1,
           totalPrice: 1,

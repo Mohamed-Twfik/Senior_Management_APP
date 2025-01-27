@@ -108,7 +108,7 @@ export class AttendanceService extends BaseService {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           name: 1,
           totalPrice: 1,
         },

@@ -15,6 +15,7 @@ const attendance_service_1 = require("../attendance/attendance.service");
 const production_service_1 = require("../production/production.service");
 const bonus_service_1 = require("../bonus/bonus.service");
 const departments_service_1 = require("../departments/departments.service");
+const arabic_date_formatter_1 = require("../utils/arabic-date-formatter");
 let SalaryService = class SalaryService {
     constructor(productionService, attendanceService, bonusService, departmentsService) {
         this.productionService = productionService;
@@ -40,7 +41,17 @@ let SalaryService = class SalaryService {
             worker.totalSalary = worker.totalPrice + worker.bonus;
         }
         ;
-        const renderData = { productionWorkers, attendanceWorkers, user, type: 'salary', title: 'المرتبات' };
+        const renderData = {
+            productionWorkers,
+            attendanceWorkers,
+            fromDate: getSalaryDto.from,
+            toDate: getSalaryDto.to,
+            arabicFromDate: arabic_date_formatter_1.arabicDateFormatter.format(getSalaryDto.from),
+            arabicToDate: arabic_date_formatter_1.arabicDateFormatter.format(getSalaryDto.to),
+            user,
+            type: 'salary',
+            title: 'المرتبات'
+        };
         return renderData;
     }
 };

@@ -13,6 +13,10 @@ export declare class SalaryService {
     getSalary(getSalaryDto: GetSalaryDto, user: UserDocument): Promise<{
         productionWorkers: any[];
         attendanceWorkers: any[];
+        fromDate: Date;
+        toDate: Date;
+        arabicFromDate: string;
+        arabicToDate: string;
         user: UserDocument;
         type: string;
         title: string;

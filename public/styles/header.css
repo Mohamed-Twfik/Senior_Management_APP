@@ -93,19 +93,7 @@ nav.navbar {
 .sidebar #filter-accordion .accordion-body input[type="checkbox"],
 .sidebar #filter-accordion .accordion-body input[type="checkbox"]:checked,
 .sidebar #filter-accordion .accordion-body input[type="checkbox"]:focus {
-  border: 1px solid #000217;
-  box-shadow: none;
   float: none;
-}
-
-.sidebar #filter-accordion .accordion-body input[type="checkbox"] {
-  background-color: #bdecff;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%0, 0, 0, 0.25%29'/%3e%3c/svg%3e");
-}
-
-.sidebar #filter-accordion .accordion-body input[type="checkbox"]:checked {
-  background-color: #98d0e6;
-  background-image: url("data: image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' %3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6' /%3e%3c/svg%3e");
 }
 
 .sidebar #filter-accordion .clear-filters {
