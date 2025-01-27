@@ -1,0 +1,37 @@
+<div class="accordion" id="filter-accordion">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-menu" aria-expanded="true" aria-controls="filter-menu">الفلاتر</button>
+    </h2>
+    <div id="filter-menu" class="accordion-collapse collapse">
+      <div class="accordion-body">
+        <div class="filter-section">
+          <label for="sort" class="col-form-label">
+            <div class="form-check form-switch">
+              <label for="sort-type">ترتيب</label>
+              <input class="form-check-input" type="checkbox" role="switch" name="sort-type" id="sort-type" form="filter-form" <%=(filters.sort.startsWith("-"))?"checked":""%>>
+            </div>
+          </label>
+          <select class="form-select" id="sort" name="sort" form="filter-form">
+            <option value="createdAt" <%=(filters.sort.replace('-', '' )==="createdAt" ) ? 'selected' : '' %>>تاريخ الإنشاء
+            </option>
+            <option value="updatedAt" <%=(filters.sort.replace('-', '' )==="updatedAt" ) ? 'selected' : '' %>>تاريخ آخر تحديث
+            </option>
+            <%- include(`../modules/${type}/sort-options`) %>
+          </select>
+        </div>
+
+        <div class="filter-section">
+          <label for="page-size" class="col-form-label">عدد الصفوف</label>
+          <input id="page-size" type="number" class="form-control" name="pageSize" form="filter-form" value="<%=(filters.pagination.pageSize) ? filters.pagination.pageSize : 10 %>">
+        </div>
+
+        <div class="filter-section submit">
+          <button type="submit" class="btn" form="filter-form"><i class="fa-solid fa-magnifying-glass me-3"></i>فلترة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn clear-filters" href="/<%= type %>"><i class="fa-solid fa-eraser me-3"></i>حذف الفلاتر</a>
+</div>

@@ -19,6 +19,13 @@
   </head>
 
   <body page-type="<%= type %>">
-    <%- include('components/header') %>
+    <%- include('components/header/main') %>
+
+    <script src="/scripts/bootstrap.bundle.min.js"></script>
+    <script src="/scripts/choices.js"></script>
+    <script src="/scripts/filters.js"></script>
+    <script src="/scripts/modules/<%= type %>.js"></script>
+    <script src="/scripts/modules/salary.js"></script>
+    <script src="/scripts/script.js"></script>
   </body>
 </html>

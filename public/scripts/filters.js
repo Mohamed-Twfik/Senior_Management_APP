@@ -10,7 +10,7 @@ const getFilterUrl = (filterForm) => {
   for (const element of filterForm.elements) {
     if (element.value) {
       if (element.getAttribute('type') === 'text') element.value = `search:` + element.value;
-      if ((element.getAttribute('type') === 'number' && element.getAttribute('name') !== 'pageSize') || element.getAttribute('type') === 'range') {
+      if (element.getAttribute('type') === 'number' && element.getAttribute('name') !== 'pageSize') {
         element.setAttribute('type', 'text');
         element.value = `${element.previousElementSibling.value}${element.value}`;
       }

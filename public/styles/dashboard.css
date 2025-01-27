@@ -71,16 +71,6 @@ i {
   border: none;
 }
 
-.form-control[type='number'][form="filter-form"] {
-  max-width: 100px;
-}
-
-.form-control[name='pageSize'][form="filter-form"],
-.form-select[name='sort'][form="filter-form"] {
-  color: #bdecff;
-  background-color: #01425c;
-}
-
 .form-control[name="password"] {
   padding-left: 2.5rem;
 }
@@ -107,33 +97,6 @@ i {
   color: #000217;
 }
 
-#menu-bar {
-  border: 1px solid #000217;
-  border-radius: 15px;
-}
-
-#menu-bar .input-group-text {
-  background-color: #000217;
-  color: #bdecff;
-  border: none;
-  font-size: .9em;
-}
-
-input[type="checkbox"], input[type="checkbox"]:checked, input[type="checkbox"]:focus {
-  border: 1px solid #000217;
-  box-shadow: none;
-}
-
-input[type="checkbox"] {
-  background-color: #bdecff;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%0, 0, 0, 0.25%29'/%3e%3c/svg%3e");
-}
-
-input[type="checkbox"]:checked {
-  background-color: #98d0e6;
-  background-image: url("data: image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' %3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6' /%3e%3c/svg%3e");
-}
-
 .modal-header, .modal-footer {
   border-color: #bdecff;
 }
@@ -143,33 +106,8 @@ input[type="checkbox"]:checked {
   color: #bdecff;
 }
 
-.choices {
-  border-radius: 10px;
-}
-
-.choices * {
-  border: none !important;
-  font-size: 1em !important;
-}
-
-.choices, .choices__list, .choices__inner, .is-highlighted {
-  background-color: #bdecff !important;
-  color: #000217;
-  margin: 0;
-  padding: 0;
-  line-height: normal;
-}
-
-.choices__input {
-  background-color: #01425c !important;
-  color: #bdecff;
-}
-
-.choices__item.is-selected, .choices__list:not(.choices__list--single) .choices__item:hover {
-  background-color: #000217 !important;
-  color: #bdecff;
-}
-
-.choices__inner{
-  padding-right: 30px;
+@media (min-width: 991.98px) {
+  main {
+    padding-right: 240px;
+  }
 }

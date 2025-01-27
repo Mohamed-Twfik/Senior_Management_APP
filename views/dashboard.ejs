@@ -17,20 +17,13 @@
   </head>
 
   <body page-type="<%= type %>">
-    <%- include('components/header') %>
+    <%- include('components/header/main') %>
     <%- include(`components/form-modals/create`) %>
     <main style="margin-top: 10px">
       <div class="container pt-4">
         <form action="/<%= type %>" id="filter-form" method="get"></form>
 
         <div class="container overflow-hidden">
-
-          <%- include('components/menu-bar', {filters}) %>
-
-          <div class="row g-4 my-4" style="max-width: 400px;">
-            <div class="col-sm-6 col-12">
-            </div>
-          </div>
 
           <% if(error) { %>
             <div class="alert alert-danger alert-dismissible" role="alert">
