@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Query } from 'mongoose';
 import { DepartmentsService } from 'src/departments/departments.service';
 import { ProductsService } from 'src/products/products.service';
 import { UserDocument } from 'src/users/entities/user.entity';
@@ -12,15 +12,10 @@ import { WorkerType } from 'src/workers/enums/workerType.enum';
 import { WorkersService } from 'src/workers/workers.service';
 import { ProductionDto } from './dto/production.dto';
 import { Production, ProductionDocument } from './entities/production.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class ProductionService extends BaseService {
-  searchableKeys: string[] = [
-    "arabicDate",
-    "createdAtArabic",
-    "updatedAtArabic",
-  ];
-
   constructor(
     @InjectModel(Production.name) private productionModel: Model<Production>,
     private readonly usersService: UsersService,
@@ -77,42 +72,8 @@ export class ProductionService extends BaseService {
     await this.productionModel.create(inputDate);
   }
 
-  /**
-   * Find all production.
-   * @param queryParams The query parameters.
-   * @param user The user who is get production.
-   * @returns The render variables.
-   */
-  async findAll(queryParams: QueryDto, user: UserDocument) {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const production = await queryBuilder
-      .filter()
-      .search(this.searchableKeys)
-      .sort()
-      .paginate()
-      .build()
-      .populate('worker', 'name')
-      .populate('product', 'name')
-      .populate('department', 'name')
-      .populate('createdBy', 'username')
-      .populate('updatedBy', 'username');
-
-    const renderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
-      data: production,
-      user,
-      filters: {
-        search: queryBuilder.getSearchKey(),
-        sort: queryBuilder.getSortKey(),
-        pagination: {
-          page: queryBuilder.getPage(),
-          totalPages: await queryBuilder.getTotalPages(),
-          pageSize: queryBuilder.getPageSize()
-        },
-        ...queryBuilder.getCustomFilters()
-      }
-    };
-    return {...renderVariables, ...(await this.getAdditionalRenderVariables())};
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('worker', 'name').populate('product', 'name').populate('department', 'name');
   }
 
   /**

@@ -26,7 +26,6 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         this.bonusModel = bonusModel;
         this.usersService = usersService;
         this.departmentsService = departmentsService;
-        this.searchableKeys = [];
     }
     getModuleModel() {
         return this.bonusModel;
@@ -60,33 +59,8 @@ let BonusService = class BonusService extends base_service_1.BaseService {
         };
         await this.bonusModel.create(inputDate);
     }
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const bonus = await queryBuilder
-            .filter()
-            .search(this.searchableKeys)
-            .sort()
-            .paginate()
-            .build()
-            .populate('department', 'name')
-            .populate('createdBy', 'username')
-            .populate('updatedBy', 'username');
-        const renderVariables = {
-            error: queryParams.error || null,
-            data: bonus,
-            user,
-            filters: {
-                search: queryBuilder.getSearchKey(),
-                sort: queryBuilder.getSortKey(),
-                pagination: {
-                    page: queryBuilder.getPage(),
-                    totalPages: await queryBuilder.getTotalPages(),
-                    pageSize: queryBuilder.getPageSize()
-                },
-                ...queryBuilder.getCustomFilters()
-            }
-        };
-        return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+    applyFilters(queryBuilder) {
+        return super.applyFilters(queryBuilder).populate('department', 'name');
     }
     async update(bonus, updateBonusDto, user) {
         const existBonus = await this.bonusModel.findOne({

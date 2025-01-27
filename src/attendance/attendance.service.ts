@@ -10,15 +10,10 @@ import { WorkerType } from 'src/workers/enums/workerType.enum';
 import { WorkersService } from 'src/workers/workers.service';
 import { AttendanceDto } from './dto/attendance.dto';
 import { Attendance, AttendanceDocument } from './entities/attendance.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class AttendanceService extends BaseService {
-  searchableKeys: string[] = [
-    "arabicDate",
-    "createdAtArabic",
-    "updatedAtArabic",
-  ];
-
   constructor(
     @InjectModel(Attendance.name) private attendanceModel: Model<Attendance>,
     private readonly usersService: UsersService,
@@ -57,40 +52,8 @@ export class AttendanceService extends BaseService {
     await this.attendanceModel.create(inputData);
   }
 
-  /**
-   * Find all attendance.
-   * @param queryParams The query parameters.
-   * @param user The user who is get attendance.
-   * @returns The render variables.
-   */
-  async findAll(queryParams: QueryDto, user: UserDocument) {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const data = await queryBuilder
-      .filter()
-      .search(this.searchableKeys)
-      .sort()
-      .paginate()
-      .build()
-      .populate('worker', 'name')
-      .populate('createdBy', 'username')
-      .populate('updatedBy', 'username');
-
-    const renderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
-      data,
-      user,
-      filters: {
-        search: queryBuilder.getSearchKey(),
-        sort: queryBuilder.getSortKey(),
-        pagination: {
-          page: queryBuilder.getPage(),
-          totalPages: await queryBuilder.getTotalPages(),
-          pageSize: queryBuilder.getPageSize()
-        },
-        ...queryBuilder.getCustomFilters()
-      }
-    };
-    return {...renderVariables, ...(await this.getAdditionalRenderVariables())};
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('worker', 'name');
   }
 
   /**

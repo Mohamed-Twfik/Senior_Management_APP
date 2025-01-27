@@ -1,50 +1,5 @@
-<%- include('form-modals/get-salary') %>
 <header>
-  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
-    <div class="position-sticky">
-      <div class="list-group list-group-flush mx-3">
-        <a href="#">
-          <h1 class="sidebar-brand mx-3 my-2 mb-4">لوحة التحكم</h1>
-        </a>
-        <div class="icon">
-          <a href="/auth/logout" type="button" class="btn icon"><i class="fa-solid fa-arrow-right-from-bracket logout"></i></a>
-          <% if(type !== 'salary') { %>
-            <a class="btn icon" type="button" data-bs-toggle="modal" data-bs-target='#create-<%= type %>-modal'><i class="fa-solid fa-plus"></i></a>
-          <% } %>
-        </div>
-        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#salary-modal"><i class="fa-solid fa-list me-3" style="transform: rotate(180deg);"></i>إظهارالمرتبات</button>
-        <!-- <a href="#" class="list-group-item list-group-item-action ripple <%if(type === 'main'){%>active<%}%>" aria-current="true">
-          <i class="fa-solid fa-home me-3"></i><span>الصفحة الرئيسية</span>
-        </a> -->
-        <%if(user.role === 'مدير'){%>
-          <a href="/users" class="list-group-item list-group-item-action ripple <%if(type === 'users'){%>active<%}%>">
-            <i class="fa-solid fa-users-gear me-3"></i><span>المشرفين</span>
-          </a>
-        <%}%>
-        <a href="/workers" class="list-group-item list-group-item-action ripple <%if(type === 'workers'){%>active<%}%>">
-          <i class="fa-solid fa-users me-3"></i><span>العمال</span>
-        </a>
-        <a href="/departments" class="list-group-item list-group-item-action ripple <%if(type === 'departments'){%>active<%}%>">
-          <i class="fa-solid fa-building me-3"></i><span>الأقسام</span>
-        </a>
-        <a href="/products" class="list-group-item list-group-item-action ripple <%if(type === 'products'){%>active<%}%>">
-          <i class="fa-brands fa-product-hunt me-3"></i><span>المنتجات</span>
-        </a>
-        <a href="/productPrice" class="list-group-item list-group-item-action ripple <%if(type === 'productPrice'){%>active<%}%>">
-          <i class="fa-solid fa-circle-dollar-to-slot me-3"></i><span>أسعار المنتجات</span>
-        </a>
-        <a href="/bonus" class="list-group-item list-group-item-action ripple <%if(type === 'bonus'){%>active<%}%>">
-          <i class="fa-solid fa-money-bill-trend-up me-3"></i><span>الحوافز</span>
-        </a>
-        <a href="/attendance" class="list-group-item list-group-item-action ripple <%if(type === 'attendance'){%>active<%}%>">
-          <i class="fa-solid fa-clipboard-user me-3"></i><span>الحضور</span>
-        </a>
-        <a href="/production" class="list-group-item list-group-item-action ripple <%if(type === 'production'){%>active<%}%>">
-          <i class="fa-solid fa-circle-dollar-to-slot me-3"></i><span>الإنتاج</span>
-        </a>
-      </div>
-    </div>
-  </nav>
+  <%- include('side-bar') %>
 
   <nav dir="ltr" id="main-navbar" class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">

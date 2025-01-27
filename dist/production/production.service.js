@@ -31,11 +31,6 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         this.productsService = productsService;
         this.workersService = workersService;
         this.departmentsService = departmentsService;
-        this.searchableKeys = [
-            "arabicDate",
-            "createdAtArabic",
-            "updatedAtArabic",
-        ];
     }
     getModuleModel() {
         return this.productionModel;
@@ -66,35 +61,8 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         };
         await this.productionModel.create(inputDate);
     }
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const production = await queryBuilder
-            .filter()
-            .search(this.searchableKeys)
-            .sort()
-            .paginate()
-            .build()
-            .populate('worker', 'name')
-            .populate('product', 'name')
-            .populate('department', 'name')
-            .populate('createdBy', 'username')
-            .populate('updatedBy', 'username');
-        const renderVariables = {
-            error: queryParams.error || null,
-            data: production,
-            user,
-            filters: {
-                search: queryBuilder.getSearchKey(),
-                sort: queryBuilder.getSortKey(),
-                pagination: {
-                    page: queryBuilder.getPage(),
-                    totalPages: await queryBuilder.getTotalPages(),
-                    pageSize: queryBuilder.getPageSize()
-                },
-                ...queryBuilder.getCustomFilters()
-            }
-        };
-        return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+    applyFilters(queryBuilder) {
+        return super.applyFilters(queryBuilder).populate('worker', 'name').populate('product', 'name').populate('department', 'name');
     }
     async update(production, updateProductionDto, user) {
         const existProduction = await this.productionModel.findOne({

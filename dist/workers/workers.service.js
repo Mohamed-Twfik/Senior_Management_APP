@@ -26,9 +26,6 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
         this.workersModel = workersModel;
         this.usersService = usersService;
         this.departmentsService = departmentsService;
-        this.searchableKeys = [
-            "name"
-        ];
     }
     getModuleModel() {
         return this.workersModel;
@@ -52,34 +49,8 @@ let WorkersService = class WorkersService extends base_service_1.BaseService {
         };
         await this.workersModel.create(inputDate);
     }
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const data = await queryBuilder
-            .filter()
-            .search(this.searchableKeys)
-            .sort()
-            .paginate()
-            .build()
-            .populate('department', 'name')
-            .populate('createdBy', 'username')
-            .populate('updatedBy', 'username');
-        const baseRenderVariables = {
-            error: queryParams.error || null,
-            data,
-            user,
-            filters: {
-                search: queryBuilder.getSearchKey(),
-                sort: queryBuilder.getSortKey(),
-                pagination: {
-                    page: queryBuilder.getPage(),
-                    totalPages: await queryBuilder.getTotalPages(),
-                    pageSize: queryBuilder.getPageSize()
-                },
-                ...queryBuilder.getCustomFilters()
-            }
-        };
-        const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
-        return renderVariables;
+    applyFilters(queryBuilder) {
+        return super.applyFilters(queryBuilder).populate('department', 'name');
     }
     async update(worker, updateWorkerDto, user) {
         const existWorker = await this.findOne({

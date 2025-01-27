@@ -12,23 +12,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.MainController = void 0;
 const common_1 = require("@nestjs/common");
-let AppController = class AppController {
-    root(req, res) {
-        return (req.isAuthenticated()) ? res.redirect('/main') : res.redirect('/login');
+const main_service_1 = require("./main.service");
+const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
+let MainController = class MainController {
+    constructor(mainService) {
+        this.mainService = mainService;
+    }
+    root(user) {
+        return {
+            user,
+            title: 'الصفحة الرئيسية',
+            type: 'main',
+        };
     }
 };
-exports.AppController = AppController;
+exports.MainController = MainController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
+    (0, common_1.Render)('index'),
+    __param(0, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], AppController.prototype, "root", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)()
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+], MainController.prototype, "root", null);
+exports.MainController = MainController = __decorate([
+    (0, common_1.Controller)('main'),
+    __metadata("design:paramtypes", [main_service_1.MainService])
+], MainController);
+//# sourceMappingURL=main.controller.js.map

@@ -26,6 +26,7 @@ import { UnauthorizedFilter } from './auth/filters/un-auth.filter';
 import { FallBackModule } from './fall-back/fall-back.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { SalaryModule } from './salary/salary.module';
+import { MainModule } from './main/main.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { SalaryModule } from './salary/salary.module';
     ProductionModule,
     AttendanceModule,
     SalaryModule,
+    MainModule,
     FallBackModule,
   ],
   controllers: [AppController],

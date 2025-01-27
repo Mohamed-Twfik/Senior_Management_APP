@@ -39,6 +39,7 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
             updatedAtArabic: "",
             salary: '',
             bonusLimit: '',
+            date: ''
         };
         this.query = query;
         this.queryParams = queryParams;
@@ -92,6 +93,10 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
             },
             "search": (value) => {
                 return new RegExp(value, 'i');
+            },
+            "daterange": (value) => {
+                const dateRange = value.split(",");
+                return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
             }
         };
         return filterKeyWords[queryValue[0]](queryValue[1]);
@@ -114,15 +119,6 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
     selectFields() {
         if (this.queryParams.fields)
             this.query = this.query.select(this.queryParams.fields);
-        return this;
-    }
-    search(searchableFields) {
-        if (this.queryParams.search) {
-            this.searchKey = this.queryParams.search;
-            const searchRegex = new RegExp(this.searchKey, 'i');
-            let searchObject = searchableFields.map(field => ({ [field]: searchRegex }));
-            this.query = this.query.find({ $or: searchObject });
-        }
         return this;
     }
     build() {

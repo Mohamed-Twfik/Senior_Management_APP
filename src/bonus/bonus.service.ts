@@ -9,12 +9,11 @@ import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { BonusDto } from './dto/bonus.dto';
 import { Bonus, BonusDocument } from './entities/bonus.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 
 @Injectable()
 export class BonusService extends BaseService {
-  searchableKeys: string[] = [];
-
   constructor(
     @InjectModel(Bonus.name) private bonusModel: Model<Bonus>,
     private readonly usersService: UsersService,
@@ -71,40 +70,8 @@ export class BonusService extends BaseService {
     await this.bonusModel.create(inputDate);
   }
 
-    /**
-   * Find all bonuses.
-   * @param queryParams The query parameters.
-   * @param user The user who is get bonuses.
-   * @returns The render variables.
-   */
-  async findAll(queryParams: QueryDto, user: UserDocument) {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const bonus = await queryBuilder
-      .filter()
-      .search(this.searchableKeys)
-      .sort()
-      .paginate()
-      .build()
-      .populate('department', 'name')
-      .populate('createdBy', 'username')
-      .populate('updatedBy', 'username');
-
-    const renderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
-      data: bonus,
-      user,
-      filters: {
-        search: queryBuilder.getSearchKey(),
-        sort: queryBuilder.getSortKey(),
-        pagination: {
-          page: queryBuilder.getPage(),
-          totalPages: await queryBuilder.getTotalPages(),
-          pageSize: queryBuilder.getPageSize()
-        },
-        ...queryBuilder.getCustomFilters()
-      }
-    };
-    return {...renderVariables, ...(await this.getAdditionalRenderVariables())};
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('department', 'name');
   }
 
   /**

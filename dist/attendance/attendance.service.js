@@ -27,11 +27,6 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         this.attendanceModel = attendanceModel;
         this.usersService = usersService;
         this.workersService = workersService;
-        this.searchableKeys = [
-            "arabicDate",
-            "createdAtArabic",
-            "updatedAtArabic",
-        ];
     }
     getModuleModel() {
         return this.attendanceModel;
@@ -55,33 +50,8 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         };
         await this.attendanceModel.create(inputData);
     }
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const data = await queryBuilder
-            .filter()
-            .search(this.searchableKeys)
-            .sort()
-            .paginate()
-            .build()
-            .populate('worker', 'name')
-            .populate('createdBy', 'username')
-            .populate('updatedBy', 'username');
-        const renderVariables = {
-            error: queryParams.error || null,
-            data,
-            user,
-            filters: {
-                search: queryBuilder.getSearchKey(),
-                sort: queryBuilder.getSortKey(),
-                pagination: {
-                    page: queryBuilder.getPage(),
-                    totalPages: await queryBuilder.getTotalPages(),
-                    pageSize: queryBuilder.getPageSize()
-                },
-                ...queryBuilder.getCustomFilters()
-            }
-        };
-        return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+    applyFilters(queryBuilder) {
+        return super.applyFilters(queryBuilder).populate('worker', 'name');
     }
     async update(entity, updateDto, userDocument) {
         const existAttendance = await this.attendanceModel.findOne({ worker: updateDto.worker, date: updateDto.date, _id: { $ne: entity._id } });

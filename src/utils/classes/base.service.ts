@@ -18,16 +18,19 @@ export abstract class BaseService {
     return this.getModuleModel().find(filter);
   };
 
-  async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const data = await queryBuilder
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return queryBuilder
       .filter()
-      .search(this.searchableKeys)
       .sort()
       .paginate()
       .build()
       .populate('createdBy', 'username')
       .populate('updatedBy', 'username');
+  }
+
+  async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
+    const queryBuilder = this.getQueryBuilder(queryParams);
+    const data = await this.applyFilters(queryBuilder);
 
     const baseRenderVariables: BaseRenderVariablesType = {
       error: queryParams.error || null,
@@ -68,7 +71,6 @@ export abstract class BaseService {
     await this.getModuleModel().findByIdAndDelete(entity._id);
   }
 
-  abstract searchableKeys: string[];
   abstract getModuleModel(): Model<any>;
   abstract getAdditionalRenderVariables(): Promise<object>;
   abstract create(createDto: any, userDocument: UserDocument): Promise<void>;

@@ -1,6 +1,8 @@
 <% try { %>
   <% if(type==='salary' ) { %>
     <%- include('salary') %>
+  <% } else if(type === 'main') { %>
+    <%- include('main') %>
   <% } else { %>
     <%- include('dashboard') %>
   <% } %>
