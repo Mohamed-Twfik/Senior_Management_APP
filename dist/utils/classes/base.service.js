@@ -18,16 +18,18 @@ class BaseService {
         return this.getModuleModel().find(filter);
     }
     ;
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const data = await queryBuilder
+    applyFilters(queryBuilder) {
+        return queryBuilder
             .filter()
-            .search(this.searchableKeys)
             .sort()
             .paginate()
             .build()
             .populate('createdBy', 'username')
             .populate('updatedBy', 'username');
+    }
+    async findAll(queryParams, user) {
+        const queryBuilder = this.getQueryBuilder(queryParams);
+        const data = await this.applyFilters(queryBuilder);
         const baseRenderVariables = {
             error: queryParams.error || null,
             data,

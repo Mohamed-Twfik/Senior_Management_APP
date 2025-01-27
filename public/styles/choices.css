@@ -335,4 +335,39 @@
   opacity: 0.5;
 }
 
+.choices {
+  border-radius: 10px;
+}
+
+.choices * {
+  border: none !important;
+  font-size: 1em !important;
+}
+
+.choices,
+.choices__list,
+.choices__inner,
+.is-highlighted {
+  background-color: #bdecff !important;
+  color: #000217;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+}
+
+.choices__input {
+  background-color: #01425c !important;
+  color: #bdecff;
+}
+
+.choices__item.is-selected,
+.choices__list:not(.choices__list--single) .choices__item:hover {
+  background-color: #000217 !important;
+  color: #bdecff;
+}
+
+.choices__inner {
+  padding-right: 30px;
+}
+
 /* =====  End of Choices  ====== */

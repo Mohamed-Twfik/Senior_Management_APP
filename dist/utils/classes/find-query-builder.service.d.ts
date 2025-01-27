@@ -5,6 +5,7 @@ export declare class FindQueryBuilderService {
     private static defaultSortKey;
     private static defaultSearchKey;
     private static defaultPage;
+    private static filterKeyWords;
     private query;
     private queryParams;
     private page;
@@ -19,7 +20,6 @@ export declare class FindQueryBuilderService {
     paginate(): this;
     sort(): this;
     selectFields(): this;
-    search(searchableFields: string[]): this;
     build(): Query<any, any, {}, unknown, "find", Record<string, never>>;
     getTotalPages(): Promise<number>;
     getPage(): number;
@@ -45,5 +45,6 @@ export declare class FindQueryBuilderService {
         updatedAtArabic: string;
         salary: string;
         bonusLimit: string;
+        date: string;
     };
 }

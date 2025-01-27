@@ -8,7 +8,7 @@ export class FallBackController {
     @Req() req: Request,
     @Res() res: any
   ) {
-    if (req.isAuthenticated()) res.redirect('/production');
+    if (req.isAuthenticated()) res.redirect('/main');
     else res.redirect('/auth/login');
   }
 }

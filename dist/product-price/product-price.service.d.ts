@@ -2,11 +2,11 @@ import { Model, Types } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
-import { QueryDto } from 'src/utils/dtos/query.dto';
 import { DepartmentsService } from '../departments/departments.service';
 import { ProductsService } from '../products/products.service';
 import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPrice, ProductPriceDocument } from './entities/product-price.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 export declare class ProductPriceService extends BaseService {
     private readonly productPriceModel;
     private readonly usersService;
@@ -27,25 +27,6 @@ export declare class ProductPriceService extends BaseService {
         title: string;
     }>;
     create(createProductPriceDto: ProductPriceDto, user: UserDocument): Promise<void>;
-    findAll(queryParams: QueryDto, user: UserDocument): Promise<{
-        users: any[];
-        products: any[];
-        departments: any[];
-        type: string;
-        title: string;
-        error: string | null;
-        data: Array<any> | null;
-        user: UserDocument;
-        filters: {
-            [key: string]: any;
-            search: string;
-            sort: string;
-            pagination: {
-                page: number;
-                pageSize: number;
-                totalPages: number;
-            };
-        };
-    }>;
+    applyFilters(queryBuilder: FindQueryBuilderService): import("mongoose").Query<any, any, {}, unknown, "find", Record<string, never>>;
     update(productPrice: ProductPriceDocument, updateProductPriceDto: ProductPriceDto, user: UserDocument): Promise<void>;
 }

@@ -12,6 +12,30 @@ export class FindQueryBuilderService {
   private static defaultSortKey: string = '-createdAt';
   private static defaultSearchKey: string = "";
   private static defaultPage: number = 1;
+  private static filterKeyWords = {
+    "objectid": (value: string) => {
+      return new Types.ObjectId(value)
+    },
+    "gt": (value: string) => {
+      return { $gt: value };
+    },
+    "gte": (value: string) => {
+      return { $gte: value };
+    },
+    "lt": (value: string) => {
+      return { $lt: value };
+    },
+    "lte": (value: string) => {
+      return { $lte: value };
+    },
+    "search": (value: string) => {
+      return new RegExp(value, 'i');
+    },
+    "daterange": (value: string) => {
+      const dateRange = value.split(",");
+      return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
+    }
+  };
 
   private query: Query<any, any>;
   private queryParams: QueryDto;
@@ -38,7 +62,9 @@ export class FindQueryBuilderService {
     updatedAtArabic: "",
     salary: '',
     bonusLimit: '',
+    date: ''
   };
+  
 
   constructor(query: Query<any, any>, queryParams: QueryDto) {
     this.query = query;
@@ -89,27 +115,7 @@ export class FindQueryBuilderService {
   }
 
   private filterQueryInterpreter(queryValue: string[]) {
-    const filterKeyWords = {
-      "objectid": (value: string) => {
-        return new Types.ObjectId(value)
-      },
-      "gt": (value: string) => {
-        return { $gt: value };
-      },
-      "gte": (value: string) => {
-        return { $gte: value };
-      },
-      "lt": (value: string) => {
-        return { $lt: value };
-      },
-      "lte": (value: string) => {
-        return { $lte: value };
-      },
-      "search": (value: string) => {
-        return new RegExp(value, 'i');
-      }
-    };
-    return filterKeyWords[queryValue[0]](queryValue[1])
+    return FindQueryBuilderService.filterKeyWords[queryValue[0]](queryValue[1])
   }
   
   /**
@@ -146,23 +152,6 @@ export class FindQueryBuilderService {
    */
   selectFields() {
     if(this.queryParams.fields) this.query = this.query.select(this.queryParams.fields);
-    return this;
-  }
-
-  /**
-   * Performs a search operation on specified fields.
-   * Defaults to not performing a search.
-   * 
-   * @param searchableFields - Array of fields to perform the search on.
-   * @returns The query builder instance.
-   */
-  search(searchableFields: string[]) {
-    if (this.queryParams.search) {
-      this.searchKey = this.queryParams.search;
-      const searchRegex = new RegExp(this.searchKey, 'i');
-      let searchObject = searchableFields.map(field => ({ [field]: searchRegex }));
-      this.query = this.query.find({ $or: searchObject });
-    }
     return this;
   }
 

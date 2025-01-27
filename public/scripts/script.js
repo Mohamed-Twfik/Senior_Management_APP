@@ -4,7 +4,7 @@ document.querySelectorAll('input').forEach(ele => {
 });
 
 // Set default date in all date inputs except update date inputs that already have default value
-const inputDates = document.querySelectorAll('input[type="date"]:not(.update)');
+const inputDates = document.querySelectorAll('input[type="date"]:not(.not-today)');
 inputDates.forEach(inputDate => {
   const today = new Date().toISOString().split('T')[0];
   inputDate.value = today;

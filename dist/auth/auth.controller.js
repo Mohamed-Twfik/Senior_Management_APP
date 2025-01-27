@@ -31,7 +31,7 @@ let AuthController = class AuthController {
             if (err)
                 return res.redirect('/auth/login?error=خطأ في تسجيل الدخول&username=' + req.user.username);
             else
-                return res.redirect('/production');
+                return res.redirect('/main');
         });
     }
     logout(req, res) {

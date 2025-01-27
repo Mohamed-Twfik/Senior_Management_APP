@@ -53,34 +53,8 @@ let ProductPriceService = class ProductPriceService extends base_service_1.BaseS
         };
         await this.productPriceModel.create(inputData);
     }
-    async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
-        const productsPrices = await queryBuilder
-            .filter()
-            .search(this.searchableKeys)
-            .sort()
-            .paginate()
-            .build()
-            .populate('createdBy', 'username')
-            .populate('updatedBy', 'username')
-            .populate('department', 'name')
-            .populate('product', 'name');
-        const renderVariables = {
-            error: queryParams.error || null,
-            data: productsPrices,
-            user,
-            filters: {
-                search: queryBuilder.getSearchKey(),
-                sort: queryBuilder.getSortKey(),
-                pagination: {
-                    page: queryBuilder.getPage(),
-                    totalPages: await queryBuilder.getTotalPages(),
-                    pageSize: queryBuilder.getPageSize()
-                },
-                ...queryBuilder.getCustomFilters()
-            }
-        };
-        return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+    applyFilters(queryBuilder) {
+        return super.applyFilters(queryBuilder).populate('product', 'name').populate('department', 'name');
     }
     async update(productPrice, updateProductPriceDto, user) {
         const existPrice = await this.productPriceModel.findOne({

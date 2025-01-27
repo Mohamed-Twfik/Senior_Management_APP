@@ -9,13 +9,10 @@ import { BaseService } from 'src/utils/classes/base.service';
 import { QueryDto } from 'src/utils/dtos/query.dto';
 import { WorkerDto } from './dto/worker.dto';
 import { Worker, WorkerDocument } from './entities/worker.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class WorkersService extends BaseService {
-  searchableKeys: string[] = [
-    "name"
-  ];
-
   constructor(
     @InjectModel(Worker.name) private workersModel: Model<Worker>,
     private readonly usersService: UsersService,
@@ -32,7 +29,7 @@ export class WorkersService extends BaseService {
     return this.workersModel;
   }
 
-    /**
+  /**
    * Get additional render variables for the dashboard.
    * @returns The additional render variables.
    */
@@ -62,42 +59,45 @@ export class WorkersService extends BaseService {
     await this.workersModel.create(inputDate);
   }
 
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('department', 'name');
+  }
+
   /**
    * Find all workers.
    * @param queryParams The query parameters.
    * @param user The user who is finding the workers.
    * @returns The workers.
    */
-  async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const data = await queryBuilder
-      .filter()
-      .search(this.searchableKeys)
-      .sort()
-      .paginate()
-      .build()
-      .populate('department', 'name')
-      .populate('createdBy', 'username')
-      .populate('updatedBy', 'username');
+  // async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
+  //   const queryBuilder = this.getQueryBuilder(queryParams);
+  //   const data = await queryBuilder
+  //     .filter()
+  //     .sort()
+  //     .paginate()
+  //     .build()
+  //     .populate('department', 'name')
+  //     .populate('createdBy', 'username')
+  //     .populate('updatedBy', 'username');
 
-    const baseRenderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
-      data,
-      user,
-      filters: {
-        search: queryBuilder.getSearchKey(),
-        sort: queryBuilder.getSortKey(),
-        pagination: {
-          page: queryBuilder.getPage(),
-          totalPages: await queryBuilder.getTotalPages(),
-          pageSize: queryBuilder.getPageSize()
-        },
-        ...queryBuilder.getCustomFilters()
-      }
-    };
-    const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
-    return renderVariables;
-  }
+  //   const baseRenderVariables: BaseRenderVariablesType = {
+  //     error: queryParams.error || null,
+  //     data,
+  //     user,
+  //     filters: {
+  //       search: queryBuilder.getSearchKey(),
+  //       sort: queryBuilder.getSortKey(),
+  //       pagination: {
+  //         page: queryBuilder.getPage(),
+  //         totalPages: await queryBuilder.getTotalPages(),
+  //         pageSize: queryBuilder.getPageSize()
+  //       },
+  //       ...queryBuilder.getCustomFilters()
+  //     }
+  //   };
+  //   const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
+  //   return renderVariables;
+  // }
 
   /**
    * Update worker.

@@ -17,7 +17,7 @@ const common_1 = require("@nestjs/common");
 let FallBackController = class FallBackController {
     fallBack(req, res) {
         if (req.isAuthenticated())
-            res.redirect('/production');
+            res.redirect('/main');
         else
             res.redirect('/auth/login');
     }

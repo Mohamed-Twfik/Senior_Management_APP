@@ -10,6 +10,7 @@ import { DepartmentsService } from '../departments/departments.service';
 import { ProductsService } from '../products/products.service';
 import { ProductPriceDto } from './dto/product-price.dto';
 import { ProductPrice, ProductPriceDocument } from './entities/product-price.entity';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class ProductPriceService extends BaseService {
@@ -64,40 +65,8 @@ export class ProductPriceService extends BaseService {
     await this.productPriceModel.create(inputData);
   }
 
-  /**
-   * Find all productsPrices.
-   * @param queryParams The query parameters.
-   * @param user The user who is get productsPrices.
-   */
-  async findAll(queryParams: QueryDto, user: UserDocument) {
-    const queryBuilder = this.getQueryBuilder(queryParams);
-    const productsPrices = await queryBuilder
-      .filter()
-      .search(this.searchableKeys)
-      .sort()
-      .paginate()
-      .build()
-      .populate('createdBy', 'username')
-      .populate('updatedBy', 'username')
-      .populate('department', 'name')
-      .populate('product', 'name');
-
-    const renderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
-      data: productsPrices,
-      user,
-      filters: {
-        search: queryBuilder.getSearchKey(),
-        sort: queryBuilder.getSortKey(),
-        pagination: {
-          page: queryBuilder.getPage(),
-          totalPages: await queryBuilder.getTotalPages(),
-          pageSize: queryBuilder.getPageSize()
-        },
-        ...queryBuilder.getCustomFilters()
-      }
-    };
-    return { ...renderVariables, ...(await this.getAdditionalRenderVariables()) };
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('product', 'name').populate('department', 'name');
   }
 
   /**

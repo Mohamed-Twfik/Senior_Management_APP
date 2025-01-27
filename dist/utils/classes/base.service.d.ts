@@ -7,13 +7,13 @@ export declare abstract class BaseService {
     private queryBuilder;
     getQueryBuilder(queryParams: QueryDto, filter?: RootFilterQuery<any>): FindQueryBuilderService;
     find(filter?: RootFilterQuery<any>): import("mongoose").Query<any[], any, {}, any, "find", {}>;
+    applyFilters(queryBuilder: FindQueryBuilderService): import("mongoose").Query<any, any, {}, unknown, "find", Record<string, never>>;
     findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType>;
     findById(id: string): Promise<any>;
     findOne(filter: RootFilterQuery<any>): Promise<any>;
     updateMany(filter: RootFilterQuery<any>, updateDto: any): Promise<any>;
     removeMany(filter: RootFilterQuery<any>): Promise<any>;
     remove(entity: Document): Promise<void>;
-    abstract searchableKeys: string[];
     abstract getModuleModel(): Model<any>;
     abstract getAdditionalRenderVariables(): Promise<object>;
     abstract create(createDto: any, userDocument: UserDocument): Promise<void>;
