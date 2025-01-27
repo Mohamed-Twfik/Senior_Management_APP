@@ -13,13 +13,37 @@
     <link rel="stylesheet" href="/styles/pagination.css" />
     <link rel="stylesheet" href="/styles/table.css" />
     <link rel="stylesheet" href="/styles/logo.css" />
-    <title>
-      <%= title %>
-    </title>
+    <title><%= title %></title>
+    <style>
+      #title {
+        font-size: 2rem !important;
+        font-weight: bold;
+        max-width: 700px;
+        margin: 2em auto;
+      }
+    
+      #title i {
+        font-size: 1.5rem;
+      }
+    
+      td .form-check {
+        max-width: 20px;
+        margin: 0 auto;
+      }
+    </style>
   </head>
 
   <body page-type="<%= type %>">
     <%- include('components/header/main') %>
+    <main class="my-3">
+      <% if(type==='salary' ) { %>
+        <%- include('components/salary') %>
+      <% } else if(type==='main' ) { %>
+        <%- include('components/main') %>
+      <% } else { %>
+        <%- include('components/dashboard') %>
+      <% } %>
+    </main>
 
     <script src="/scripts/bootstrap.bundle.min.js"></script>
     <script src="/scripts/choices.js"></script>
