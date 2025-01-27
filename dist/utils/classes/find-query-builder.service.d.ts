@@ -5,6 +5,7 @@ export declare class FindQueryBuilderService {
     private static defaultSortKey;
     private static defaultSearchKey;
     private static defaultPage;
+    private static filterKeyWords;
     private query;
     private queryParams;
     private page;

@@ -12,6 +12,30 @@ export class FindQueryBuilderService {
   private static defaultSortKey: string = '-createdAt';
   private static defaultSearchKey: string = "";
   private static defaultPage: number = 1;
+  private static filterKeyWords = {
+    "objectid": (value: string) => {
+      return new Types.ObjectId(value)
+    },
+    "gt": (value: string) => {
+      return { $gt: value };
+    },
+    "gte": (value: string) => {
+      return { $gte: value };
+    },
+    "lt": (value: string) => {
+      return { $lt: value };
+    },
+    "lte": (value: string) => {
+      return { $lte: value };
+    },
+    "search": (value: string) => {
+      return new RegExp(value, 'i');
+    },
+    "daterange": (value: string) => {
+      const dateRange = value.split(",");
+      return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
+    }
+  };
 
   private query: Query<any, any>;
   private queryParams: QueryDto;
@@ -40,6 +64,7 @@ export class FindQueryBuilderService {
     bonusLimit: '',
     date: ''
   };
+  
 
   constructor(query: Query<any, any>, queryParams: QueryDto) {
     this.query = query;
@@ -90,31 +115,7 @@ export class FindQueryBuilderService {
   }
 
   private filterQueryInterpreter(queryValue: string[]) {
-    const filterKeyWords = {
-      "objectid": (value: string) => {
-        return new Types.ObjectId(value)
-      },
-      "gt": (value: string) => {
-        return { $gt: value };
-      },
-      "gte": (value: string) => {
-        return { $gte: value };
-      },
-      "lt": (value: string) => {
-        return { $lt: value };
-      },
-      "lte": (value: string) => {
-        return { $lte: value };
-      },
-      "search": (value: string) => {
-        return new RegExp(value, 'i');
-      },
-      "daterange": (value: string) => {
-        const dateRange = value.split(",");
-        return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
-      }
-    };
-    return filterKeyWords[queryValue[0]](queryValue[1])
+    return FindQueryBuilderService.filterKeyWords[queryValue[0]](queryValue[1])
   }
   
   /**

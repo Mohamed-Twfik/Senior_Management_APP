@@ -75,31 +75,7 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
         return this;
     }
     filterQueryInterpreter(queryValue) {
-        const filterKeyWords = {
-            "objectid": (value) => {
-                return new mongoose_1.Types.ObjectId(value);
-            },
-            "gt": (value) => {
-                return { $gt: value };
-            },
-            "gte": (value) => {
-                return { $gte: value };
-            },
-            "lt": (value) => {
-                return { $lt: value };
-            },
-            "lte": (value) => {
-                return { $lte: value };
-            },
-            "search": (value) => {
-                return new RegExp(value, 'i');
-            },
-            "daterange": (value) => {
-                const dateRange = value.split(",");
-                return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
-            }
-        };
-        return filterKeyWords[queryValue[0]](queryValue[1]);
+        return FindQueryBuilderService_1.filterKeyWords[queryValue[0]](queryValue[1]);
     }
     paginate() {
         if (this.queryParams.page)
@@ -149,6 +125,30 @@ FindQueryBuilderService.defaultPageSize = 10;
 FindQueryBuilderService.defaultSortKey = '-createdAt';
 FindQueryBuilderService.defaultSearchKey = "";
 FindQueryBuilderService.defaultPage = 1;
+FindQueryBuilderService.filterKeyWords = {
+    "objectid": (value) => {
+        return new mongoose_1.Types.ObjectId(value);
+    },
+    "gt": (value) => {
+        return { $gt: value };
+    },
+    "gte": (value) => {
+        return { $gte: value };
+    },
+    "lt": (value) => {
+        return { $lt: value };
+    },
+    "lte": (value) => {
+        return { $lte: value };
+    },
+    "search": (value) => {
+        return new RegExp(value, 'i');
+    },
+    "daterange": (value) => {
+        const dateRange = value.split(",");
+        return { $gte: new Date(dateRange[0]), $lte: new Date(dateRange[1]) };
+    }
+};
 exports.FindQueryBuilderService = FindQueryBuilderService = FindQueryBuilderService_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [mongoose_1.Query, query_dto_1.QueryDto])

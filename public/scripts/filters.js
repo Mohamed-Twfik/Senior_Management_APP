@@ -23,14 +23,30 @@ const getFilterUrl = (filterForm) => {
   if (filterFormData.get('sort-type')) filterFormData.set('sort', `-${filterFormData.get('sort')}`);
   filterFormData.delete('sort-type');
 
+  if (filterFormData.get('date-range') && filterFormData.get('date-range-from') && filterFormData.get('date-range-to')) {
+    let from = new Date(filterFormData.get('date-range-from'));
+    let to = new Date(filterFormData.get('date-range-to'));
+
+    let value;
+    if (from > to) value = `daterange:${filterFormData.get('date-range-to')},${filterFormData.get('date-range-from')}`
+    else value = `daterange:${filterFormData.get('date-range-from')},${filterFormData.get('date-range-to')}`
+
+    filterFormData.set('date', value);
+  }
+  filterFormData.delete('date-range');
+  filterFormData.delete('date-range-from');
+  filterFormData.delete('date-range-to');
+
   const action = filterForm.getAttribute('action');
   const url = `${action}?${new URLSearchParams(filterFormData).toString()}`;
+  // console.log(url);
   return url;
 }
 
 // Used to filter data when submitting filter form
 document.querySelector('#filter-form').addEventListener('submit', function (e) {
   e.preventDefault();
+  // getFilterUrl(e.target);
   window.location.href = getFilterUrl(e.target);
 });
 
