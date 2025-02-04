@@ -3,10 +3,13 @@
     <caption class="mx-4 fs-5">
       <span>العدد: <%= data.length %></span>
     </caption>
-    <thead><%- include('table-components/header') %></thead>
+    <thead><%- include('./header') %></thead>
     <tbody>
-      <%- include('table-components/filters') %>
-      <%- include('table-components/data') %>
+      <%- include('./filters') %>
+      <%- include('./data') %>
     </tbody>
   </table>
 </div>
+<% if(filters.pagination.totalPages> 1) { %>
+  <%- include('./pagination', filters.pagination) %>
+<% } %>

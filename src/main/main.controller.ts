@@ -12,10 +12,6 @@ export class MainController {
   root(
     @GetUser() user: UserDocument
   ) {
-    return {
-      user,
-      title: 'الصفحة الرئيسية',
-      type: 'main',
-    };
+    return this.mainService.main(user);
   }
 }

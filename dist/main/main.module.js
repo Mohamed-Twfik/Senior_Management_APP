@@ -10,11 +10,15 @@ exports.MainModule = void 0;
 const common_1 = require("@nestjs/common");
 const main_service_1 = require("./main.service");
 const main_controller_1 = require("./main.controller");
+const production_module_1 = require("../production/production.module");
 let MainModule = class MainModule {
 };
 exports.MainModule = MainModule;
 exports.MainModule = MainModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            production_module_1.ProductionModule
+        ],
         controllers: [main_controller_1.MainController],
         providers: [main_service_1.MainService],
     })

@@ -38,6 +38,14 @@ const salaryValidation = () => {
   if (isValid) form.submit();
 };
 
+const salaryForm = document.querySelector('#salary-form');
+const today = new Date();
+const lastSaturday = new Date(today);
+lastSaturday.setDate(today.getDate() - (today.getDay() + 1) % 7);
+
+salaryForm.querySelector("input[name='from']").value = lastSaturday.toISOString().split('T')[0];
+salaryForm.querySelector("input[name='to']").value = today.toISOString().split('T')[0];
+
 // Get Salary form
 document.querySelector('.get-salary').addEventListener('click', (e) => {
   salaryValidation();

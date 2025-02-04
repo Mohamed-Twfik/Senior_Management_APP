@@ -125,6 +125,156 @@ let ProductionService = class ProductionService extends base_service_1.BaseServi
         ]);
         return workers;
     }
+    async getProductsStats(from, to) {
+        const productsStats = await this.productionModel.aggregate([
+            {
+                $match: {
+                    date: {
+                        $gte: from,
+                        $lte: to,
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: {
+                        product: "$product",
+                        department: "$department"
+                    },
+                    totalQuantity: { $sum: "$quantity" }
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id.product",
+                    departments: {
+                        $push: {
+                            departmentId: "$_id.department",
+                            totalQuantity: "$totalQuantity"
+                        }
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "product"
+                }
+            },
+            {
+                $unwind: "$product"
+            },
+            {
+                $lookup: {
+                    from: "departments",
+                    localField: "departments.departmentId",
+                    foreignField: "_id",
+                    as: "departmentDetails"
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    productId: "$product._id",
+                    productName: "$product.name",
+                    departments: {
+                        $map: {
+                            input: "$departments",
+                            as: "dept",
+                            in: {
+                                departmentId: "$$dept.departmentId",
+                                departmentName: {
+                                    $arrayElemAt: [
+                                        "$departmentDetails.name",
+                                        { $indexOfArray: ["$departmentDetails._id", "$$dept.departmentId"] }
+                                    ]
+                                },
+                                totalQuantity: "$$dept.totalQuantity"
+                            }
+                        }
+                    }
+                }
+            }
+        ]);
+        return productsStats;
+    }
+    async getDepartmentsStats(from, to) {
+        const departmentsStats = await this.productionModel.aggregate([
+            {
+                $match: {
+                    date: {
+                        $gte: from,
+                        $lte: to,
+                    },
+                },
+            },
+            {
+                $group: {
+                    _id: {
+                        product: "$product",
+                        department: "$department"
+                    },
+                    totalQuantity: { $sum: "$quantity" }
+                }
+            },
+            {
+                $group: {
+                    _id: "$_id.department",
+                    products: {
+                        $push: {
+                            productId: "$_id.product",
+                            totalQuantity: "$totalQuantity"
+                        }
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "departments",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "department"
+                }
+            },
+            {
+                $unwind: "$department"
+            },
+            {
+                $lookup: {
+                    from: "products",
+                    localField: "products.productId",
+                    foreignField: "_id",
+                    as: "productDetails"
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    departmentId: "$department._id",
+                    departmentName: "$department.name",
+                    products: {
+                        $map: {
+                            input: "$products",
+                            as: "prod",
+                            in: {
+                                productId: "$$prod.productId",
+                                productName: {
+                                    $arrayElemAt: [
+                                        "$productDetails.name",
+                                        { $indexOfArray: ["$productDetails._id", "$$prod.productId"] }
+                                    ]
+                                },
+                                totalQuantity: "$$prod.totalQuantity"
+                            }
+                        }
+                    }
+                }
+            }
+        ]);
+        return departmentsStats;
+    }
 };
 exports.ProductionService = ProductionService;
 exports.ProductionService = ProductionService = __decorate([

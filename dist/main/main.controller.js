@@ -21,11 +21,7 @@ let MainController = class MainController {
         this.mainService = mainService;
     }
     root(user) {
-        return {
-            user,
-            title: 'الصفحة الرئيسية',
-            type: 'main',
-        };
+        return this.mainService.main(user);
     }
 };
 exports.MainController = MainController;

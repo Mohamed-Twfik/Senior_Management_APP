@@ -3,9 +3,15 @@ import { UserDocument } from 'src/users/entities/user.entity';
 export declare class MainController {
     private readonly mainService;
     constructor(mainService: MainService);
-    root(user: UserDocument): {
+    root(user: UserDocument): Promise<{
+        formattedToday: string;
+        formattedLastSaturday: string;
+        arabicLastSaturday: string;
+        arabicToday: string;
+        productsStats: any[];
+        departmentsStats: any[];
         user: UserDocument;
         title: string;
         type: string;
-    };
+    }>;
 }

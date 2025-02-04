@@ -29,7 +29,7 @@
       <% if(dataItem.role !== 'مدير') { %>
         <button class="btn btn-danger" data-bs-toggle="modal"
           data-bs-target="#delete-<%= type %>-modal-<%= index %>"><i class="fa-solid fa-trash"></i></button>
-        <%- include('../delete-modal', {index, dataItem}) %>
+        <%- include('../form-modals/delete-modal', {index, dataItem}) %>
       <% } %>
     </td>
   </tr>

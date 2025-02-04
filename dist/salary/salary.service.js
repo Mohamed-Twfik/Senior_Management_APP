@@ -26,6 +26,12 @@ let SalaryService = class SalaryService {
     async getSalary(getSalaryDto, user) {
         const attendanceWorkers = await this.attendanceService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
         const productionWorkers = await this.productionService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
+        const attendanceSum = attendanceWorkers.reduce((acc, worker) => acc + worker.totalPrice, 0);
+        const productionSum = {
+            totalPrice: 0,
+            totalSalary: 0,
+            bonus: 0
+        };
         for (const worker of productionWorkers) {
             worker.bonus = 0;
             const bonusPresent = await this.bonusService.findOne({
@@ -37,13 +43,18 @@ let SalaryService = class SalaryService {
             if (bonusPresent) {
                 let bonus = Math.ceil((bonusPresent.percentage / 100) * worker.totalPrice);
                 worker.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
+                productionSum.bonus += worker.bonus;
             }
             worker.totalSalary = worker.totalPrice + worker.bonus;
+            productionSum.totalPrice += worker.totalPrice;
+            productionSum.totalSalary += worker.totalSalary;
         }
         ;
         const renderData = {
             productionWorkers,
+            productionSum,
             attendanceWorkers,
+            attendanceSum,
             fromDate: getSalaryDto.from,
             toDate: getSalaryDto.to,
             arabicFromDate: arabic_date_formatter_1.arabicDateFormatter.format(getSalaryDto.from),

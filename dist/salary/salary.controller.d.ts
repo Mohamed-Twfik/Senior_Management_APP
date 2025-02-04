@@ -6,7 +6,13 @@ export declare class SalaryController {
     constructor(salaryService: SalaryService);
     getSalary(getSalaryDto: GetSalaryDto, user: UserDocument): Promise<{
         productionWorkers: any[];
+        productionSum: {
+            totalPrice: number;
+            totalSalary: number;
+            bonus: number;
+        };
         attendanceWorkers: any[];
+        attendanceSum: any;
         fromDate: Date;
         toDate: Date;
         arabicFromDate: string;
