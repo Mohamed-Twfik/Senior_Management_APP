@@ -38,6 +38,17 @@
             </tr>
           <% }) %>
         </tbody>
+        <tfoot>
+          <tr class="table-dark">
+            <th scope="row"></th>
+            <td>المجموع</td>
+            <td>
+              <%= Math.ceil(attendanceSum) %>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   <% } else { %>
@@ -90,6 +101,23 @@
             </tr>
           <% }) %>
         </tbody>
+        <tfoot>
+          <tr class="table-dark">
+            <th scope="row"></th>
+            <td>المجموع</td>
+            <td>
+              <%= Math.ceil(productionSum.totalPrice) %>
+            </td>
+            <td>
+              <%= Math.ceil(productionSum.bonus) %>
+            </td>
+            <td>
+              <%= Math.ceil(productionSum.totalSalary) %>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   <% } else { %>
