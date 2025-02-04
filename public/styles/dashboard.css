@@ -128,3 +128,19 @@ i {
     padding-right: 240px;
   }
 }
+
+#title {
+  font-size: 2rem !important;
+  font-weight: bold;
+  max-width: 700px;
+  margin: 2em auto;
+}
+
+#title i {
+  font-size: 1.5rem;
+}
+
+td .form-check {
+  max-width: 20px;
+  margin: 0 auto;
+}
