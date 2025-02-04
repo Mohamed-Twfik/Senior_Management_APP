@@ -32,24 +32,24 @@
       }
     </style>
   </head>
-
+  
   <body page-type="<%= type %>">
     <%- include('components/header/main') %>
     <main class="my-3">
-      <% if(type==='salary' ) { %>
-        <%- include('components/salary') %>
-      <% } else if(type==='main' ) { %>
-        <%- include('components/main') %>
-      <% } else { %>
-        <%- include('components/dashboard') %>
-      <% } %>
+      <%- include(`components/${(type != 'salary' && type != 'main' ) ? "dashboard" : type}`) %>
     </main>
 
     <script src="/scripts/bootstrap.bundle.min.js"></script>
-    <script src="/scripts/choices.js"></script>
-    <script src="/scripts/filters.js"></script>
-    <script src="/scripts/modules/<%= type %>.js"></script>
-    <script src="/scripts/modules/salary.js"></script>
-    <script src="/scripts/script.js"></script>
+    <% if(type==='main' ) { %>
+      <script src="/scripts/script.js"></script>
+      <script src="/scripts/modules/salary.js"></script>
+      <script src="/scripts/modules/main.js"></script>
+    <% } else if(type !== 'salary') { %>
+      <script src="/scripts/choices.js"></script>
+      <script src="/scripts/filters.js"></script>
+      <script src="/scripts/script.js"></script>
+      <script src="/scripts/modules/salary.js"></script>
+      <script src="/scripts/modules/<%= type %>.js"></script>
+    <% } %>
   </body>
 </html>

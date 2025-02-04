@@ -1,8 +1,3 @@
-// cancel auto complete for all input fields
-document.querySelectorAll('input').forEach(ele => {
-  ele.setAttribute('autocomplete', 'off');
-});
-
 // Set default date in all date inputs except update date inputs that already have default value
 const inputDates = document.querySelectorAll('input[type="date"]:not(.not-today)');
 inputDates.forEach(inputDate => {
