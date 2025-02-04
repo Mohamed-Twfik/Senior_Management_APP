@@ -1,19 +1,71 @@
-<div class="container-xl mt-5">
-  <section>
-    <h1 class="text-center fs-2">المرتبات</h1>
-    <div class="row">
-      <form action="/salary" method="post" id="week-salary-form" class="col">
-        <input type="date" class="form-control px-4 not-tody" name="from" id="week-from" hidden>
-        <input type="date" class="form-control px-4 not-tody" name="to" id="week-to" hidden>
-        <input type="submit" class="btn btn-save" value="حساب مرتبات هذا الأسبوع">
-      </form>
-    </div>
-  </section>
+<div class="card parent">
+  <div class="card-header parent">المنتجات</div>
+  <div class="card-body">
+    <% if(productsStats.length > 0) { %>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4">
+        <% productsStats.forEach(e=> { %>
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <a href="/production?date=daterange:<%= `${formattedLastSaturday},${formattedToday}` %>&product=objectid:<%= e.productId %>">
+                  <%= e.productName %>
+                </a>
+              </div>
+              <ul class="list-group list-group-flush">
+                <% e.departments.forEach(dept=> { %>
+                  <li class="list-group-item">
+                    <a href="/production?date=daterange:<%= `${formattedLastSaturday},${formattedToday}` %>&product=objectid:<%= e.productId %>&department=objectid:<%= dept.departmentId %>">
+                      <%= dept.departmentName %>: <%= dept.totalQuantity %>
+                    </a>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-warning">لا يوجد بيانات</div>
+    <% } %>
+  </div>
+  <div class="card-footer">
+    <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+  </div>
+</div>
 
-  <section class="mt-5">
-    <h2 class="fs-3"></h2>
-    <div class="row">
-
-    </div>
-
+<div class="card parent">
+  <div class="card-header parent">الأقسام</div>
+  <div class="card-body">
+    <% if(departmentsStats.length > 0) { %>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4">
+        <% departmentsStats.forEach(e=> { %>
+          <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <a
+                  href="/production?date=daterange:<%= `${formattedLastSaturday},${formattedToday}` %>&department=objectid:<%= e.departmentId %>">
+                  <%= e.departmentName %>
+                </a>
+              </div>
+              <ul class="list-group list-group-flush">
+                <% e.products.forEach(prod=> { %>
+                  <li class="list-group-item">
+                    <a
+                      href="/production?date=daterange:<%= `${formattedLastSaturday},${formattedToday}` %>&department=objectid:<%= e.departmentId %>&product=objectid:<%= prod.productId %>">
+                      <%= prod.productName %>: <%= prod.totalQuantity %>
+                    </a>
+                  </li>
+                  <% }) %>
+              </ul>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+    <% } else { %>
+      <div class="alert alert-warning">لا يوجد بيانات</div>
+    <% } %>
+  </div>
+  <div class="card-footer">
+    <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+  </div>
 </div>

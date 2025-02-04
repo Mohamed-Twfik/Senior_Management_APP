@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/styles/pagination.css" />
     <link rel="stylesheet" href="/styles/table.css" />
     <link rel="stylesheet" href="/styles/logo.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
     <title><%= title %></title>
     <style>
       #title {
@@ -40,10 +41,8 @@
     </main>
 
     <script src="/scripts/bootstrap.bundle.min.js"></script>
-    <% if(type==='main' ) { %>
-      <script src="/scripts/script.js"></script>
+    <% if(type === 'main' ) { %>
       <script src="/scripts/modules/salary.js"></script>
-      <script src="/scripts/modules/main.js"></script>
     <% } else if(type !== 'salary') { %>
       <script src="/scripts/choices.js"></script>
       <script src="/scripts/filters.js"></script>

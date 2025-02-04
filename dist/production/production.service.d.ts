@@ -32,4 +32,6 @@ export declare class ProductionService extends BaseService {
     applyFilters(queryBuilder: FindQueryBuilderService): Query<any, any, {}, unknown, "find", Record<string, never>>;
     update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     getSalaryData(startDate: Date, endDate: Date): Promise<any[]>;
+    getProductsStats(from: Date, to: Date): Promise<any[]>;
+    getDepartmentsStats(from: Date, to: Date): Promise<any[]>;
 }
