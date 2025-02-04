@@ -25,7 +25,7 @@ let MainService = class MainService {
     }
     ;
     async main(user) {
-        const today = new Date();
+        const today = new Date('2025-01-16');
         const lastSaturday = new Date(today);
         lastSaturday.setDate(today.getDate() - (today.getDay() + 1) % 7);
         const productsStats = await this.productionService.getProductsStats(lastSaturday, today);
