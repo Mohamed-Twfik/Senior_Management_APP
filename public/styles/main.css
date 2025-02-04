@@ -1,6 +1,5 @@
-#week-salary-form {
-  margin: 60px;
-  text-align: center;
+.btn[form='week-salary-form']:hover {
+  transform: translateY(0);
 }
 
 .card {

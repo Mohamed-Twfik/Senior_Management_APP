@@ -1,7 +1,6 @@
-<form action="/salary" method="post" style="text-align: center;">
+<form action="/salary" method="post" id="week-salary-form">
   <input type="date" name="from" id="" value="<%= formattedLastSaturday %>" hidden>
   <input type="date" name="to" id="" value="<%= formattedToday %>" hidden>
-  <button class="btn">إظهار مرتبات هذا الأسبوع</button>
 </form>
 
 <div class="card parent">
@@ -35,7 +34,9 @@
     <% } %>
   </div>
   <div class="card-footer">
-    <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+    <button class="btn" type="submit" form="week-salary-form">
+      <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+    </button>
   </div>
 </div>
 
@@ -72,6 +73,8 @@
     <% } %>
   </div>
   <div class="card-footer">
-    <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+    <button class="btn" type="submit" form="week-salary-form">
+      <%= arabicLastSaturday %><i class="fa-solid fa-arrow-left mx-5"></i><%= arabicToday %>
+    </button>
   </div>
 </div>
