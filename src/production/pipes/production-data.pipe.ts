@@ -25,29 +25,30 @@ export class ProductionDataPipe {
    * @param metadata metadata
    * @returns transformed production  data
    */
-  async transform(data: ProductionDto & {price: number}, metadata: ArgumentMetadata) {
-    const productExists = await this.productsService.findById(data.product.toString());
-    if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
-    data.product = productExists._id;
-    
+  async transform(data: any, metadata: ArgumentMetadata) {
     const workerExists = await this.workersService.findById(data.worker.toString());
     if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
     data.worker = workerExists._id;
 
-    if (data.department) {
-      const departmentExists = await this.departmentsService.findById(data.department.toString());
-      if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
-      data.department = departmentExists._id;
-    } else {
-      data.department = workerExists.department;
-    }
+    for (const productDetail of data.productionDetails) {
+      const productExists = await this.productsService.findById(productDetail.product.toString());
+      if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
+      productDetail.product = productExists._id;
 
-    if (workerExists.type !== WorkerType.Weekly) {
-      const productPrice = await this.productPriceService.findOne({ product: data.product, department: data.department });
-      if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-      data.price = (productPrice.price / 100) * data.quantity;
-    }
+      if (productDetail.department) {
+        const departmentExists = await this.departmentsService.findById(productDetail.department.toString());
+        if (!departmentExists) throw new NotAcceptableException('خطأ في معرف القسم.');
+        productDetail.department = departmentExists._id;
+      } else {
+        productDetail.department = workerExists.department;
+      }
 
+      if (workerExists.type !== WorkerType.Weekly) {
+        const productPrice = await this.productPriceService.findOne({ product: productDetail.product, department: productDetail.department });
+        if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
+        productDetail.price = (productPrice.price / 100) * productDetail.quantity;
+      }
+    }
     return data;
   }
 }

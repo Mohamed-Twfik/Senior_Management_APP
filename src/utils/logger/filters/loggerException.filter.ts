@@ -28,7 +28,7 @@ export class LoggerExceptionFilter extends BaseExceptionFilter implements Except
     const statusCode = exception instanceof HttpException ? exception.getStatus() : 500;
     const errorMessage = exception.message || "Internal server error";
     const contextName = exception.contextName || 'Unknown';
-    
+
     const request = host.switchToHttp().getRequest();
     const { method, url } = request;
     const duration = Date.now() - (request.startTime || Date.now());
