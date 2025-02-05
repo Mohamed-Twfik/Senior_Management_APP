@@ -13,28 +13,23 @@ exports.MainService = void 0;
 const common_1 = require("@nestjs/common");
 const production_service_1 = require("../production/production.service");
 const arabic_date_formatter_1 = require("../utils/arabic-date-formatter");
+const input_field_date_format_1 = require("../utils/input-field-date-format");
 let MainService = class MainService {
     constructor(productionService) {
         this.productionService = productionService;
     }
-    formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-    ;
     async main(user) {
-        const today = new Date();
-        const lastSaturday = new Date(today);
-        lastSaturday.setDate(today.getDate() - (today.getDay() + 1) % 7);
-        const productsStats = await this.productionService.getProductsStats(lastSaturday, today);
-        const departmentsStats = await this.productionService.getDepartmentsStats(lastSaturday, today);
+        const productsStats = await this.productionService.getProductsStats(input_field_date_format_1.lastSaturday, input_field_date_format_1.today);
+        const departmentsStats = await this.productionService.getDepartmentsStats(input_field_date_format_1.lastSaturday, input_field_date_format_1.today);
         return {
-            formattedToday: this.formatDate(today),
-            formattedLastSaturday: this.formatDate(lastSaturday),
-            arabicLastSaturday: arabic_date_formatter_1.arabicDateFormatter.format(lastSaturday),
-            arabicToday: arabic_date_formatter_1.arabicDateFormatter.format(today),
+            formattedToday: input_field_date_format_1.todayFormatted,
+            formattedLastSaturday: input_field_date_format_1.lastSaturdayFormatted,
+            arabicLastSaturday: arabic_date_formatter_1.arabicDateFormatter.format(input_field_date_format_1.lastSaturday),
+            arabicToday: arabic_date_formatter_1.arabicDateFormatter.format(input_field_date_format_1.today),
+            salaryForm: {
+                from: input_field_date_format_1.lastSaturdayFormatted,
+                to: input_field_date_format_1.todayFormatted
+            },
             productsStats,
             departmentsStats,
             user,

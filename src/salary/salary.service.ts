@@ -6,6 +6,7 @@ import { UserDocument } from "src/users/entities/user.entity";
 import { BonusService } from '../bonus/bonus.service';
 import { DepartmentsService } from "src/departments/departments.service";
 import { arabicDateFormatter } from "src/utils/arabic-date-formatter";
+import { formatDate, lastSaturdayFormatted, todayFormatted } from "src/utils/input-field-date-format";
 
 @Injectable()
 export class SalaryService {
@@ -40,6 +41,7 @@ export class SalaryService {
         worker.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
         productionSum.bonus += worker.bonus;
       }
+      worker.totalPrice = Math.ceil(worker.totalPrice);
       worker.totalSalary = worker.totalPrice + worker.bonus;
       productionSum.totalPrice += worker.totalPrice;
       productionSum.totalSalary += worker.totalSalary;
@@ -50,8 +52,12 @@ export class SalaryService {
       productionSum,
       attendanceWorkers,
       attendanceSum,
-      fromDate: getSalaryDto.from,
-      toDate: getSalaryDto.to,
+      fromDate: formatDate(getSalaryDto.from),
+      toDate: formatDate(getSalaryDto.to),
+      salaryForm: {
+        from: lastSaturdayFormatted,
+        to: todayFormatted
+      },
       arabicFromDate: arabicDateFormatter.format(getSalaryDto.from),
       arabicToDate: arabicDateFormatter.format(getSalaryDto.to),
       user,

@@ -16,6 +16,7 @@ const production_service_1 = require("../production/production.service");
 const bonus_service_1 = require("../bonus/bonus.service");
 const departments_service_1 = require("../departments/departments.service");
 const arabic_date_formatter_1 = require("../utils/arabic-date-formatter");
+const input_field_date_format_1 = require("../utils/input-field-date-format");
 let SalaryService = class SalaryService {
     constructor(productionService, attendanceService, bonusService, departmentsService) {
         this.productionService = productionService;
@@ -45,6 +46,7 @@ let SalaryService = class SalaryService {
                 worker.bonus = (bonus > department.bonusLimit) ? department.bonusLimit : bonus;
                 productionSum.bonus += worker.bonus;
             }
+            worker.totalPrice = Math.ceil(worker.totalPrice);
             worker.totalSalary = worker.totalPrice + worker.bonus;
             productionSum.totalPrice += worker.totalPrice;
             productionSum.totalSalary += worker.totalSalary;
@@ -55,8 +57,12 @@ let SalaryService = class SalaryService {
             productionSum,
             attendanceWorkers,
             attendanceSum,
-            fromDate: getSalaryDto.from,
-            toDate: getSalaryDto.to,
+            fromDate: (0, input_field_date_format_1.formatDate)(getSalaryDto.from),
+            toDate: (0, input_field_date_format_1.formatDate)(getSalaryDto.to),
+            salaryForm: {
+                from: input_field_date_format_1.lastSaturdayFormatted,
+                to: input_field_date_format_1.todayFormatted
+            },
             arabicFromDate: arabic_date_formatter_1.arabicDateFormatter.format(getSalaryDto.from),
             arabicToDate: arabic_date_formatter_1.arabicDateFormatter.format(getSalaryDto.to),
             user,

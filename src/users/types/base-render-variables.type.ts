@@ -15,5 +15,10 @@ export type BaseRenderVariablesType = {
   error: string | null,
   data: Array<any> | null,
   user: UserDocument,
+  todayDate: string,
+  salaryForm: {
+    from: string,
+    to: string
+  },
   filters: Filters
 };

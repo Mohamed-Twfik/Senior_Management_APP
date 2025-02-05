@@ -8,6 +8,10 @@ export declare class MainController {
         formattedLastSaturday: string;
         arabicLastSaturday: string;
         arabicToday: string;
+        salaryForm: {
+            from: string;
+            to: string;
+        };
         productsStats: any[];
         departmentsStats: any[];
         user: UserDocument;

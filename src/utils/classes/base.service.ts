@@ -3,6 +3,7 @@ import { UserDocument } from 'src/users/entities/user.entity';
 import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { QueryDto } from '../dtos/query.dto';
 import { FindQueryBuilderService } from './find-query-builder.service';
+import { lastSaturdayFormatted, todayFormatted } from '../input-field-date-format';
 
 export abstract class BaseService {
   private queryBuilder: FindQueryBuilderService | null = null;
@@ -31,11 +32,16 @@ export abstract class BaseService {
   async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
     const queryBuilder = this.getQueryBuilder(queryParams);
     const data = await this.applyFilters(queryBuilder);
-
+    
     const baseRenderVariables: BaseRenderVariablesType = {
       error: queryParams.error || null,
       data,
       user,
+      todayDate: todayFormatted,
+      salaryForm: {
+        from: lastSaturdayFormatted,
+        to: todayFormatted
+      },
       filters: {
         search: queryBuilder.getSearchKey(),
         sort: queryBuilder.getSortKey(),
