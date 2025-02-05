@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseService = void 0;
 const find_query_builder_service_1 = require("./find-query-builder.service");
+const input_field_date_format_1 = require("../input-field-date-format");
 class BaseService {
     constructor() {
         this.queryBuilder = null;
@@ -34,6 +35,11 @@ class BaseService {
             error: queryParams.error || null,
             data,
             user,
+            todayDate: input_field_date_format_1.todayFormatted,
+            salaryForm: {
+                from: input_field_date_format_1.lastSaturdayFormatted,
+                to: input_field_date_format_1.todayFormatted
+            },
             filters: {
                 search: queryBuilder.getSearchKey(),
                 sort: queryBuilder.getSortKey(),

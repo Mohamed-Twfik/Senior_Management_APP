@@ -7,8 +7,8 @@
       </div>
       <div class="modal-body">
         <form action="/salary" method="post" id="salary-form">
-          <%- include('../inputs-fields/create/input', {name: 'from' , type: 'date' , label: 'من'}) %>
-          <%- include('../inputs-fields/create/input', {name: 'to' , type: 'date' , label: 'إلى'}) %>
+          <%- include('../inputs-fields/update/input', {id: '', value: salaryForm.from, name: 'from' , type: 'date' , label: 'من'}) %>
+          <%- include('../inputs-fields/update/input', {id: '', value: salaryForm.to, name: 'to' , type: 'date' , label: 'إلى'}) %>
         </form>
       </div>
       <div class="modal-footer">

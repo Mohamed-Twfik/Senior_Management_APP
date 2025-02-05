@@ -25,10 +25,10 @@
                 <%= worker.name %>
               </td>
               <td>
-                <%= Math.ceil(worker.totalPrice) %>
+                <%= worker.totalPrice %>
               </td>
               <td>
-                <a href="/attendance?date=daterange:<%= `${fromDate.toISOString().split('T')[0]},${toDate.toISOString().split('T')[0]}` %>&worker=objectid:<%= worker._id %>" class="btn">تفاصيل</a>
+                <a href="/attendance?date=daterange:<%= `${fromDate},${toDate}` %>&worker=objectid:<%= worker._id %>" class="btn">تفاصيل</a>
               </td>
               <td>
                 <div class="form-check form-switch">
@@ -43,7 +43,7 @@
             <th scope="row"></th>
             <td>المجموع</td>
             <td>
-              <%= Math.ceil(attendanceSum) %>
+              <%= attendanceSum %>
             </td>
             <td></td>
             <td></td>
@@ -82,16 +82,16 @@
                 <%= worker.name %>
               </td>
               <td>
-                <%= Math.ceil(worker.totalPrice) %>
+                <%= worker.totalPrice %>
               </td>
               <td>
-                <%= Math.ceil(worker.bonus) %>
+                <%= worker.bonus %>
               </td>
               <td>
-                <%= Math.ceil(worker.totalSalary) %>
+                <%= worker.totalSalary %>
               </td>
               <td>
-                <a href="/production?date=daterange:<%= `${fromDate.toISOString().split('T')[0]},${toDate.toISOString().split('T')[0]}` %>&worker=objectid:<%= worker._id %>" class="btn">تفاصيل</a>
+                <a href="/production?date=daterange:<%= `${fromDate},${toDate}` %>&worker=objectid:<%= worker._id %>" class="btn">تفاصيل</a>
               </td>
               <td>
                 <div class="form-check form-switch">
@@ -106,13 +106,13 @@
             <th scope="row"></th>
             <td>المجموع</td>
             <td>
-              <%= Math.ceil(productionSum.totalPrice) %>
+              <%= productionSum.totalPrice %>
             </td>
             <td>
-              <%= Math.ceil(productionSum.bonus) %>
+              <%= productionSum.bonus %>
             </td>
             <td>
-              <%= Math.ceil(productionSum.totalSalary) %>
+              <%= productionSum.totalSalary %>
             </td>
             <td></td>
             <td></td>

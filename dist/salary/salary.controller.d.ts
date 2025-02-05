@@ -13,8 +13,12 @@ export declare class SalaryController {
         };
         attendanceWorkers: any[];
         attendanceSum: any;
-        fromDate: Date;
-        toDate: Date;
+        fromDate: string;
+        toDate: string;
+        salaryForm: {
+            from: string;
+            to: string;
+        };
         arabicFromDate: string;
         arabicToDate: string;
         user: UserDocument;
