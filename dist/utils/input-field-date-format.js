@@ -10,8 +10,9 @@ const formatDate = (date) => {
 exports.formatDate = formatDate;
 exports.today = new Date();
 exports.todayFormatted = (0, exports.formatDate)(exports.today);
-const lastSaturday = new Date(exports.today);
+const lastSaturday = new Date();
 exports.lastSaturday = lastSaturday;
 lastSaturday.setDate(exports.today.getDate() - (exports.today.getDay() + 1) % 7);
+lastSaturday.setUTCHours(0, 0, 0, 0);
 exports.lastSaturdayFormatted = (0, exports.formatDate)(lastSaturday);
 //# sourceMappingURL=input-field-date-format.js.map
