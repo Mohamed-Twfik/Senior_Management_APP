@@ -8,7 +8,8 @@ export const formatDate = (date: Date) => {
 export const today = new Date();
 export const todayFormatted = formatDate(today);
 
-const lastSaturday = new Date(today);
+const lastSaturday = new Date();
 lastSaturday.setDate(today.getDate() - (today.getDay() + 1) % 7);
+lastSaturday.setUTCHours(0, 0, 0, 0);
 export { lastSaturday };
 export const lastSaturdayFormatted = formatDate(lastSaturday);

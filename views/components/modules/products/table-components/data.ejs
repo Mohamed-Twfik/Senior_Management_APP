@@ -1,3 +1,6 @@
 <td scope="col">
-  <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
+  <a href="/production?date=daterange:<%= salaryForm.from %>,<%= salaryForm.to %>&product=objectid:<%= dataItem._id.toString() %>">
+    <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
+  </a>
+  
 </td>

@@ -40,7 +40,7 @@ async function bootstrap() {
   app.useStaticAssets(path.join(__dirname, '..', 'public'));
 
   await app.listen(port, () => {
-    Logger.log(`Server listen on URL: ${baseUrl}`, 'Bootstrap');
+    Logger.log(`Server listen in ${process.env.NODE_ENV} environment on URL: ${baseUrl}`, 'Bootstrap');
   });
 }
 bootstrap();

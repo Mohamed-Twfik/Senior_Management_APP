@@ -1,5 +1,34 @@
 <%- include('../../../inputs-fields/create/input', {name: 'date' , type: 'date' , label: 'تاريخ الإنتاج'}) %>
 <%- include('../../../inputs-fields/create/select', {name: 'worker' , label: 'العامل' , data: workers}) %>
-<%- include('../../../inputs-fields/create/select', {name: 'product' , label: 'المنتج' , data: products}) %>
-<%- include('../../../inputs-fields/create/select', {name: 'department' , label: 'القسم' , data: departments}) %>
-<%- include('../../../inputs-fields/create/input', {name: 'quantity' , type: 'number' , label: 'كمية الإنتاج'}) %>
+
+<div class="production-details">
+  <label class="col-form-label fs-4 px-4">تفاصيل الإنتاج</label>
+  <div class="text-danger production-details mt-1 mx-3" style="display: none;"></div>
+  <div class="production-input-group mb-3">
+    <div class="input-group">
+      <span class="input-group-text" id="basic-addon1">
+        <button type="button" class="btn-close" aria-label="Close"></button>
+      </span>
+      <input type="number" class="form-control quantity" name="productionDetails[0][quantity]" placeholder="الكمية">
+      <select class="form-select product" name="productionDetails[0][product]">
+        <option value="" selected>اختر المنتج</option>
+        <% products.forEach(dataItem=> { %>
+          <option value="<%= dataItem._id %>">
+            <%= dataItem.name %>
+          </option>
+        <% }) %>
+      </select>
+      <select class="form-select department" name="productionDetails[0][department]">
+        <option value="" selected>اختر القسم</option>
+        <% departments.forEach(dataItem=> { %>
+          <option value="<%= dataItem._id %>">
+            <%= dataItem.name %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="text-danger mt-1 mx-3" style="display: none;"></div>
+  </div>
+</div>
+
+<button type="button" class="btn" id="add-production-input" data-length="1"><i class="fa-solid fa-plus me-3 "></i>المزيد</button>

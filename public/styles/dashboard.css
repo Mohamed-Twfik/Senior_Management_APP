@@ -87,7 +87,7 @@ i {
 
 .form-control::placeholder,
 .form-select::placeholder {
-  color: #000217;
+  color: #000217a1;
 }
 
 .toggle-password {
@@ -143,4 +143,28 @@ i {
 td .form-check {
   max-width: 20px;
   margin: 0 auto;
+}
+
+.btn#add-production-input {
+  background-color: #bdecff;
+  color: #000217;
+}
+
+.production-input-group .input-group .input-group-text {
+  background-color: #bdecff;
+  border-left: 2px solid #000217;
+  flex-grow: 0;
+  width: 10%;
+}
+
+.production-input-group .input-group .form-control {
+  border-left: 2px solid #000217;
+  flex-grow: 1;
+  width: 20%;
+}
+
+.production-input-group .input-group .choices {
+  border-left: 2px solid #000217;
+  flex-grow: 1;
+  width: 35%;
 }

@@ -29,7 +29,7 @@ async function bootstrap() {
     app.setBaseViewsDir(path.join(__dirname, '..', 'views'));
     app.useStaticAssets(path.join(__dirname, '..', 'public'));
     await app.listen(port, () => {
-        common_1.Logger.log(`Server listen on URL: ${baseUrl}`, 'Bootstrap');
+        common_1.Logger.log(`Server listen in ${process.env.NODE_ENV} environment on URL: ${baseUrl}`, 'Bootstrap');
     });
 }
 bootstrap();

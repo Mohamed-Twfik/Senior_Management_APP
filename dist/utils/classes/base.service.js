@@ -29,10 +29,11 @@ class BaseService {
             .populate('updatedBy', 'username');
     }
     async findAll(queryParams, user) {
-        const queryBuilder = this.getQueryBuilder(queryParams);
+        const { error, ...queryParamsForQuery } = queryParams;
+        const queryBuilder = this.getQueryBuilder(queryParamsForQuery);
         const data = await this.applyFilters(queryBuilder);
         const baseRenderVariables = {
-            error: queryParams.error || null,
+            error: error || null,
             data,
             user,
             todayDate: input_field_date_format_1.todayFormatted,

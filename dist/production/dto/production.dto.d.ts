@@ -1,8 +1,12 @@
 import { Types } from "mongoose";
-export declare class ProductionDto {
-    date: Date;
+declare class ProductionDetails {
     quantity: number;
     product: Types.ObjectId;
-    worker: Types.ObjectId;
     department: Types.ObjectId;
 }
+export declare class ProductionDto {
+    date: Date;
+    worker: Types.ObjectId;
+    productionDetails: ProductionDetails[];
+}
+export {};

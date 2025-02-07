@@ -1,5 +1,28 @@
 <%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: `${dataItem.date.getFullYear()}-${String(dataItem.date.getMonth() + 1).padStart(2, '0')}-${String(dataItem.date.getDate()).padStart(2, '0')}`, name: 'date' , type: 'date' , label: 'تاريخ الإنتاج'}) %>
 <%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.worker._id.toString(), name: 'worker' , label: 'العامل' , data: workers}) %>
-<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.product._id.toString(), name: 'product' , label: 'المنتج' , data: products}) %>
-<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: dataItem.department._id.toString(), name: 'department' , label: 'القسم' , data: departments}) %>
-<%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.quantity, name: 'quantity' , type: 'number' , label: 'كمية الإنتاج'}) %>
+
+<div class="production-details">
+  <label for="quantity" class="col-form-label fs-4 px-4">تفاصيل الإنتاج</label>
+  <div class="production-input-group mb-3">
+    <div class="input-group">
+      <input type="number" class="form-control quantity" name="productionDetails[0][quantity]" placeholder="الكمية" value="<%= dataItem.quantity %>">
+      <select class="form-select modify product" name="productionDetails[0][product]">
+        <option value="" selected>اختر المنتج</option>
+        <% products.forEach(product=> { %>
+          <option value="<%= product._id %>" <%=(dataItem.product._id.toString() === product._id.toString())? 'selected' : '' %>>
+            <%= product.name %>
+          </option>
+          <% }) %>
+      </select>
+      <select class="form-select modify department" name="productionDetails[0][department]">
+        <option value="" selected>اختر القسم</option>
+        <% departments.forEach(department=> { %>
+          <option value="<%= department._id %>" <%=(dataItem.department._id.toString() === department._id.toString())? 'selected' : '' %>>
+            <%= department.name %>
+          </option>
+          <% }) %>
+      </select>
+    </div>
+    <div class="text-danger mt-1 mx-3" style="display: none;"></div>
+  </div>
+</div>

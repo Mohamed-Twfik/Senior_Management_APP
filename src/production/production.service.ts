@@ -56,24 +56,31 @@ export class ProductionService extends BaseService {
    * @throws NotFoundException if the product price not found.
    */
   async create(createProductionDto: ProductionDto, user: UserDocument) {
-    const existProduction = await this.productionModel.findOne({
-      worker: createProductionDto.worker,
-      date: createProductionDto.date,
-      product: createProductionDto.product,
-      department: createProductionDto.department
-    });
-    if(existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
-    
-    const inputDate: Production = {
-      ...createProductionDto,
-      createdBy: user._id,
-      updatedBy: user._id,
-    }
+    const inputDate: Production[] = await Promise.all(createProductionDto.productionDetails.map(async (productionDetail) => {
+      const existProduction = await this.productionModel.findOne({
+        worker: createProductionDto.worker,
+        date: createProductionDto.date,
+        product: productionDetail.product,
+        department: productionDetail.department
+      });
+      if (existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
+
+      return {
+        ...productionDetail,
+        worker: createProductionDto.worker,
+        date: createProductionDto.date,
+        createdBy: user._id,
+        updatedBy: user._id,
+      };
+    }));
     await this.productionModel.create(inputDate);
   }
 
   applyFilters(queryBuilder: FindQueryBuilderService) {
-    return super.applyFilters(queryBuilder).populate('worker', 'name').populate('product', 'name').populate('department', 'name');
+    return super.applyFilters(queryBuilder)
+      .populate('worker', 'name')
+      .populate('product', 'name')
+      .populate('department', 'name');
   }
 
   /**
@@ -87,16 +94,18 @@ export class ProductionService extends BaseService {
     const existProduction = await this.productionModel.findOne({
       worker: updateProductionDto.worker,
       date: updateProductionDto.date,
-      product: updateProductionDto.product,
-      department: updateProductionDto.department,
+      product: updateProductionDto.productionDetails[0].product,
+      department: updateProductionDto.productionDetails[0].department,
       _id: { $ne: production._id }
     });
     if (existProduction) throw new ConflictException('تم إضافة الإنتاج مسبقا.');
     
     const inputData: Partial<Production> = {
-      ...updateProductionDto,
+      ...updateProductionDto.productionDetails[0],
+      worker: updateProductionDto.worker,
+      date: updateProductionDto.date,
       updatedBy: user._id
-    }
+    };
 
     await production.set(inputData).save();
   }
