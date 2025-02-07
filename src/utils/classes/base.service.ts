@@ -30,11 +30,12 @@ export abstract class BaseService {
   }
 
   async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
-    const queryBuilder = this.getQueryBuilder(queryParams);
+    const { error, ...queryParamsForQuery } = queryParams;
+    const queryBuilder = this.getQueryBuilder(queryParamsForQuery);
     const data = await this.applyFilters(queryBuilder);
-    
+
     const baseRenderVariables: BaseRenderVariablesType = {
-      error: queryParams.error || null,
+      error: error || null,
       data,
       user,
       todayDate: todayFormatted,
