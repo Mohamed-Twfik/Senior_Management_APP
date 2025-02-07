@@ -1,5 +1,7 @@
 <td>
-  <%= (dataItem.worker && dataItem.worker.name) ? dataItem.worker.name : "لا يوجد" %>
+  <a href="/production?arabicDate=<%= dataItem.arabicDate %>&worker=objectid:<%= dataItem.worker._id.toString() %>">
+    <%= (dataItem.worker && dataItem.worker.name) ? dataItem.worker.name : "لا يوجد" %>
+  </a>
 </td>
 <td>
   <%= (dataItem.arabicDate) ? dataItem.arabicDate : 'لايوجد' %>

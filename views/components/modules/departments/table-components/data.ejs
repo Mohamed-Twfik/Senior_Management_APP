@@ -1,5 +1,7 @@
 <td scope="col">
-  <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
+  <a href="/production?date=daterange:<%= salaryForm.from %>,<%= salaryForm.to %>&department=objectid:<%= dataItem._id.toString() %>">
+    <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
+  </a>
 </td>
 <td scope="col">
   <%= (dataItem.bonusLimit) ? dataItem.bonusLimit : 'لايوجد' %>
