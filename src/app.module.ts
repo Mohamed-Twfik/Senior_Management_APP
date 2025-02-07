@@ -27,10 +27,11 @@ import { FallBackModule } from './fall-back/fall-back.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { SalaryModule } from './salary/salary.module';
 import { MainModule } from './main/main.module';
-
+console.log(process.env.NODE_ENV)
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}.local`,
       validationSchema: envVariablesValidationSchema,
       isGlobal: true,
       expandVariables: true
