@@ -27,7 +27,11 @@ let SalaryService = class SalaryService {
     async getSalary(getSalaryDto, user) {
         const attendanceWorkers = await this.attendanceService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
         const productionWorkers = await this.productionService.getSalaryData(getSalaryDto.from, getSalaryDto.to);
-        const attendanceSum = attendanceWorkers.reduce((acc, worker) => acc + worker.totalPrice, 0);
+        let attendanceSum = 0;
+        for (const worker of attendanceWorkers) {
+            worker.totalPrice = Math.ceil(worker.totalPrice);
+            attendanceSum += worker.totalPrice;
+        }
         const productionSum = {
             totalPrice: 0,
             totalSalary: 0,

@@ -12,7 +12,7 @@ export declare class SalaryController {
             bonus: number;
         };
         attendanceWorkers: any[];
-        attendanceSum: any;
+        attendanceSum: number;
         fromDate: string;
         toDate: string;
         salaryForm: {
