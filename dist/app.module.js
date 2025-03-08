@@ -31,7 +31,6 @@ const fall_back_module_1 = require("./fall-back/fall-back.module");
 const attendance_module_1 = require("./attendance/attendance.module");
 const salary_module_1 = require("./salary/salary.module");
 const main_module_1 = require("./main/main.module");
-console.log(process.env.NODE_ENV);
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(requestTiming_middleware_1.RequestTimingMiddleware).forRoutes('*');
@@ -42,7 +41,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: `.env.${process.env.NODE_ENV || 'development'}.local`,
+                envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
                 validationSchema: envValidation_schema_1.envVariablesValidationSchema,
                 isGlobal: true,
                 expandVariables: true

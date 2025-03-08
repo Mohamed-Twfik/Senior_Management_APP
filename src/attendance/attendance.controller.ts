@@ -4,10 +4,12 @@ import { GetUser } from 'src/utils/decorators/get-user.decorator';
 import { ObjectIdPipe } from 'src/utils/pipes/ObjectId.pipe';
 import { QueryParamPipe } from 'src/utils/pipes/queryParam.pipe';
 import { AttendanceService } from './attendance.service';
-import { AttendanceDto } from './dto/attendance.dto';
+import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { AttendanceDocument } from './entities/attendance.entity';
-import { AttendanceDataPipe } from './pipes/attendance-data.pipe';
+import { CreateAttendanceDataPipe } from './pipes/create-attendance-data.pipe';
 import { AttendanceIdPipe } from './pipes/attendance-id.pipe';
+import { UpdateAttendanceDto } from './dto/update-attendance.dto';
+import { UpdateAttendanceDataPipe } from './pipes/update-attendance-data.pipe';
 
 @Controller('attendance')
 export class AttendanceController {
@@ -16,7 +18,7 @@ export class AttendanceController {
   @Post()
   @Redirect('/attendance')
   create(
-    @Body(AttendanceDataPipe) createAttendanceDto: AttendanceDto,
+    @Body(CreateAttendanceDataPipe) createAttendanceDto: CreateAttendanceDto & { price: number[] },
     @GetUser() user: UserDocument,
   ) {
     return this.attendanceService.create(createAttendanceDto, user);
@@ -35,7 +37,7 @@ export class AttendanceController {
   @Redirect('/attendance?sort=-updatedAt')
   update(
     @Param('attendanceId', ObjectIdPipe, AttendanceIdPipe) attendance: AttendanceDocument,
-    @Body(AttendanceDataPipe) updateDto: AttendanceDto,
+    @Body(UpdateAttendanceDataPipe) updateDto: UpdateAttendanceDto,
     @GetUser() user: UserDocument,
   ) {
     return this.attendanceService.update(attendance, updateDto, user);

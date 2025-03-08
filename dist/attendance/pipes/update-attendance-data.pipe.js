@@ -9,16 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AttendanceDataPipe = void 0;
+exports.UpdateAttendanceDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const workerType_enum_1 = require("../../workers/enums/workerType.enum");
 const workers_service_1 = require("../../workers/workers.service");
-let AttendanceDataPipe = class AttendanceDataPipe {
+let UpdateAttendanceDataPipe = class UpdateAttendanceDataPipe {
     constructor(workersService) {
         this.workersService = workersService;
     }
     async transform(data, metadata) {
-        console.log(data);
         if (data.worker) {
             const workerExists = await this.workersService.findById(data.worker.toString());
             if (!workerExists)
@@ -33,9 +32,9 @@ let AttendanceDataPipe = class AttendanceDataPipe {
         return data;
     }
 };
-exports.AttendanceDataPipe = AttendanceDataPipe;
-exports.AttendanceDataPipe = AttendanceDataPipe = __decorate([
+exports.UpdateAttendanceDataPipe = UpdateAttendanceDataPipe;
+exports.UpdateAttendanceDataPipe = UpdateAttendanceDataPipe = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [workers_service_1.WorkersService])
-], AttendanceDataPipe);
-//# sourceMappingURL=attendance-data.pipe.js.map
+], UpdateAttendanceDataPipe);
+//# sourceMappingURL=update-attendance-data.pipe.js.map

@@ -1,7 +1,7 @@
 import { ArgumentMetadata } from "@nestjs/common";
 import { WorkersService } from '../../workers/workers.service';
 import { AttendanceDto } from "../dto/create-attendance.dto";
-export declare class AttendanceDataPipe {
+export declare class CreateAttendanceDataPipe {
     private readonly workersService;
     constructor(workersService: WorkersService);
     transform(data: AttendanceDto & {

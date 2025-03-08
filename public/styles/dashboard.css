@@ -169,6 +169,6 @@ td .form-check {
   width: 35%;
 }
 
-td .choices {
+tr.table-dark td .choices {
   max-width: 300px;
 }

@@ -27,4 +27,4 @@ __decorate([
     (0, class_validator_1.IsMongoId)({ each: true }),
     __metadata("design:type", Array)
 ], AttendanceDto.prototype, "worker", void 0);
-//# sourceMappingURL=attendance.dto.js.map
+//# sourceMappingURL=attendance.dto%20copy.js.map

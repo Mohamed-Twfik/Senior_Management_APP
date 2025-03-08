@@ -9,33 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AttendanceDataPipe = void 0;
+exports.CreateAttendanceDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const workerType_enum_1 = require("../../workers/enums/workerType.enum");
 const workers_service_1 = require("../../workers/workers.service");
-let AttendanceDataPipe = class AttendanceDataPipe {
+let CreateAttendanceDataPipe = class CreateAttendanceDataPipe {
     constructor(workersService) {
         this.workersService = workersService;
     }
     async transform(data, metadata) {
-        console.log(data);
-        if (data.worker) {
-            const workerExists = await this.workersService.findById(data.worker.toString());
+        data.price = [];
+        for (let i = 0; i < data.worker.length; i++) {
+            const workerExists = await this.workersService.findById(data.worker[i].toString());
             if (!workerExists)
                 throw new common_1.NotAcceptableException('خطأ في معرف العامل.');
-            data.worker = workerExists._id;
+            data.worker[i] = workerExists._id;
             if (workerExists.type !== workerType_enum_1.WorkerType.Production) {
                 if (!workerExists.salary)
                     throw new common_1.NotFoundException('يجب تحديد الراتب للعامل أولا.');
-                data.price = workerExists.salary / 6;
+                data.price[i] = workerExists.salary / 6;
             }
         }
         return data;
     }
 };
-exports.AttendanceDataPipe = AttendanceDataPipe;
-exports.AttendanceDataPipe = AttendanceDataPipe = __decorate([
+exports.CreateAttendanceDataPipe = CreateAttendanceDataPipe;
+exports.CreateAttendanceDataPipe = CreateAttendanceDataPipe = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [workers_service_1.WorkersService])
-], AttendanceDataPipe);
-//# sourceMappingURL=attendance-data.pipe.js.map
+], CreateAttendanceDataPipe);
+//# sourceMappingURL=create-attendance-data.pipe.js.map

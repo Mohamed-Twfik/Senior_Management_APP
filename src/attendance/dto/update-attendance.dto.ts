@@ -2,7 +2,7 @@ import { Transform } from "class-transformer";
 import { IsDate, IsMongoId, IsNotEmpty } from "class-validator";
 import { Types } from "mongoose";
 
-export class AttendanceDto {
+export class UpdateAttendanceDto {
   @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   @IsDate()

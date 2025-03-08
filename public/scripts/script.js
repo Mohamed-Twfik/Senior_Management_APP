@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('select.modify').forEach(select => {
     new Choices(select, {
       searchEnabled: true,
-      removeItemButton: false,
+      removeItemButton: (select.hasAttribute('multiple')),
       searchResultLimit: -1,
       noResultsText: 'لا يوجد نتائج مطابقة',
       noChoicesText: 'لا يوجد خيارات للعرض',

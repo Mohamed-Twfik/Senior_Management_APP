@@ -18,9 +18,10 @@ const get_user_decorator_1 = require("../utils/decorators/get-user.decorator");
 const ObjectId_pipe_1 = require("../utils/pipes/ObjectId.pipe");
 const queryParam_pipe_1 = require("../utils/pipes/queryParam.pipe");
 const attendance_service_1 = require("./attendance.service");
-const attendance_dto_1 = require("./dto/attendance.dto");
-const attendance_data_pipe_1 = require("./pipes/attendance-data.pipe");
+const create_attendance_data_pipe_1 = require("./pipes/create-attendance-data.pipe");
 const attendance_id_pipe_1 = require("./pipes/attendance-id.pipe");
+const update_attendance_dto_1 = require("./dto/update-attendance.dto");
+const update_attendance_data_pipe_1 = require("./pipes/update-attendance-data.pipe");
 let AttendanceController = class AttendanceController {
     constructor(attendanceService) {
         this.attendanceService = attendanceService;
@@ -42,10 +43,10 @@ exports.AttendanceController = AttendanceController;
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.Redirect)('/attendance'),
-    __param(0, (0, common_1.Body)(attendance_data_pipe_1.AttendanceDataPipe)),
+    __param(0, (0, common_1.Body)(create_attendance_data_pipe_1.CreateAttendanceDataPipe)),
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [attendance_dto_1.AttendanceDto, Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "create", null);
 __decorate([
@@ -61,10 +62,10 @@ __decorate([
     (0, common_1.Post)('update/:attendanceId'),
     (0, common_1.Redirect)('/attendance?sort=-updatedAt'),
     __param(0, (0, common_1.Param)('attendanceId', ObjectId_pipe_1.ObjectIdPipe, attendance_id_pipe_1.AttendanceIdPipe)),
-    __param(1, (0, common_1.Body)(attendance_data_pipe_1.AttendanceDataPipe)),
+    __param(1, (0, common_1.Body)(update_attendance_data_pipe_1.UpdateAttendanceDataPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, attendance_dto_1.AttendanceDto, Object]),
+    __metadata("design:paramtypes", [Object, update_attendance_dto_1.UpdateAttendanceDto, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "update", null);
 __decorate([

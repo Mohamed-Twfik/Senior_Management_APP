@@ -2,15 +2,14 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/users/entities/user.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
 import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
-import { QueryDto } from 'src/utils/dtos/query.dto';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 import { WorkerType } from 'src/workers/enums/workerType.enum';
 import { WorkersService } from 'src/workers/workers.service';
-import { AttendanceDto } from './dto/attendance.dto';
+import { CreateAttendanceDto } from './dto/create-attendance.dto';
+import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 import { Attendance, AttendanceDocument } from './entities/attendance.entity';
-import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class AttendanceService extends BaseService {
@@ -40,14 +39,19 @@ export class AttendanceService extends BaseService {
    * @param createDto Attendance data.
    * @param userDocument The user who is create attendance.
    */
-  async create(createDto: AttendanceDto, userDocument: UserDocument): Promise<void> {
-    const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker, date: createDto.date });
-    if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
-    
-    const inputData: Attendance = {
-      ...createDto,
-      createdBy: userDocument._id,
-      updatedBy: userDocument._id
+  async create(createDto: CreateAttendanceDto & { price: number[] }, userDocument: UserDocument): Promise<void> {
+    const inputData: Attendance[] = [];
+    for (let i = 0; i < createDto.worker.length; i++) {
+      const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker[i], date: createDto.date });
+      if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
+      
+      inputData.push({
+        date: createDto.date,
+        worker: createDto.worker[i],
+        price: createDto.price[i],
+        createdBy: userDocument._id,
+        updatedBy: userDocument._id
+      });
     };
     await this.attendanceModel.create(inputData);
   }
@@ -62,7 +66,7 @@ export class AttendanceService extends BaseService {
    * @param updateDto Attendance update data.
    * @param userDocument The user who is update attendance.
    */
-  async update(entity: AttendanceDocument, updateDto: AttendanceDto, userDocument: UserDocument): Promise<void> {
+  async update(entity: AttendanceDocument, updateDto: UpdateAttendanceDto, userDocument: UserDocument): Promise<void> {
     const existAttendance = await this.attendanceModel.findOne({ worker: updateDto.worker, date: updateDto.date, _id: { $ne: entity._id } });
     if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
 

@@ -1,14 +1,13 @@
 import { ArgumentMetadata, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
-import { Types } from "mongoose";
 import { WorkerType } from "src/workers/enums/workerType.enum";
 import { WorkersService } from '../../workers/workers.service';
-import { AttendanceDto } from "../dto/attendance.dto";
+import { CreateAttendanceDto } from "../dto/create-attendance.dto";
 
 /**
  * Create Attendance pipe.
  */
 @Injectable()
-export class AttendanceDataPipe {
+export class CreateAttendanceDataPipe {
   constructor(
     private readonly workersService: WorkersService,
   ) { }
@@ -19,14 +18,15 @@ export class AttendanceDataPipe {
    * @param metadata metadata
    * @returns transformed Attendance  data
    */
-  async transform(data: AttendanceDto & {price: number}, metadata: ArgumentMetadata) {
-    if (data.worker) {
-      const workerExists = await this.workersService.findById(data.worker.toString());
+  async transform(data: CreateAttendanceDto & { price: number[] }, metadata: ArgumentMetadata) {
+    data.price = [];
+    for (let i = 0; i < data.worker.length; i++) {
+      const workerExists = await this.workersService.findById(data.worker[i].toString());
       if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
-      data.worker = workerExists._id;
+      data.worker[i] = workerExists._id;
       if (workerExists.type !== WorkerType.Production) {
         if (!workerExists.salary) throw new NotFoundException('يجب تحديد الراتب للعامل أولا.');
-        data.price = workerExists.salary / 6;
+        data.price[i] = workerExists.salary / 6;
       }
     }
     return data;
