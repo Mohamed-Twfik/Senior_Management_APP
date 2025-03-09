@@ -27,6 +27,7 @@ import { FallBackModule } from './fall-back/fall-back.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { SalaryModule } from './salary/salary.module';
 import { MainModule } from './main/main.module';
+import { ProductCategoryModule } from './product-category/product-category.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { MainModule } from './main/main.module';
     AttendanceModule,
     SalaryModule,
     MainModule,
+    ProductCategoryModule,
     FallBackModule,
   ],
   controllers: [AppController],

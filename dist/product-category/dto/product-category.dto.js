@@ -9,22 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AttendanceDto = void 0;
-const class_transformer_1 = require("class-transformer");
+exports.ProductCategoryDto = void 0;
 const class_validator_1 = require("class-validator");
-class AttendanceDto {
+class ProductCategoryDto {
 }
-exports.AttendanceDto = AttendanceDto;
+exports.ProductCategoryDto = ProductCategoryDto;
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => new Date(value)),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsDate)(),
-    __metadata("design:type", Date)
-], AttendanceDto.prototype, "date", void 0);
-__decorate([
-    (0, class_validator_1.IsArray)(),
-    (0, class_validator_1.ArrayNotEmpty)(),
-    (0, class_validator_1.IsMongoId)({ each: true }),
-    __metadata("design:type", Array)
-], AttendanceDto.prototype, "worker", void 0);
-//# sourceMappingURL=attendance.dto%20copy.js.map
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.Matches)(/^[\s\S]{3,}$/, { message: 'الإسم يجب أن يكون 3 أحرف على الأقل' }),
+    __metadata("design:type", String)
+], ProductCategoryDto.prototype, "name", void 0);
+//# sourceMappingURL=product-category.dto.js.map
