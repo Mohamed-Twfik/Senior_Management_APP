@@ -6,6 +6,8 @@ import { UsersService } from 'src/users/users.service';
 import { BaseService } from 'src/utils/classes/base.service';
 import { ProductDto } from './dto/product.dto';
 import { Product, ProductDocument } from './entities/product.entity';
+import { ProductCategoryService } from '../product-category/product-category.service';
+import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.service';
 
 @Injectable()
 export class ProductsService extends BaseService {
@@ -15,7 +17,8 @@ export class ProductsService extends BaseService {
 
   constructor(
     @InjectModel(Product.name) private productsModel: Model<Product>,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly productCategoryService: ProductCategoryService,
   ) {
     super();
   }
@@ -28,6 +31,10 @@ export class ProductsService extends BaseService {
     return this.productsModel;
   }
 
+  applyFilters(queryBuilder: FindQueryBuilderService) {
+    return super.applyFilters(queryBuilder).populate('category', 'name');
+  }
+
   /**
    * Get additional render variables for the dashboard.
    * @returns The additional render variables.
@@ -35,6 +42,7 @@ export class ProductsService extends BaseService {
   async getAdditionalRenderVariables() {
     return {
       users: await this.usersService.find(),
+      categories: await this.productCategoryService.find(),
       type: 'products',
       title: 'المنتجات'
     }

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductDto = void 0;
 const class_validator_1 = require("class-validator");
+const mongoose_1 = require("mongoose");
 class ProductDto {
 }
 exports.ProductDto = ProductDto;
@@ -19,4 +20,9 @@ __decorate([
     (0, class_validator_1.Matches)(/^[\s\S]{3,}$/, { message: 'الإسم يجب أن يكون 3 أحرف على الأقل' }),
     __metadata("design:type", String)
 ], ProductDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", mongoose_1.Types.ObjectId)
+], ProductDto.prototype, "category", void 0);
 //# sourceMappingURL=product.dto.js.map

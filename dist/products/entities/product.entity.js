@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductSchema = exports.Product = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const product_price_entity_1 = require("../../product-price/entities/product-price.entity");
 const arabic_date_formatter_1 = require("../../utils/arabic-date-formatter");
 let Product = class Product {
 };
@@ -24,6 +23,13 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Product.prototype, "name", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        ref: 'ProductCategory'
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Product.prototype, "category", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
@@ -58,12 +64,6 @@ ProductSchema.pre('save', async function (next) {
     }
     else if (this.isModified()) {
         this.updatedAtArabic = arabic_date_formatter_1.arabicDateFormatter.format(new Date());
-    }
-    next();
-});
-ProductSchema.post('findOneAndDelete', async function (doc, next) {
-    if (doc) {
-        await doc.model(product_price_entity_1.ProductPrice.name).deleteMany({ product: doc._id });
     }
     next();
 });

@@ -34,6 +34,7 @@ export declare class FindQueryBuilderService {
         percentage: string;
         worker: string;
         product: string;
+        category: string;
         department: string;
         quantity: string;
         arabicDate: string;

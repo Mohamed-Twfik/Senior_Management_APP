@@ -1,6 +1,7 @@
 import { Document, Types } from "mongoose";
 export declare class Product {
     name: string;
+    category: Types.ObjectId;
     createdAtArabic?: string;
     updatedAtArabic?: string;
     createdBy: Types.ObjectId;

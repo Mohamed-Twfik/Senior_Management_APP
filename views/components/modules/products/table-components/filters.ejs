@@ -1,3 +1,13 @@
 <td scope="col">
   <input type="text" class="form-control" name="name" form="filter-form" placeholder="إبحث" value='<%= (filters.name) ? filters.name : '' %>'>
 </td>
+<td scope="col">
+  <select class="form-select" name="category" form="filter-form">
+    <option value="" selected <%=(!filters.category) ? "selected" : "" %>>إختر</option>
+    <% categories.forEach(category=> { %>
+      <option value="objectid:<%= category._id %>" <%=(filters.category===category._id.toString() ) ? "selected" : "" %>>
+        <%= category.name %>
+      </option>
+      <% }) %>
+  </select>
+</td>

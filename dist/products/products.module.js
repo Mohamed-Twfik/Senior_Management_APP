@@ -13,6 +13,7 @@ const products_controller_1 = require("./products.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const product_entity_1 = require("./entities/product.entity");
 const users_module_1 = require("../users/users.module");
+const product_category_module_1 = require("../product-category/product-category.module");
 let ProductsModule = class ProductsModule {
 };
 exports.ProductsModule = ProductsModule;
@@ -25,7 +26,8 @@ exports.ProductsModule = ProductsModule = __decorate([
                     schema: product_entity_1.ProductSchema,
                 },
             ]),
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            product_category_module_1.ProductCategoryModule
         ],
         controllers: [products_controller_1.ProductsController],
         providers: [products_service_1.ProductsService],

@@ -1,1 +1,2 @@
 <%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.name, name: 'name' , type: 'text' , label: 'الإسم'}) %>
+<%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: (dataItem.category)? dataItem.category._id.toString() : "", name: 'category' , label: 'الفئة' , data: categories}) %>

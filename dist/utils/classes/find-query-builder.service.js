@@ -28,6 +28,7 @@ let FindQueryBuilderService = FindQueryBuilderService_1 = class FindQueryBuilder
             percentage: "",
             worker: "",
             product: "",
+            category: "",
             department: "",
             quantity: "",
             arabicDate: "",

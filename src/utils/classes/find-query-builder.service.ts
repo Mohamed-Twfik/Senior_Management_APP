@@ -51,6 +51,7 @@ export class FindQueryBuilderService {
     percentage: "",
     worker: "",
     product: "",
+    category: "",
     department: "",
     quantity: "",
     arabicDate: "",

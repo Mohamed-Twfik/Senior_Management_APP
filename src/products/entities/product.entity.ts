@@ -11,6 +11,12 @@ export class Product {
   })
   name: string;
 
+  @Prop({
+    required: true,
+    ref: 'ProductCategory'
+  })
+  category: Types.ObjectId;
+
   @Prop()
   createdAtArabic?: string;
 
@@ -37,13 +43,6 @@ ProductSchema.pre('save', async function (next) {
     this.updatedAtArabic = arabicDateFormatter.format(new Date());
   } else if (this.isModified()) {
     this.updatedAtArabic = arabicDateFormatter.format(new Date());
-  }
-  next();
-});
-
-ProductSchema.post('findOneAndDelete', async function (doc, next) {
-  if (doc) {
-    await doc.model(ProductPrice.name).deleteMany({ product: doc._id });
   }
   next();
 });
