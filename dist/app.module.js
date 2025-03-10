@@ -22,7 +22,6 @@ const fall_back_module_1 = require("./fall-back/fall-back.module");
 const main_module_1 = require("./main/main.module");
 const price_type_module_1 = require("./resources/price-type/price-type.module");
 const product_category_module_1 = require("./resources/product-category/product-category.module");
-const product_price_module_1 = require("./resources/product-price/product-price.module");
 const production_module_1 = require("./resources/production/production.module");
 const products_module_1 = require("./resources/products/products.module");
 const attendance_module_1 = require("./resources/attendance/attendance.module");
@@ -70,7 +69,6 @@ exports.AppModule = AppModule = __decorate([
             products_module_1.ProductsModule,
             departments_module_1.DepartmentsModule,
             bonus_module_1.BonusModule,
-            product_price_module_1.ProductPriceModule,
             production_module_1.ProductionModule,
             attendance_module_1.AttendanceModule,
             salary_module_1.SalaryModule,

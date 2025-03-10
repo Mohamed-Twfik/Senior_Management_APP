@@ -14,6 +14,7 @@ const users_module_1 = require("../users/users.module");
 const product_entity_1 = require("./entities/product.entity");
 const products_controller_1 = require("./products.controller");
 const products_service_1 = require("./products.service");
+const price_type_module_1 = require("../price-type/price-type.module");
 let ProductsModule = class ProductsModule {
 };
 exports.ProductsModule = ProductsModule;
@@ -27,7 +28,8 @@ exports.ProductsModule = ProductsModule = __decorate([
                 },
             ]),
             users_module_1.UsersModule,
-            product_category_module_1.ProductCategoryModule
+            product_category_module_1.ProductCategoryModule,
+            price_type_module_1.PriceTypeModule
         ],
         controllers: [products_controller_1.ProductsController],
         providers: [products_service_1.ProductsService],

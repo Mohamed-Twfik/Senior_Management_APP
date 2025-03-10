@@ -11,18 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductPipe = void 0;
 const common_1 = require("@nestjs/common");
-const departments_service_1 = require("../../departments/departments.service");
 const products_service_1 = require("../products.service");
+const product_category_service_1 = require("../../product-category/product-category.service");
+const price_type_service_1 = require("../../price-type/price-type.service");
 let ProductPipe = class ProductPipe {
-    constructor(productsService, departmentsService) {
+    constructor(productsService, productCategoryService, priceTypeService) {
         this.productsService = productsService;
-        this.departmentsService = departmentsService;
+        this.productCategoryService = productCategoryService;
+        this.priceTypeService = priceTypeService;
     }
     async transform(data, metadata) {
-        const categoryExists = await this.productsService.findById(data.category.toString());
+        const categoryExists = await this.productCategoryService.findById(data.category.toString());
         if (!categoryExists)
-            throw new common_1.NotAcceptableException('خطأ في معرف الفئة.');
+            throw new common_1.NotAcceptableException('خطأ في معرف تصنيف المنتج.');
         data.category = categoryExists._id;
+        const priceTypeExists = await this.priceTypeService.findById(data.priceType.toString());
+        if (!priceTypeExists)
+            throw new common_1.NotAcceptableException('خطأ في معرف فئة السعر.');
+        data.priceType = priceTypeExists._id;
+        console.log(data);
         return data;
     }
 };
@@ -30,6 +37,7 @@ exports.ProductPipe = ProductPipe;
 exports.ProductPipe = ProductPipe = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [products_service_1.ProductsService,
-        departments_service_1.DepartmentsService])
+        product_category_service_1.ProductCategoryService,
+        price_type_service_1.PriceTypeService])
 ], ProductPipe);
 //# sourceMappingURL=product.pipe.js.map

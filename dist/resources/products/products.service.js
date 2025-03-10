@@ -20,12 +20,14 @@ const users_service_1 = require("../users/users.service");
 const base_service_1 = require("../../utils/classes/base.service");
 const product_category_service_1 = require("../product-category/product-category.service");
 const product_entity_1 = require("./entities/product.entity");
+const price_type_service_1 = require("../price-type/price-type.service");
 let ProductsService = class ProductsService extends base_service_1.BaseService {
-    constructor(productsModel, usersService, productCategoryService) {
+    constructor(productsModel, usersService, productCategoryService, priceTypeService) {
         super();
         this.productsModel = productsModel;
         this.usersService = usersService;
         this.productCategoryService = productCategoryService;
+        this.priceTypeService = priceTypeService;
         this.searchableKeys = [
             "name"
         ];
@@ -34,12 +36,13 @@ let ProductsService = class ProductsService extends base_service_1.BaseService {
         return this.productsModel;
     }
     applyFilters(queryBuilder) {
-        return super.applyFilters(queryBuilder).populate('category', 'name');
+        return super.applyFilters(queryBuilder).populate('category', 'name').populate('priceType', 'name');
     }
     async getAdditionalRenderVariables() {
         return {
             users: await this.usersService.find(),
             categories: await this.productCategoryService.find(),
+            priceTypes: await this.priceTypeService.find(),
             type: 'products',
             title: 'المنتجات'
         };
@@ -77,6 +80,7 @@ exports.ProductsService = ProductsService = __decorate([
     __param(0, (0, mongoose_1.InjectModel)(product_entity_1.Product.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         users_service_1.UsersService,
-        product_category_service_1.ProductCategoryService])
+        product_category_service_1.ProductCategoryService,
+        price_type_service_1.PriceTypeService])
 ], ProductsService);
 //# sourceMappingURL=products.service.js.map

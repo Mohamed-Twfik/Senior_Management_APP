@@ -14,6 +14,10 @@ const Validation = (formSelector) => {
   const categoryError = form.querySelector('.text-danger-category');
   categoryError.style.display = 'none';
 
+  const priceType = form.querySelector('select[name="priceType"]').value;
+  const priceTypeError = form.querySelector('.text-danger-priceType');
+  priceTypeError.style.display = 'none';
+
   let isValid = true;
 
   const nameRegex = /^[\s\S]{3,}$/;
@@ -24,8 +28,14 @@ const Validation = (formSelector) => {
   }
   
   if(!category) {
-    categoryError.textContent = 'يجب إختيار المنتج';
+    categoryError.textContent = 'يجب إختيار التصنيف';
     categoryError.style.display = 'block';
+    isValid = false;
+  }
+
+  if(!priceType) {
+    priceTypeError.textContent = 'يجب إختيار الفئة السعرية';
+    priceTypeError.style.display = 'block';
     isValid = false;
   }
 

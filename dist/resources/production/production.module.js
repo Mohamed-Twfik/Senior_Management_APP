@@ -10,13 +10,13 @@ exports.ProductionModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const departments_module_1 = require("../departments/departments.module");
-const product_price_module_1 = require("../product-price/product-price.module");
 const products_module_1 = require("../products/products.module");
 const users_module_1 = require("../users/users.module");
 const workers_module_1 = require("../workers/workers.module");
 const production_entity_1 = require("./entities/production.entity");
 const production_controller_1 = require("./production.controller");
 const production_service_1 = require("./production.service");
+const price_type_module_1 = require("../price-type/price-type.module");
 let ProductionModule = class ProductionModule {
 };
 exports.ProductionModule = ProductionModule;
@@ -30,10 +30,10 @@ exports.ProductionModule = ProductionModule = __decorate([
                 },
             ]),
             users_module_1.UsersModule,
-            product_price_module_1.ProductPriceModule,
             products_module_1.ProductsModule,
             workers_module_1.WorkersModule,
-            departments_module_1.DepartmentsModule
+            departments_module_1.DepartmentsModule,
+            price_type_module_1.PriceTypeModule
         ],
         controllers: [production_controller_1.ProductionController],
         providers: [production_service_1.ProductionService],

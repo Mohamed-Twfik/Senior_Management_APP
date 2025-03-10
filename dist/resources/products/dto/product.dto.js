@@ -25,4 +25,9 @@ __decorate([
     (0, class_validator_1.IsMongoId)(),
     __metadata("design:type", mongoose_1.Types.ObjectId)
 ], ProductDto.prototype, "category", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", mongoose_1.Types.ObjectId)
+], ProductDto.prototype, "priceType", void 0);
 //# sourceMappingURL=product.dto.js.map

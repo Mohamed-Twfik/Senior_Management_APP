@@ -9,4 +9,8 @@ export class ProductDto {
   @IsNotEmpty()
   @IsMongoId()
   category: Types.ObjectId;
+
+  @IsNotEmpty()
+  @IsMongoId()
+  priceType: Types.ObjectId;
 }

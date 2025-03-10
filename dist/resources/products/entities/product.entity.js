@@ -31,6 +31,13 @@ __decorate([
     __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Product.prototype, "category", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        ref: 'PriceType'
+    }),
+    __metadata("design:type", mongoose_2.Types.ObjectId)
+], Product.prototype, "priceType", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Product.prototype, "createdAtArabic", void 0);

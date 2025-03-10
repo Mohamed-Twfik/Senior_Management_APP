@@ -16,6 +16,12 @@ export class Product {
   })
   category: Types.ObjectId;
 
+  @Prop({
+    required: true,
+    ref: 'PriceType'
+  })
+  priceType: Types.ObjectId;
+
   @Prop()
   createdAtArabic?: string;
 

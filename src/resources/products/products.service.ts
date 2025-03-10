@@ -8,6 +8,7 @@ import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.se
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductDto } from './dto/product.dto';
 import { Product, ProductDocument } from './entities/product.entity';
+import { PriceTypeService } from '../price-type/price-type.service';
 
 @Injectable()
 export class ProductsService extends BaseService {
@@ -19,6 +20,7 @@ export class ProductsService extends BaseService {
     @InjectModel(Product.name) private productsModel: Model<Product>,
     private readonly usersService: UsersService,
     private readonly productCategoryService: ProductCategoryService,
+    private readonly priceTypeService: PriceTypeService
   ) {
     super();
   }
@@ -32,7 +34,7 @@ export class ProductsService extends BaseService {
   }
 
   applyFilters(queryBuilder: FindQueryBuilderService) {
-    return super.applyFilters(queryBuilder).populate('category', 'name');
+    return super.applyFilters(queryBuilder).populate('category', 'name').populate('priceType', 'name');
   }
 
   /**
@@ -43,6 +45,7 @@ export class ProductsService extends BaseService {
     return {
       users: await this.usersService.find(),
       categories: await this.productCategoryService.find(),
+      priceTypes: await this.priceTypeService.find(),
       type: 'products',
       title: 'المنتجات'
     }

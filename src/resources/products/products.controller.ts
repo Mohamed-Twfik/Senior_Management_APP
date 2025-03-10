@@ -16,6 +16,7 @@ import { ProductDto } from './dto/product.dto';
 import { ProductDocument } from './entities/product.entity';
 import { ProductIdPipe } from './pipes/product-id.pipe';
 import { ProductsService } from './products.service';
+import { ProductPipe } from './pipes/product.pipe';
 
 @Controller('products')
 export class ProductsController {
@@ -25,7 +26,7 @@ export class ProductsController {
   @Redirect('/products')
   create(
     @GetUser() user: UserDocument,
-    @Body() createProductDto: ProductDto
+    @Body(ProductPipe) createProductDto: ProductDto
   ) {
     return this.productsService.create(createProductDto, user);
   }
@@ -43,7 +44,7 @@ export class ProductsController {
   @Redirect('/products?sort=-updatedAt')
   update(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
-    @Body() updateProductDto: ProductDto,
+    @Body(ProductPipe) updateProductDto: ProductDto,
     @GetUser() user: UserDocument,
   ) {
     return this.productsService.update(product, updateProductDto, user);

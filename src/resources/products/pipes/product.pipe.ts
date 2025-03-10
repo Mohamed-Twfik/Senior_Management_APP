@@ -2,6 +2,8 @@ import { ArgumentMetadata, Injectable, NotAcceptableException } from "@nestjs/co
 import { DepartmentsService } from "src/resources/departments/departments.service";
 import { ProductDto } from "../dto/product.dto";
 import { ProductsService } from '../products.service';
+import { ProductCategoryService } from '../../product-category/product-category.service';
+import { PriceTypeService } from '../../price-type/price-type.service';
 
 /**
  * Create product pipe.
@@ -10,7 +12,8 @@ import { ProductsService } from '../products.service';
 export class ProductPipe {
   constructor(
     private readonly productsService: ProductsService,
-    private readonly departmentsService: DepartmentsService,
+    private readonly productCategoryService: ProductCategoryService,
+    private readonly priceTypeService: PriceTypeService
   ) { }
   /**
    * Transform product data to save it in the database.
@@ -20,9 +23,15 @@ export class ProductPipe {
    * @returns transformed product data
    */
   async transform(data: ProductDto, metadata: ArgumentMetadata) {
-    const categoryExists = await this.productsService.findById(data.category.toString());
-    if (!categoryExists) throw new NotAcceptableException('خطأ في معرف الفئة.');
+    const categoryExists = await this.productCategoryService.findById(data.category.toString());
+    if (!categoryExists) throw new NotAcceptableException('خطأ في معرف تصنيف المنتج.');
     data.category = categoryExists._id;
+
+    const priceTypeExists = await this.priceTypeService.findById(data.priceType.toString());
+    if (!priceTypeExists) throw new NotAcceptableException('خطأ في معرف فئة السعر.');
+    data.priceType = priceTypeExists._id;
+
+    console.log(data)
 
     return data;
   }

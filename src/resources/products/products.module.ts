@@ -5,6 +5,7 @@ import { UsersModule } from 'src/resources/users/users.module';
 import { Product, ProductSchema } from './entities/product.entity';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
+import { PriceTypeModule } from '../price-type/price-type.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ProductsService } from './products.service';
       },
     ]),
     UsersModule,
-    ProductCategoryModule
+    ProductCategoryModule,
+    PriceTypeModule
   ],
   controllers: [ProductsController],
   providers: [ProductsService],

@@ -20,6 +20,7 @@ const queryParam_pipe_1 = require("../../utils/pipes/queryParam.pipe");
 const product_dto_1 = require("./dto/product.dto");
 const product_id_pipe_1 = require("./pipes/product-id.pipe");
 const products_service_1 = require("./products.service");
+const product_pipe_1 = require("./pipes/product.pipe");
 let ProductsController = class ProductsController {
     constructor(productsService) {
         this.productsService = productsService;
@@ -42,7 +43,7 @@ __decorate([
     (0, common_1.Post)(),
     (0, common_1.Redirect)('/products'),
     __param(0, (0, get_user_decorator_1.GetUser)()),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(product_pipe_1.ProductPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, product_dto_1.ProductDto]),
     __metadata("design:returntype", void 0)
@@ -60,7 +61,7 @@ __decorate([
     (0, common_1.Post)('update/:productId'),
     (0, common_1.Redirect)('/products?sort=-updatedAt'),
     __param(0, (0, common_1.Param)('productId', ObjectId_pipe_1.ObjectIdPipe, product_id_pipe_1.ProductIdPipe)),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(product_pipe_1.ProductPipe)),
     __param(2, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, product_dto_1.ProductDto, Object]),

@@ -18,7 +18,6 @@ import { FallBackModule } from './fall-back/fall-back.module';
 import { MainModule } from './main/main.module';
 import { PriceTypeModule } from './resources/price-type/price-type.module';
 import { ProductCategoryModule } from './resources/product-category/product-category.module';
-import { ProductPriceModule } from './resources/product-price/product-price.module';
 import { ProductionModule } from './resources/production/production.module';
 import { ProductsModule } from './resources/products/products.module';
 import { AttendanceModule } from './resources/attendance/attendance.module';
@@ -60,7 +59,6 @@ import { WorkersModule } from './resources/workers/workers.module';
     ProductsModule,
     DepartmentsModule,
     BonusModule,
-    ProductPriceModule,
     ProductionModule,
     AttendanceModule,
     SalaryModule,

@@ -6,12 +6,14 @@ import { FindQueryBuilderService } from 'src/utils/classes/find-query-builder.se
 import { ProductCategoryService } from '../product-category/product-category.service';
 import { ProductDto } from './dto/product.dto';
 import { Product, ProductDocument } from './entities/product.entity';
+import { PriceTypeService } from '../price-type/price-type.service';
 export declare class ProductsService extends BaseService {
     private productsModel;
     private readonly usersService;
     private readonly productCategoryService;
+    private readonly priceTypeService;
     searchableKeys: string[];
-    constructor(productsModel: Model<Product>, usersService: UsersService, productCategoryService: ProductCategoryService);
+    constructor(productsModel: Model<Product>, usersService: UsersService, productCategoryService: ProductCategoryService, priceTypeService: PriceTypeService);
     getModuleModel(): Model<Product, {}, {}, {}, import("mongoose").Document<unknown, {}, Product> & Product & {
         _id: import("mongoose").Types.ObjectId;
     } & {
@@ -21,6 +23,7 @@ export declare class ProductsService extends BaseService {
     getAdditionalRenderVariables(): Promise<{
         users: any[];
         categories: any[];
+        priceTypes: any[];
         type: string;
         title: string;
     }>;

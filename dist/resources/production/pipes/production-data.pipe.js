@@ -13,15 +13,15 @@ exports.ProductionDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const departments_service_1 = require("../../departments/departments.service");
 const workerType_enum_1 = require("../../workers/enums/workerType.enum");
-const product_price_service_1 = require("../../product-price/product-price.service");
 const products_service_1 = require("../../products/products.service");
 const workers_service_1 = require("../../workers/workers.service");
+const price_type_service_1 = require("../../price-type/price-type.service");
 let ProductionDataPipe = class ProductionDataPipe {
-    constructor(productPriceService, productsService, workersService, departmentsService) {
-        this.productPriceService = productPriceService;
+    constructor(productsService, workersService, departmentsService, priceTypeService) {
         this.productsService = productsService;
         this.workersService = workersService;
         this.departmentsService = departmentsService;
+        this.priceTypeService = priceTypeService;
     }
     async transform(data, metadata) {
         const workerExists = await this.workersService.findById(data.worker.toString());
@@ -43,10 +43,9 @@ let ProductionDataPipe = class ProductionDataPipe {
                 productDetail.department = workerExists.department;
             }
             if (workerExists.type !== workerType_enum_1.WorkerType.Weekly) {
-                const productPrice = await this.productPriceService.findOne({ product: productDetail.product, department: productDetail.department });
-                if (!productPrice)
-                    throw new common_1.NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-                productDetail.price = (productPrice.price / 100) * productDetail.quantity;
+                const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
+                const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
+                productDetail.price = (unitPrice / 100) * productDetail.quantity;
             }
         }
         return data;
@@ -55,9 +54,9 @@ let ProductionDataPipe = class ProductionDataPipe {
 exports.ProductionDataPipe = ProductionDataPipe;
 exports.ProductionDataPipe = ProductionDataPipe = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [product_price_service_1.ProductPriceService,
-        products_service_1.ProductsService,
+    __metadata("design:paramtypes", [products_service_1.ProductsService,
         workers_service_1.WorkersService,
-        departments_service_1.DepartmentsService])
+        departments_service_1.DepartmentsService,
+        price_type_service_1.PriceTypeService])
 ], ProductionDataPipe);
 //# sourceMappingURL=production-data.pipe.js.map

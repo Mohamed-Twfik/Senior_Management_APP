@@ -1,9 +1,9 @@
 import { ArgumentMetadata, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { DepartmentsService } from "src/resources/departments/departments.service";
 import { WorkerType } from "src/resources/workers/enums/workerType.enum";
-import { ProductPriceService } from '../../product-price/product-price.service';
 import { ProductsService } from '../../products/products.service';
 import { WorkersService } from '../../workers/workers.service';
+import { PriceTypeService } from '../../price-type/price-type.service';
 
 /**
  * Create production pipe.
@@ -11,10 +11,10 @@ import { WorkersService } from '../../workers/workers.service';
 @Injectable()
 export class ProductionDataPipe {
   constructor(
-    private readonly productPriceService: ProductPriceService,
     private readonly productsService: ProductsService,
     private readonly workersService: WorkersService,
     private readonly departmentsService: DepartmentsService,
+    private readonly priceTypeService: PriceTypeService
   ) { }
   /**
    * Transform production data to save it in the database.
@@ -42,9 +42,9 @@ export class ProductionDataPipe {
       }
 
       if (workerExists.type !== WorkerType.Weekly) {
-        const productPrice = await this.productPriceService.findOne({ product: productDetail.product, department: productDetail.department });
-        if (!productPrice) throw new NotFoundException('يجب تحديد سعر المنتج لهذا القسم');
-        productDetail.price = (productPrice.price / 100) * productDetail.quantity;
+        const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
+        const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
+        productDetail.price = (unitPrice / 100) * productDetail.quantity;
       }
     }
     return data;
