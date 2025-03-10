@@ -33,10 +33,11 @@ export class ProductsController {
 
   @Get()
   @Render('index')
-  findAll(
+  async findAll(
     @Query(QueryParamPipe) queryParams: any,
     @GetUser() user: UserDocument,
   ) {
+    // await this.productsService.enterData();
     return this.productsService.findAll(queryParams, user);
   }
 

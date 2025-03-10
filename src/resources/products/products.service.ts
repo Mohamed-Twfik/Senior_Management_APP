@@ -37,6 +37,14 @@ export class ProductsService extends BaseService {
     return super.applyFilters(queryBuilder).populate('category', 'name').populate('priceType', 'name');
   }
 
+  async enterData() {
+    // const products = await this.productsModel.find();
+    // for(const product of products) {
+    //   if (product.name.startsWith('فوط فنيك قماش')) product.set({ category: '67ceaf579661b18c88dfaffd', priceType: '67ceb8209661b18c88dfbb62' }).save();
+    //   else if (product.name.startsWith('فوط فنيك')) product.set({ category: '67ceaf709661b18c88dfb016', priceType: '67ceb4f69661b18c88dfb5de' }).save();
+    // }
+  }
+
   /**
    * Get additional render variables for the dashboard.
    * @returns The additional render variables.

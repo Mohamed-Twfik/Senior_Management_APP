@@ -28,7 +28,7 @@ let ProductsController = class ProductsController {
     create(user, createProductDto) {
         return this.productsService.create(createProductDto, user);
     }
-    findAll(queryParams, user) {
+    async findAll(queryParams, user) {
         return this.productsService.findAll(queryParams, user);
     }
     update(product, updateProductDto, user) {
@@ -55,7 +55,7 @@ __decorate([
     __param(1, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:productId'),

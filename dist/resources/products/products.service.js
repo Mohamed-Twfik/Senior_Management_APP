@@ -38,6 +38,8 @@ let ProductsService = class ProductsService extends base_service_1.BaseService {
     applyFilters(queryBuilder) {
         return super.applyFilters(queryBuilder).populate('category', 'name').populate('priceType', 'name');
     }
+    async enterData() {
+    }
     async getAdditionalRenderVariables() {
         return {
             users: await this.usersService.find(),
