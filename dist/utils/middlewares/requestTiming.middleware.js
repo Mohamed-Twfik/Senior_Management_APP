@@ -12,7 +12,6 @@ let PAGE_SIZE = 10;
 let RequestTimingMiddleware = class RequestTimingMiddleware {
     use(req, res, next) {
         req.startTime = Date.now();
-        console.log("Page Size: " + PAGE_SIZE);
         if (req.query.pageSize) {
             PAGE_SIZE = parseInt(`${req.query.pageSize}`, 10);
         }

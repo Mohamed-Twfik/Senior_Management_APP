@@ -32,15 +32,15 @@
 <td scope="col">
   <div class="input-group">
     <select class="form-select">
-      <option value="" <%=(filters.quantity.split(":").length===1) ? 'selected' : '' %>>يساوي</option>
+      <option value="" <%=(filters.quantity.split(":").length===1) ? 'selected' : '' %>>=</option>
       <option value="lt:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='lt' )
-        ? 'selected' : '' %>>أقل من</option>
+        ? 'selected' : '' %>>></option>
       <option value="lte:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='lte' )
-        ? 'selected' : '' %>>أقل من أو يساوي</option>
+        ? 'selected' : '' %>>>=</option>
       <option value="gt:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='gt' )
-        ? 'selected' : '' %>>أكبر من</option>
+        ? 'selected' : '' %>><</option>
       <option value="gte:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='gte' )
-        ? 'selected' : '' %>>أكبر من أو يساوي</option>
+        ? 'selected' : '' %>><=</option>
     </select>
     <input type="number" class="form-control" name="quantity" form="filter-form" placeholder="الرقم"
       value='<%= (filters.quantity.split(":").length === 2) ? filters.quantity.split(":")[1] : filters.quantity.split(":")[0] %>'>

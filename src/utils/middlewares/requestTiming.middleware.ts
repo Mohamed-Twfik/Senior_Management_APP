@@ -14,7 +14,6 @@ let PAGE_SIZE = 10;
 export class RequestTimingMiddleware implements NestMiddleware {
   use(req: Request & {startTime: number}, res: Response, next: NextFunction) {
     req.startTime = Date.now();
-    console.log("Page Size: " + PAGE_SIZE);
     if (req.query.pageSize) {
       PAGE_SIZE = parseInt(`${req.query.pageSize}`, 10);
     }
