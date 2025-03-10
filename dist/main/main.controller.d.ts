@@ -1,5 +1,5 @@
+import { UserDocument } from 'src/resources/users/entities/user.entity';
 import { MainService } from './main.service';
-import { UserDocument } from 'src/users/entities/user.entity';
 export declare class MainController {
     private readonly mainService;
     constructor(mainService: MainService);

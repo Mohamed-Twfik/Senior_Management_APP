@@ -1,7 +1,7 @@
 import { Controller, Get, Render } from '@nestjs/common';
-import { MainService } from './main.service';
+import { UserDocument } from 'src/resources/users/entities/user.entity';
 import { GetUser } from 'src/utils/decorators/get-user.decorator';
-import { UserDocument } from 'src/users/entities/user.entity';
+import { MainService } from './main.service';
 
 @Controller('main')
 export class MainController {

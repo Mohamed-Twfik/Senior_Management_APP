@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MainService = void 0;
 const common_1 = require("@nestjs/common");
-const production_service_1 = require("../production/production.service");
+const production_service_1 = require("../resources/production/production.service");
 const arabic_date_formatter_1 = require("../utils/arabic-date-formatter");
 const input_field_date_format_1 = require("../utils/input-field-date-format");
 let MainService = class MainService {

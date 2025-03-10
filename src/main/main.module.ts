@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MainService } from './main.service';
 import { MainController } from './main.controller';
-import { ProductionModule } from 'src/production/production.module';
+import { ProductionModule } from '../resources/production/production.module';
 
 @Module({
   imports: [

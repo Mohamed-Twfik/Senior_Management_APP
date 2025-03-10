@@ -1,6 +1,6 @@
 import { Document, Model, RootFilterQuery } from 'mongoose';
-import { UserDocument } from 'src/users/entities/user.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { UserDocument } from 'src/resources/users/entities/user.entity';
+import { BaseRenderVariablesType } from 'src/resources/users/types/base-render-variables.type';
 import { QueryDto } from '../dtos/query.dto';
 import { FindQueryBuilderService } from './find-query-builder.service';
 export declare abstract class BaseService {

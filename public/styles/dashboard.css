@@ -90,6 +90,11 @@ i {
   color: #000217a1;
 }
 
+.form-control[form="filter-form"] {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
 .toggle-password {
   top: 35%;
   left: 4%;
@@ -148,6 +153,12 @@ td .form-check {
 .btn#add-production-input {
   background-color: #bdecff;
   color: #000217;
+}
+
+.input-group .input-group-text {
+  background-color: #01425c;
+  border: none;
+  color: #bdecff;
 }
 
 .production-input-group .input-group .input-group-text {

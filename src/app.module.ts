@@ -1,33 +1,34 @@
 import {
-  HttpStatus,
-  MiddlewareConsumer,
-  Module,
-  ValidationPipe
+    HttpStatus,
+    MiddlewareConsumer,
+    Module,
+    ValidationPipe
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
-import { AuthModule } from './auth/auth.module';
-import { RolesGuard } from './auth/guards/roles.guard';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './resources/auth/auth.module';
+import { UnauthorizedFilter } from './resources/auth/filters/un-auth.filter';
+import { RolesGuard } from './resources/auth/guards/roles.guard';
+import { BonusModule } from './resources/bonus/bonus.module';
+import { DepartmentsModule } from './resources/departments/departments.module';
+import { FallBackModule } from './fall-back/fall-back.module';
+import { MainModule } from './main/main.module';
+import { PriceTypeModule } from './resources/price-type/price-type.module';
+import { ProductCategoryModule } from './resources/product-category/product-category.module';
+import { ProductPriceModule } from './resources/product-price/product-price.module';
+import { ProductionModule } from './resources/production/production.module';
+import { ProductsModule } from './resources/products/products.module';
+import { AttendanceModule } from './resources/attendance/attendance.module';
+import { SalaryModule } from './resources/salary/salary.module';
+import { UsersModule } from './resources/users/users.module';
 import { envVariablesValidationSchema } from './utils/config/envValidation.schema';
 import { LoggerExceptionFilter } from './utils/logger/filters/loggerException.filter';
 import { LoggerModule } from './utils/logger/logger.module';
 import { RequestTimingMiddleware } from './utils/middlewares/requestTiming.middleware';
-import { WorkersModule } from './workers/workers.module';
-import { ProductsModule } from './products/products.module';
-import { DepartmentsModule } from './departments/departments.module';
-import { BonusModule } from './bonus/bonus.module';
-import { ProductPriceModule } from './product-price/product-price.module';
-import { ProductionModule } from './production/production.module';
-import { UnauthorizedFilter } from './auth/filters/un-auth.filter';
-import { FallBackModule } from './fall-back/fall-back.module';
-import { AttendanceModule } from './attendance/attendance.module';
-import { SalaryModule } from './salary/salary.module';
-import { MainModule } from './main/main.module';
-import { ProductCategoryModule } from './product-category/product-category.module';
+import { WorkersModule } from './resources/workers/workers.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { ProductCategoryModule } from './product-category/product-category.modul
     SalaryModule,
     MainModule,
     ProductCategoryModule,
+    PriceTypeModule,
     FallBackModule,
   ],
   controllers: [AppController],

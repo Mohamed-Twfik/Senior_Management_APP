@@ -1,9 +1,9 @@
 import { Document, Model, RootFilterQuery } from 'mongoose';
-import { UserDocument } from 'src/users/entities/user.entity';
-import { BaseRenderVariablesType } from 'src/users/types/base-render-variables.type';
+import { UserDocument } from 'src/resources/users/entities/user.entity';
+import { BaseRenderVariablesType } from 'src/resources/users/types/base-render-variables.type';
 import { QueryDto } from '../dtos/query.dto';
-import { FindQueryBuilderService } from './find-query-builder.service';
 import { lastSaturdayFormatted, todayFormatted } from '../input-field-date-format';
+import { FindQueryBuilderService } from './find-query-builder.service';
 
 export abstract class BaseService {
   private queryBuilder: FindQueryBuilderService | null = null;

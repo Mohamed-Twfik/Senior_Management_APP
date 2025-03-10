@@ -1,6 +1,6 @@
 /**
- * Product Form Validation
- * Used to validate product form data before submitting it to the server
+ * Product category Form Validation
+ * Used to validate product category form data before submitting it to the server
  * @param {string} formSelector The form selector to get the form element
  */
 const Validation = (formSelector) => {

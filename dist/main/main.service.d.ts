@@ -1,5 +1,5 @@
-import { ProductionService } from 'src/production/production.service';
-import { UserDocument } from 'src/users/entities/user.entity';
+import { ProductionService } from 'src/resources/production/production.service';
+import { UserDocument } from 'src/resources/users/entities/user.entity';
 export declare class MainService {
     private readonly productionService;
     constructor(productionService: ProductionService);

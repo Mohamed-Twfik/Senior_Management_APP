@@ -1,5 +1,5 @@
 import { SetMetadata } from "@nestjs/common";
-import { Role } from "src/users/enums/roles.enum";
+import { Role } from "src/resources/users/enums/roles.enum";
 
 /**
  * Custom decorator to set roles for a route, restricting access based on user roles.

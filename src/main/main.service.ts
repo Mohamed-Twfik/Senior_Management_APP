@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProductionService } from 'src/production/production.service';
-import { UserDocument } from 'src/users/entities/user.entity';
+import { ProductionService } from 'src/resources/production/production.service';
+import { UserDocument } from 'src/resources/users/entities/user.entity';
 import { arabicDateFormatter } from 'src/utils/arabic-date-formatter';
 import { lastSaturday, lastSaturdayFormatted, today, todayFormatted } from 'src/utils/input-field-date-format';
 
