@@ -30,7 +30,7 @@
       <a href="#workers-grouped-links" class="list-group-item list-group-item-action ripple <%if(type === 'workers' || type === 'departments' || type === 'bonus'){%>active<%}%>" data-bs-toggle="collapse" aria-expanded="false">
         <i class="fa-solid fa-folder me-3"></i><span>إدارة العمال</span>
       </a>
-      <div class="collapse" id="workers-grouped-links">
+      <div class="collapse <%if(type === 'workers' || type === 'departments' || type === 'bonus'){%>show<%}%>" id="workers-grouped-links">
         <a href="/workers" class="list-group-item list-group-item-action ripple <%if(type === 'workers'){%>active<%}%>">
           <i class="fa-solid fa-users me-3"></i><span>العمال</span>
         </a>
@@ -52,7 +52,7 @@
         aria-expanded="false">
         <i class="fa-solid fa-folder me-3"></i><span>إدارة المنتجات</span>
       </a>
-      <div class="collapse" id="products-grouped-links">
+      <div class="collapse <%if(type === 'productCategory' || type === 'priceType' || type === 'products'){%>show<%}%>" id="products-grouped-links">
         <a href="/productCategory"
           class="list-group-item list-group-item-action ripple <%if(type === 'productCategory'){%>active<%}%>">
           <i class="fa-solid fa-layer-group me-3"></i><span>تصنيفات المنتجات</span>
