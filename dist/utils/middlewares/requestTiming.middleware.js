@@ -8,9 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestTimingMiddleware = void 0;
 const common_1 = require("@nestjs/common");
+let PAGE_SIZE = 10;
 let RequestTimingMiddleware = class RequestTimingMiddleware {
     use(req, res, next) {
         req.startTime = Date.now();
+        if (req.query.pageSize) {
+            PAGE_SIZE = parseInt(`${req.query.pageSize}`, 10);
+        }
+        req.query.pageSize = `${PAGE_SIZE}`;
         next();
     }
 };

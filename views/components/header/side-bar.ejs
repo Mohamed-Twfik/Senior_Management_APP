@@ -26,30 +26,50 @@
           <i class="fa-solid fa-users-gear me-3"></i><span>المشرفين</span>
         </a>
       <%}%>
-      <a href="/workers" class="list-group-item list-group-item-action ripple <%if(type === 'workers'){%>active<%}%>">
-        <i class="fa-solid fa-users me-3"></i><span>العمال</span>
+
+      <a href="#workers-grouped-links" class="list-group-item list-group-item-action ripple <%if(type === 'workers' || type === 'departments' || type === 'bonus'){%>active<%}%>" data-bs-toggle="collapse" aria-expanded="false">
+        <i class="fa-solid fa-folder me-3"></i><span>إدارة العمال</span>
       </a>
-      <a href="/departments" class="list-group-item list-group-item-action ripple <%if(type === 'departments'){%>active<%}%>">
-        <i class="fa-solid fa-building me-3"></i><span>الأقسام</span>
+      <div class="collapse" id="workers-grouped-links">
+        <a href="/workers" class="list-group-item list-group-item-action ripple <%if(type === 'workers'){%>active<%}%>">
+          <i class="fa-solid fa-users me-3"></i><span>العمال</span>
+        </a>
+        <a href="/departments" class="list-group-item list-group-item-action ripple <%if(type === 'departments'){%>active<%}%>">
+          <i class="fa-solid fa-building me-3"></i><span>الأقسام</span>
+        </a>
+        <a href="/bonus" class="list-group-item list-group-item-action ripple <%if(type === 'bonus'){%>active<%}%>">
+          <i class="fa-solid fa-money-bill-trend-up me-3"></i><span>الحوافز</span>
+        </a>
+        <a href="/attendance" class="list-group-item list-group-item-action ripple <%if(type === 'attendance'){%>active<%}%>">
+          <i class="fa-solid fa-clipboard-user me-3"></i><span>الحضور</span>
+        </a>
+        <a href="/production" class="list-group-item list-group-item-action ripple <%if(type === 'production'){%>active<%}%>">
+          <i class="fa-solid fa-circle-dollar-to-slot me-3"></i><span>الإنتاج</span>
+        </a>
+      </div>
+
+      <a href="#products-grouped-links" class="list-group-item list-group-item-action ripple <%if(type === 'productCategory' || type === 'priceType' || type === 'products'){%>active<%}%>" data-bs-toggle="collapse"
+        aria-expanded="false">
+        <i class="fa-solid fa-folder me-3"></i><span>إدارة المنتجات</span>
       </a>
-      <a href="/productCategory" class="list-group-item list-group-item-action ripple <%if(type === 'productCategory'){%>active<%}%>">
-        <i class="fa-solid fa-layer-group me-3"></i><span>تصنيفات المنتجات</span>
+      <div class="collapse" id="products-grouped-links">
+        <a href="/productCategory"
+          class="list-group-item list-group-item-action ripple <%if(type === 'productCategory'){%>active<%}%>">
+          <i class="fa-solid fa-layer-group me-3"></i><span>تصنيفات المنتجات</span>
+        </a>
+        <a href="/priceType" class="list-group-item list-group-item-action ripple <%if(type === 'priceType'){%>active<%}%>">
+          <i class="fa-solid fa-layer-group me-3"></i><span>فئات الأسعار</span>
+        </a>
+        <a href="/products" class="list-group-item list-group-item-action ripple <%if(type === 'products'){%>active<%}%>">
+          <i class="fa-brands fa-product-hunt me-3"></i><span>المنتجات</span>
+        </a>
+      </div>
+
+      <a href="#orders-grouped-links" class="list-group-item list-group-item-action ripple" data-bs-toggle="collapse" aria-expanded="false">
+        <i class="fa-solid fa-folder me-3"></i><span>إدارة الطلبيات</span>
       </a>
-      <a href="/priceType" class="list-group-item list-group-item-action ripple <%if(type === 'priceType'){%>active<%}%>">
-        <i class="fa-solid fa-layer-group me-3"></i><span>فئات الأسعار</span>
-      </a>
-      <a href="/products" class="list-group-item list-group-item-action ripple <%if(type === 'products'){%>active<%}%>">
-        <i class="fa-brands fa-product-hunt me-3"></i><span>المنتجات</span>
-      </a>
-      <a href="/bonus" class="list-group-item list-group-item-action ripple <%if(type === 'bonus'){%>active<%}%>">
-        <i class="fa-solid fa-money-bill-trend-up me-3"></i><span>الحوافز</span>
-      </a>
-      <a href="/attendance" class="list-group-item list-group-item-action ripple <%if(type === 'attendance'){%>active<%}%>">
-        <i class="fa-solid fa-clipboard-user me-3"></i><span>الحضور</span>
-      </a>
-      <a href="/production" class="list-group-item list-group-item-action ripple <%if(type === 'production'){%>active<%}%>">
-        <i class="fa-solid fa-circle-dollar-to-slot me-3"></i><span>الإنتاج</span>
-      </a>
+      <div class="collapse" id="orders-grouped-links">
+      </div>
     </div>
   </div>
 </nav>

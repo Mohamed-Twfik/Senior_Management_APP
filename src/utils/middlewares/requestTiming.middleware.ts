@@ -4,7 +4,7 @@ import {
   NextFunction
 } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-
+let PAGE_SIZE = 10;
 /**
  * A middleware that sets the `startTime` property on the request object. 
  * It records the current timestamp when the request is received, allowing the duration of the request to be calculated later in logging or response handling.
@@ -14,6 +14,10 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 export class RequestTimingMiddleware implements NestMiddleware {
   use(req: Request & {startTime: number}, res: Response, next: NextFunction) {
     req.startTime = Date.now();
+    if (req.query.pageSize) {
+      PAGE_SIZE = parseInt(`${req.query.pageSize}`, 10);
+    }
+    req.query.pageSize = `${PAGE_SIZE}`;
     next();
   }
 }

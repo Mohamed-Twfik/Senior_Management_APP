@@ -4,6 +4,7 @@
     <label for="<%= department.name %>" class="input-group-text"><%= department.name %></label>
     <input id="<%= department.name %>" name="departmentsPrice[<%= index %>][price]" type="number" class="form-control" aria-describedby="<%= department.name %>" value="<%= (dataItem.departmentsPrice[index])? dataItem.departmentsPrice[index].price : 0 %>">
     <input name="departmentsPrice[<%= index %>][department]" type="hidden" class="form-control" value="<%= department._id %>">
+    <label class="input-group-text">قرش</label>
   </div>
   <div class="text-danger text-danger-department-price mt-1" style="display: none;"></div>
 <% }); %>

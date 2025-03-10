@@ -23,15 +23,15 @@
 <td scope="col">
   <div class="input-group">
     <select class="form-select">
-      <option value="" <%=(filters.salary.split(":").length===1) ? 'selected' : '' %>>يساوي</option>
+      <option value="" <%=(filters.salary.split(":").length===1) ? 'selected' : '' %>>=</option>
       <option value="lt:" <%=(filters.salary.split(":").length===2 && filters.salary.split(":")[0]==='lt' ) ? 'selected' : ''
-        %>>أقل من</option>
+        %>>></option>
       <option value="lte:" <%=(filters.salary.split(":").length===2 && filters.salary.split(":")[0]==='lte' ) ? 'selected'
-        : '' %>>أقل من أو يساوي</option>
+        : '' %>>>=</option>
       <option value="gt:" <%=(filters.salary.split(":").length===2 && filters.salary.split(":")[0]==='gt' ) ? 'selected' : ''
-        %>>أكبر من</option>
+        %>><</option>
       <option value="gte:" <%=(filters.salary.split(":").length===2 && filters.salary.split(":")[0]==='gte' ) ? 'selected'
-        : '' %>>أكبر من أو يساوي</option>
+        : '' %>><=</option>
     </select>
     <input type="number" class="form-control" name="salary" form="filter-form" placeholder="الرقم"
       value='<%= (filters.salary.split(":").length === 2) ? filters.salary.split(":")[1] : filters.salary.split(":")[0] %>'>

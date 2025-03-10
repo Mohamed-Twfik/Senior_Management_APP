@@ -1,5 +1,5 @@
 <%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.name , name: 'name' , type: 'text' , label: 'الإسم'}) %>
-<div class="mb-4 input-group">
+<div class="mt-4 input-group">
   <label for="worker-type" class="input-group-text">النوع</label>
   <select name="type" id="worker-type" class="form-select">
     <option value="" <%=(!dataItem.type) ? "selected" : "" %>>اختر</option>
