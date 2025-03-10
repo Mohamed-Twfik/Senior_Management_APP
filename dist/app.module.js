@@ -13,25 +13,25 @@ const core_1 = require("@nestjs/core");
 const mongoose_1 = require("@nestjs/mongoose");
 const throttler_1 = require("@nestjs/throttler");
 const app_controller_1 = require("./app.controller");
-const auth_module_1 = require("./auth/auth.module");
-const roles_guard_1 = require("./auth/guards/roles.guard");
-const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./resources/auth/auth.module");
+const un_auth_filter_1 = require("./resources/auth/filters/un-auth.filter");
+const roles_guard_1 = require("./resources/auth/guards/roles.guard");
+const bonus_module_1 = require("./resources/bonus/bonus.module");
+const departments_module_1 = require("./resources/departments/departments.module");
+const fall_back_module_1 = require("./fall-back/fall-back.module");
+const main_module_1 = require("./main/main.module");
+const price_type_module_1 = require("./resources/price-type/price-type.module");
+const product_category_module_1 = require("./resources/product-category/product-category.module");
+const production_module_1 = require("./resources/production/production.module");
+const products_module_1 = require("./resources/products/products.module");
+const attendance_module_1 = require("./resources/attendance/attendance.module");
+const salary_module_1 = require("./resources/salary/salary.module");
+const users_module_1 = require("./resources/users/users.module");
 const envValidation_schema_1 = require("./utils/config/envValidation.schema");
 const loggerException_filter_1 = require("./utils/logger/filters/loggerException.filter");
 const logger_module_1 = require("./utils/logger/logger.module");
 const requestTiming_middleware_1 = require("./utils/middlewares/requestTiming.middleware");
-const workers_module_1 = require("./workers/workers.module");
-const products_module_1 = require("./products/products.module");
-const departments_module_1 = require("./departments/departments.module");
-const bonus_module_1 = require("./bonus/bonus.module");
-const product_price_module_1 = require("./product-price/product-price.module");
-const production_module_1 = require("./production/production.module");
-const un_auth_filter_1 = require("./auth/filters/un-auth.filter");
-const fall_back_module_1 = require("./fall-back/fall-back.module");
-const attendance_module_1 = require("./attendance/attendance.module");
-const salary_module_1 = require("./salary/salary.module");
-const main_module_1 = require("./main/main.module");
-console.log(process.env.NODE_ENV);
+const workers_module_1 = require("./resources/workers/workers.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(requestTiming_middleware_1.RequestTimingMiddleware).forRoutes('*');
@@ -42,7 +42,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: `.env.${process.env.NODE_ENV || 'development'}.local`,
+                envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
                 validationSchema: envValidation_schema_1.envVariablesValidationSchema,
                 isGlobal: true,
                 expandVariables: true
@@ -69,11 +69,12 @@ exports.AppModule = AppModule = __decorate([
             products_module_1.ProductsModule,
             departments_module_1.DepartmentsModule,
             bonus_module_1.BonusModule,
-            product_price_module_1.ProductPriceModule,
             production_module_1.ProductionModule,
             attendance_module_1.AttendanceModule,
             salary_module_1.SalaryModule,
             main_module_1.MainModule,
+            product_category_module_1.ProductCategoryModule,
+            price_type_module_1.PriceTypeModule,
             fall_back_module_1.FallBackModule,
         ],
         controllers: [app_controller_1.AppController],

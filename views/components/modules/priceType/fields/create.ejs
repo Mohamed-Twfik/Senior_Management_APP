@@ -1,0 +1,9 @@
+<%- include('../../../inputs-fields/create/input', {name: 'name' , type: 'text' , label: 'الإسم'}) %>
+<% departments.forEach((department, index) => { %>
+  <div class="input-group department-price mt-4">
+    <label for="<%= department.name %>" class="input-group-text"><%= department.name %></label>
+    <input id="<%= department.name %>" name="departmentsPrice[<%= index %>][price]" type="number" class="form-control" aria-describedby="<%= department.name %>" value="0">
+    <input name="departmentsPrice[<%= index %>][department]" type="hidden" class="form-control" value="<%= department._id.toString() %>">
+  </div>
+  <% }); %>
+  <div class="text-danger text-danger-department-price mt-1" style="display: none;"></div>

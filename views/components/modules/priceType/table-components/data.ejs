@@ -1,0 +1,13 @@
+<td scope="col">
+  <a href="/products?priceType=objectid:<%= dataItem._id.toString() %>">
+    <%= (dataItem.name) ? dataItem.name : 'لايوجد' %>
+  </a>
+</td>
+<td scope="col">
+  <%
+    dataItem.departmentsPrice.forEach(department=> { 
+      if(department.price > 0) {
+  %>
+    <div scope="col"><strong class="mx-2"><%= department.department.name %>:</strong> <%= department.price %> قرش</div>
+  <% }}); %>
+</td>

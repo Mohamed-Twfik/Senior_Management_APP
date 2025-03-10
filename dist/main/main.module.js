@@ -10,7 +10,7 @@ exports.MainModule = void 0;
 const common_1 = require("@nestjs/common");
 const main_service_1 = require("./main.service");
 const main_controller_1 = require("./main.controller");
-const production_module_1 = require("../production/production.module");
+const production_module_1 = require("../resources/production/production.module");
 let MainModule = class MainModule {
 };
 exports.MainModule = MainModule;

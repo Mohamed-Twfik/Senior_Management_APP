@@ -1,13 +1,13 @@
 <%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.name , name: 'name' , type: 'text' , label: 'الإسم'}) %>
-<div class="mb-3 form-group">
-  <label for="worker-type" class="col-form-label fs-4 px-4">النوع</label>
-  <select name="type" id="worker-type" class="form-select px-4">
+<div class="mb-4 input-group">
+  <label for="worker-type" class="input-group-text">النوع</label>
+  <select name="type" id="worker-type" class="form-select">
     <option value="" <%=(!dataItem.type) ? "selected" : "" %>>اختر</option>
     <option value="إنتاج" <%=(dataItem.type==='إنتاج' ) ? "selected" : "" %>>إنتاج</option>
     <option value="أسبوعي" <%=(dataItem.type==='أسبوعي' ) ? "selected" : "" %>>أسبوعي</option>
     <option value="مختلط" <%=(dataItem.type==='مختلط' ) ? "selected" : "" %>>مختلط</option>
   </select>
-  <div class="text-danger text-danger-type mt-1" style="display: none;"></div>
 </div>
+<div class="text-danger text-danger-type mt-1" style="display: none;"></div>
 <%- include('../../../inputs-fields/update/select', {id: dataItem._id, value: (dataItem.department && dataItem.department._id )? dataItem.department._id.toString() : '' , name: 'department' , label: 'القسم' , data: departments}) %>
 <%- include('../../../inputs-fields/update/input', {id: dataItem._id, value: dataItem.salary , name: 'salary' , type: 'number' , label: 'المرتب الأسبوعي (جنيه)'}) %>

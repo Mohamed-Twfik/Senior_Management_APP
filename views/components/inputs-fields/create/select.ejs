@@ -1,10 +1,12 @@
-<div class="mb-3 form-group">
-  <label for="<%= name %>" class="col-form-label fs-4 px-4"><%= label %></label>
-  <select class="form-select modify px-4" id="<%= name %>" name="<%= name %>">
-    <option value="" selected>اختر</option>
+<div class="input-group mt-4">
+  <label for="<%= name %>" class="input-group-text"><%= label %></label>
+  <select class="form-select modify px-4" id="<%= name %>" name="<%= name %>" <%= (multiple) ? "multiple" : "" %>>
+    <% if(!multiple) { %>
+      <option value="" selected>اختر</option>
+    <% } %>
     <% data.forEach(dataItem=> { %>
       <option value="<%= dataItem._id %>"><%= dataItem.name %></option>
     <% }) %>
   </select>
-  <div class="text-danger text-danger-<%= name %> mt-1" style="display: none;"></div>
 </div>
+<div class="text-danger text-danger-<%= name %> mt-1" style="display: none;"></div>

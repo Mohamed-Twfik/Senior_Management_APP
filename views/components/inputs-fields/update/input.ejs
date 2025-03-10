@@ -1,5 +1,5 @@
-<div class="mb-3">
-  <label for="<%= `${name}-${id}` %>" class="col-form-label fs-4 px-4"><%= label %></label>
-  <input type="<%= type %>" class="form-control px-4 <%= (type==='date' )? "not-today" : "" %>" name="<%= name %>" id="<%= `${name}-${id}` %>" value='<%= (value!=Infinity) ? value : '' %>'>
-  <div class="text-danger text-danger-<%= name %> mt-1" style="display: none;"></div>
+<div class="input-group mt-4">
+  <label for="<%= `${name}-${id}` %>" class="input-group-text"><%= label %></label>
+  <input type="<%= type %>" class="form-control <%= (type==='date' )? "not-today" : "" %>" name="<%= name %>" id="<%= `${name}-${id}` %>" value='<%= (value!=Infinity) ? value : '' %>'>
 </div>
+<div class="text-danger text-danger-<%= name %> mt-1" style="display: none;"></div>
