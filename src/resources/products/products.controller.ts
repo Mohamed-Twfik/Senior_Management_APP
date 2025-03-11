@@ -37,7 +37,6 @@ export class ProductsController {
     @Query(QueryParamPipe) queryParams: any,
     @GetUser() user: UserDocument,
   ) {
-    // await this.productsService.enterData();
     return this.productsService.findAll(queryParams, user);
   }
 
@@ -52,7 +51,7 @@ export class ProductsController {
   }
 
   @Get('delete/:productId')
-  @Redirect('/products')
+  @Redirect('/products?sort=updatedAt')
   remove(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
   ) {

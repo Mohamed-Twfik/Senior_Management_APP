@@ -45,6 +45,8 @@ let ProductionDataPipe = class ProductionDataPipe {
             if (workerExists.type !== workerType_enum_1.WorkerType.Weekly) {
                 const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
                 const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
+                if (!unitPrice)
+                    throw new common_1.NotFoundException('لم يتم تحديد سعر لهذا المنتج في هذا القسم.');
                 productDetail.price = (unitPrice / 100) * productDetail.quantity;
             }
         }

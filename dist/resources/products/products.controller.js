@@ -69,7 +69,7 @@ __decorate([
 ], ProductsController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:productId'),
-    (0, common_1.Redirect)('/products'),
+    (0, common_1.Redirect)('/products?sort=updatedAt'),
     __param(0, (0, common_1.Param)('productId', ObjectId_pipe_1.ObjectIdPipe, product_id_pipe_1.ProductIdPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

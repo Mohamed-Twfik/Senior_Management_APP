@@ -20,7 +20,6 @@ export declare class ProductsService extends BaseService {
         __v: number;
     }, any>;
     applyFilters(queryBuilder: FindQueryBuilderService): import("mongoose").Query<any, any, {}, unknown, "find", Record<string, never>>;
-    enterData(): Promise<void>;
     getAdditionalRenderVariables(): Promise<{
         users: any[];
         categories: any[];

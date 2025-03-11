@@ -31,8 +31,6 @@ export class ProductPipe {
     if (!priceTypeExists) throw new NotAcceptableException('خطأ في معرف فئة السعر.');
     data.priceType = priceTypeExists._id;
 
-    console.log(data)
-
     return data;
   }
 }

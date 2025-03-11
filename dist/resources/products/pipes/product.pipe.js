@@ -29,7 +29,6 @@ let ProductPipe = class ProductPipe {
         if (!priceTypeExists)
             throw new common_1.NotAcceptableException('خطأ في معرف فئة السعر.');
         data.priceType = priceTypeExists._id;
-        console.log(data);
         return data;
     }
 };
