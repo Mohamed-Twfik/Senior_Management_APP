@@ -33,7 +33,7 @@ export class ProductsController {
 
   @Get()
   @Render('index')
-  findAll(
+  async findAll(
     @Query(QueryParamPipe) queryParams: any,
     @GetUser() user: UserDocument,
   ) {
@@ -51,7 +51,7 @@ export class ProductsController {
   }
 
   @Get('delete/:productId')
-  @Redirect('/products')
+  @Redirect('/products?sort=updatedAt')
   remove(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
   ) {

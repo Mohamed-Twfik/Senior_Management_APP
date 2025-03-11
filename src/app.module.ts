@@ -28,6 +28,7 @@ import { LoggerExceptionFilter } from './utils/logger/filters/loggerException.fi
 import { LoggerModule } from './utils/logger/logger.module';
 import { RequestTimingMiddleware } from './utils/middlewares/requestTiming.middleware';
 import { WorkersModule } from './resources/workers/workers.module';
+import { ClientsModule } from './resources/clients/clients.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { WorkersModule } from './resources/workers/workers.module';
     MainModule,
     ProductCategoryModule,
     PriceTypeModule,
+    ClientsModule,
     FallBackModule,
   ],
   controllers: [AppController],

@@ -32,6 +32,7 @@ const loggerException_filter_1 = require("./utils/logger/filters/loggerException
 const logger_module_1 = require("./utils/logger/logger.module");
 const requestTiming_middleware_1 = require("./utils/middlewares/requestTiming.middleware");
 const workers_module_1 = require("./resources/workers/workers.module");
+const clients_module_1 = require("./resources/clients/clients.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(requestTiming_middleware_1.RequestTimingMiddleware).forRoutes('*');
@@ -75,6 +76,7 @@ exports.AppModule = AppModule = __decorate([
             main_module_1.MainModule,
             product_category_module_1.ProductCategoryModule,
             price_type_module_1.PriceTypeModule,
+            clients_module_1.ClientsModule,
             fall_back_module_1.FallBackModule,
         ],
         controllers: [app_controller_1.AppController],

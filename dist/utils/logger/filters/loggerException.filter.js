@@ -49,6 +49,8 @@ let LoggerExceptionFilter = class LoggerExceptionFilter extends core_1.BaseExcep
             response.redirect(`/productCategory?error=${errorMessage}`);
         else if (url.startsWith("/priceType"))
             response.redirect(`/priceType?error=${errorMessage}`);
+        else if (url.startsWith("/clients"))
+            response.redirect(`/clients?error=${errorMessage}`);
     }
 };
 exports.LoggerExceptionFilter = LoggerExceptionFilter;
