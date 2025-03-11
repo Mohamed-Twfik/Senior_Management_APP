@@ -29,7 +29,7 @@
       <% }) %>
   </select>
 </td>
-<td scope="col">
+<!-- <td scope="col">
   <div class="input-group">
     <select class="form-select">
       <option value="" <%=(filters.quantity.split(":").length===1) ? 'selected' : '' %>>=</option>
@@ -45,7 +45,7 @@
     <input type="number" class="form-control" name="quantity" form="filter-form" placeholder="الرقم"
       value='<%= (filters.quantity.split(":").length === 2) ? filters.quantity.split(":")[1] : filters.quantity.split(":")[0] %>'>
   </div>
-</td>
+</td> -->
 <td scope="col">
   <input type="text" class="form-control" name="arabicDate" form="filter-form" placeholder="إبحث"
     value='<%= (filters.arabicDate) ? filters.arabicDate : '' %>'>

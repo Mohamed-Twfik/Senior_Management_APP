@@ -28,7 +28,9 @@ export class ProductionDataPipe {
     if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
     data.worker = workerExists._id;
 
-    for (const productDetail of data.productionDetails) {
+    // for (const productDetail of data.productionDetails) {
+    for (let i = 0; i < data.productionDetails.length; i++) {
+      const productDetail = data.productionDetails[i];
       const productExists = await this.productsService.findById(productDetail.product.toString());
       if (!productExists) throw new NotAcceptableException('خطأ في معرف المنتج.');
       productDetail.product = productExists._id;
@@ -44,8 +46,7 @@ export class ProductionDataPipe {
       if (workerExists.type !== WorkerType.Weekly) {
         const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
         const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
-        if (!unitPrice) throw new NotFoundException('لم يتم تحديد سعر لهذا المنتج في هذا القسم.');
-        productDetail.price = (unitPrice / 100) * productDetail.quantity;
+        productDetail.price = (unitPrice.price / 100) * productDetail.quantity;
       }
     }
     return data;
