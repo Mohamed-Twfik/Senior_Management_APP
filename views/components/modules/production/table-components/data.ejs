@@ -2,14 +2,14 @@
   <%= (dataItem.worker && dataItem.worker.name) ? dataItem.worker.name : "لا يوجد" %>
 </td>
 <td>
-  <%= (dataItem.product && dataItem.product.name)? dataItem.product.name : 'لا يوجد' %>
+  <%= (dataItem.product && dataItem.product.name)? `${dataItem.quantity} ${dataItem.product.name}` : 'لا يوجد' %>
 </td>
 <td>
   <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لا يوجد' %>
 </td>
-<td>
-  <%= (dataItem.quantity) ? dataItem.quantity : 'لايوجد' %>
-</td>
+<!-- <td>
+  <%= //(dataItem.quantity) ? dataItem.quantity : 'لايوجد' %>
+</td> -->
 <td>
   <%= (dataItem.arabicDate) ? dataItem.arabicDate : 'لايوجد' %>
 </td>
