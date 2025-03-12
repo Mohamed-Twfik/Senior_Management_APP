@@ -51,7 +51,7 @@ export class ProductsController {
   }
 
   @Get('delete/:productId')
-  @Redirect('/products?sort=updatedAt')
+  @Redirect('/products')
   remove(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
   ) {

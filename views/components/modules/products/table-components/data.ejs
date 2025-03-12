@@ -4,8 +4,12 @@
   </a>
 </td>
 <td>
-  <%= (dataItem.category && dataItem.category.name) ? dataItem.category.name : 'لا يوجد' %>
+  <a href="/productCategory?name=search:<%= dataItem.category.name %>">
+    <%= (dataItem.category && dataItem.category.name) ? dataItem.category.name : 'لا يوجد' %>
+  </a>
 </td>
 <td>
-  <%= (dataItem.priceType && dataItem.priceType.name) ? dataItem.priceType.name : 'لا يوجد' %>
+  <a href="/priceType?name=search:<%= dataItem.priceType.name %>">
+    <%= (dataItem.priceType && dataItem.priceType.name) ? dataItem.priceType.name : 'لا يوجد' %>
+  </a>
 </td>

@@ -8,5 +8,7 @@
   <%= (dataItem.percentage) ? dataItem.percentage+"%" : 'لايوجد' %>
 </td>
 <td scope="col">
-  <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
+  <a href="/departments?name=search:<%= dataItem.department.name %>">
+    <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
+  </a>
 </td>
