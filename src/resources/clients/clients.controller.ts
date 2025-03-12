@@ -31,20 +31,22 @@ export class ClientsController {
   }
 
   @Post('update/:clientId')
-  @Redirect('/clients?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('clientId', ObjectIdPipe, ClientIdPipe) client: ClientDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body() clientDto: ClientsDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.clientsService.update(client, clientDto, user);
+    return this.clientsService.updateRoute(client, clientDto, user, queryParams);
   }
 
   @Get('delete/:clientId')
-  @Redirect('/clients')
+  @Redirect()
   remove(
     @Param('clientId', ObjectIdPipe, ClientIdPipe) client: ClientDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.clientsService.remove(client);
+    return this.clientsService.remove(client, queryParams);
   }
 }

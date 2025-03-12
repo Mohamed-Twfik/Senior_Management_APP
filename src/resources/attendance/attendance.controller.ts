@@ -34,18 +34,22 @@ export class AttendanceController {
   }
 
   @Post('update/:attendanceId')
-  @Redirect('/attendance?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('attendanceId', ObjectIdPipe, AttendanceIdPipe) attendance: AttendanceDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body(UpdateAttendanceDataPipe) updateDto: UpdateAttendanceDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.attendanceService.update(attendance, updateDto, user);
+    return this.attendanceService.updateRoute(attendance, updateDto, user, queryParams);
   }
 
   @Get('delete/:attendanceId')
-  @Redirect('/attendance')
-  remove(@Param('attendanceId', ObjectIdPipe, AttendanceIdPipe) attendance: AttendanceDocument,) {
-    return this.attendanceService.remove(attendance);
+  @Redirect()
+  remove(
+    @Param('attendanceId', ObjectIdPipe, AttendanceIdPipe) attendance: AttendanceDocument,
+    @Query(QueryParamPipe) queryParams: any,
+  ) {
+    return this.attendanceService.remove(attendance, queryParams);
   }
 }

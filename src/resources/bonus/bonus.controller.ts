@@ -41,20 +41,22 @@ export class BonusController {
   }
 
   @Post('update/:bonusId')
-  @Redirect('/bonus?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('bonusId', ObjectIdPipe, BonusIdPipe) bonus: BonusDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body(BonusDataPipe) updateBonusDto: BonusDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.bonusService.update(bonus, updateBonusDto, user);
+    return this.bonusService.updateRoute(bonus, updateBonusDto, user, queryParams);
   }
 
   @Get('delete/:bonusId')
-  @Redirect('/bonus')
+  @Redirect()
   remove(
     @Param('bonusId', ObjectIdPipe, BonusIdPipe) bonus: BonusDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.bonusService.remove(bonus);
+    return this.bonusService.remove(bonus, queryParams);
   }
 }

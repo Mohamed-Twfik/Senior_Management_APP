@@ -7,6 +7,8 @@ export declare class PriceTypeController {
     constructor(priceTypeService: PriceTypeService);
     create(createPriceTypeDto: PriceTypeDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(priceType: PriceTypeDocument, updatePriceTypeDto: PriceTypeDto, user: UserDocument): Promise<void>;
-    remove(priceType: PriceTypeDocument): Promise<void>;
+    update(priceType: PriceTypeDocument, queryParams: any, updatePriceTypeDto: PriceTypeDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(priceType: PriceTypeDocument, queryParams: any): Promise<object>;
 }

@@ -10,6 +10,8 @@ export declare class AttendanceController {
         price: number[];
     }, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(attendance: AttendanceDocument, updateDto: UpdateAttendanceDto, user: UserDocument): Promise<void>;
-    remove(attendance: AttendanceDocument): Promise<void>;
+    update(attendance: AttendanceDocument, queryParams: any, updateDto: UpdateAttendanceDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(attendance: AttendanceDocument, queryParams: any): Promise<object>;
 }

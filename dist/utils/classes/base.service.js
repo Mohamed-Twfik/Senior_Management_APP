@@ -69,8 +69,18 @@ class BaseService {
     removeMany(filter) {
         return this.getModuleModel().deleteMany(filter);
     }
-    async remove(entity) {
+    async remove(entity, queryParams) {
         await this.getModuleModel().findByIdAndDelete(entity._id);
+        return this.setQueryFilters(queryParams);
+    }
+    async setQueryFilters(queryParams) {
+        const queryString = new URLSearchParams({ ...queryParams }).toString();
+        let result = { url: `/${(await this.getAdditionalRenderVariables())['type']}?${queryString}` };
+        return result;
+    }
+    async updateRoute(entity, updateDto, userDocument, queryParams) {
+        await this.update(entity, updateDto, userDocument);
+        return this.setQueryFilters(queryParams);
     }
 }
 exports.BaseService = BaseService;

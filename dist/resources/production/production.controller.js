@@ -31,11 +31,11 @@ let ProductionController = class ProductionController {
     findAll(queryParams, user) {
         return this.productionService.findAll(queryParams, user);
     }
-    update(production, updateProductionDto, user) {
-        return this.productionService.update(production, updateProductionDto, user);
+    update(production, queryParams, updateProductionDto, user) {
+        return this.productionService.updateRoute(production, updateProductionDto, user, queryParams);
     }
-    remove(production) {
-        return this.productionService.remove(production);
+    remove(production, queryParams) {
+        return this.productionService.remove(production, queryParams);
     }
 };
 exports.ProductionController = ProductionController;
@@ -59,20 +59,22 @@ __decorate([
 ], ProductionController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:productionId'),
-    (0, common_1.Redirect)('/production?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productionId', ObjectId_pipe_1.ObjectIdPipe, production_id_pipe_1.ProductionIdPipe)),
-    __param(1, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)(production_data_pipe_1.ProductionDataPipe)),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, production_dto_1.ProductionDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, production_dto_1.ProductionDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:productionId'),
-    (0, common_1.Redirect)('/production'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productionId', ObjectId_pipe_1.ObjectIdPipe, production_id_pipe_1.ProductionIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductionController.prototype, "remove", null);
 exports.ProductionController = ProductionController = __decorate([

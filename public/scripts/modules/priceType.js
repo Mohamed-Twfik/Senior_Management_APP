@@ -3,8 +3,7 @@
  * Validate the Price type form data before submitting it to the server
  * @param {string} formSelector The form selector to get the form data
  */
-const Validation = (formSelector) => {
-  const form = document.querySelector(formSelector);
+const Validation = (form) => {
   let isValid = true;
 
   const name = form.querySelector('input[name="name"]').value;
@@ -23,11 +22,7 @@ const Validation = (formSelector) => {
   inputGroupsError.style.display = 'none';
   let inputGroupsValid = false
   for (let i = 0; i < inputGroups.length; i++) {
-    console.log(inputGroups[i]);
     const departmentPrice = inputGroups[i].querySelector(`input[name="departmentsPrice[${i}][price]"]`).value;
-    console.log(departmentPrice);
-    console.log((departmentPrice)? true : false);
-    console.log(isNaN(departmentPrice));
     if (!isNaN(departmentPrice) && departmentPrice > 0) {
       inputGroupsValid = true;
       break;
@@ -39,18 +34,5 @@ const Validation = (formSelector) => {
     isValid = false;
   }
   
-  if (isValid) form.submit();
+  return isValid;
 };
-
-// Create entity
-document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
-  Validation(`#create-${PAGE_TYPE}-form`);
-});
-
-// Update entity
-document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
-  button.addEventListener('click', (e) => {
-    const entityId = button.getAttribute('dataItemId');
-    Validation(`#update-${PAGE_TYPE}-form-${entityId}`);
-  });
-});

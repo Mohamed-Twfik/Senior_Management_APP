@@ -7,10 +7,9 @@ const workerTypes = {
 /**
  * Worker Form Validation
  * Used to validate worker form data before submitting it to the server
- * @param {string} formSelector The form selector to get the form element
+ * @param form The form element
  */
-const Validation = (formSelector) => {
-  const form = document.querySelector(formSelector);
+const Validation = (form) => {
   let isValid = true;
 
   const name = form.querySelector('input[name="name"]').value;
@@ -52,7 +51,7 @@ const Validation = (formSelector) => {
     }
   }
 
-  if(isValid) form.submit();
+  return isValid;
 };
 
 const toggleSalaryDisabled = (typeSelect, salaryInput) => {
@@ -67,19 +66,6 @@ const toggleSalaryDisabled = (typeSelect, salaryInput) => {
     salaryInput.removeAttribute('name');
   }
 }
-
-// Create entity
-document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
-  Validation(`#create-${PAGE_TYPE}-form`);
-});
-
-// Update entity
-document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
-  button.addEventListener('click', (e) => {
-    const entityId = button.getAttribute('dataItemId');
-    Validation(`#update-${PAGE_TYPE}-form-${entityId}`);
-  });
-});
 
 // Disable salary input when worker type is not workerTypes.Weekly
 document.querySelectorAll('form:not(#filter-form):not(#salary-form)').forEach((form, index) => {

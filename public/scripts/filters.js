@@ -39,14 +39,12 @@ const getFilterUrl = (filterForm) => {
 
   const action = filterForm.getAttribute('action');
   const url = `${action}?${new URLSearchParams(filterFormData).toString()}`;
-  // console.log(url);
   return url;
 }
 
 // Used to filter data when submitting filter form
 document.querySelector('#filter-form').addEventListener('submit', function (e) {
   e.preventDefault();
-  // getFilterUrl(e.target);
   window.location.href = getFilterUrl(e.target);
 });
 

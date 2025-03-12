@@ -30,11 +30,11 @@ let ClientsController = class ClientsController {
     findAll(queryParams, user) {
         return this.clientsService.findAll(queryParams, user);
     }
-    update(client, clientDto, user) {
-        return this.clientsService.update(client, clientDto, user);
+    update(client, queryParams, clientDto, user) {
+        return this.clientsService.updateRoute(client, clientDto, user, queryParams);
     }
-    remove(client) {
-        return this.clientsService.remove(client);
+    remove(client, queryParams) {
+        return this.clientsService.remove(client, queryParams);
     }
 };
 exports.ClientsController = ClientsController;
@@ -58,20 +58,22 @@ __decorate([
 ], ClientsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:clientId'),
-    (0, common_1.Redirect)('/clients?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('clientId', ObjectId_pipe_1.ObjectIdPipe, client_id_pipe_1.ClientIdPipe)),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, client_dto_1.ClientsDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, client_dto_1.ClientsDto, Object]),
     __metadata("design:returntype", void 0)
 ], ClientsController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:clientId'),
-    (0, common_1.Redirect)('/clients'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('clientId', ObjectId_pipe_1.ObjectIdPipe, client_id_pipe_1.ClientIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ClientsController.prototype, "remove", null);
 exports.ClientsController = ClientsController = __decorate([

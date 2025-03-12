@@ -62,42 +62,6 @@ export class WorkersService extends BaseService {
   }
 
   /**
-   * Find all workers.
-   * @param queryParams The query parameters.
-   * @param user The user who is finding the workers.
-   * @returns The workers.
-   */
-  // async findAll(queryParams: QueryDto, user: UserDocument): Promise<BaseRenderVariablesType> {
-  //   const queryBuilder = this.getQueryBuilder(queryParams);
-  //   const data = await queryBuilder
-  //     .filter()
-  //     .sort()
-  //     .paginate()
-  //     .build()
-  //     .populate('department', 'name')
-  //     .populate('createdBy', 'username')
-  //     .populate('updatedBy', 'username');
-
-  //   const baseRenderVariables: BaseRenderVariablesType = {
-  //     error: queryParams.error || null,
-  //     data,
-  //     user,
-  //     filters: {
-  //       search: queryBuilder.getSearchKey(),
-  //       sort: queryBuilder.getSortKey(),
-  //       pagination: {
-  //         page: queryBuilder.getPage(),
-  //         totalPages: await queryBuilder.getTotalPages(),
-  //         pageSize: queryBuilder.getPageSize()
-  //       },
-  //       ...queryBuilder.getCustomFilters()
-  //     }
-  //   };
-  //   const renderVariables = { ...baseRenderVariables, ...(await this.getAdditionalRenderVariables()) };
-  //   return renderVariables;
-  // }
-
-  /**
    * Update worker.
    * @param worker The worker who is wanted to be updated.
    * @param updateWorkerDto The data to update the worker.

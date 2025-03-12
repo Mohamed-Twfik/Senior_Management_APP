@@ -3,8 +3,7 @@
  * Validate the bonus form data before submitting it to the server
  * @param {string} formSelector The form selector to get form data and validate it
  */
-const Validation = (formSelector) => {
-  const form = document.querySelector(formSelector);
+const Validation = (form) => {
   const from = form.querySelector('input[name="from"]').value;
   const to = form.querySelector('input[name="to"]').value;
   const department = form.querySelector('select[name="department"').value;
@@ -36,24 +35,11 @@ const Validation = (formSelector) => {
     isValid = false;
   }
   
-  if (isValid) form.submit();
+  return isValid;
 };
 
 const createFormId = `create-${PAGE_TYPE}-form`;
 const updateFormId = `update-${PAGE_TYPE}-form`;
-
-// Create entity
-document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
-  Validation(`#create-${PAGE_TYPE}-form`);
-});
-
-// Update entity
-document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
-  button.addEventListener('click', (e) => {
-    const entityId = button.getAttribute('dataItemId');
-    Validation(`#update-${PAGE_TYPE}-form-${entityId}`);
-  });
-});
 
 // Set the range input min and max values
 document.querySelectorAll("input[name='percentage']").forEach(input => {

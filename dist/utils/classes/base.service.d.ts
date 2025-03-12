@@ -13,7 +13,13 @@ export declare abstract class BaseService {
     findOne(filter: RootFilterQuery<any>): Promise<any>;
     updateMany(filter: RootFilterQuery<any>, updateDto: any): Promise<any>;
     removeMany(filter: RootFilterQuery<any>): Promise<any>;
-    remove(entity: Document): Promise<void>;
+    remove(entity: Document, queryParams: QueryDto): Promise<object>;
+    setQueryFilters(queryParams: QueryDto): Promise<{
+        url: string;
+    }>;
+    updateRoute(entity: Document, updateDto: any, userDocument: UserDocument, queryParams: QueryDto): Promise<{
+        url: string;
+    }>;
     abstract getModuleModel(): Model<any>;
     abstract getAdditionalRenderVariables(): Promise<object>;
     abstract create(createDto: any, userDocument: UserDocument): Promise<void>;

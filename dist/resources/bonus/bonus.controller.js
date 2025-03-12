@@ -31,11 +31,11 @@ let BonusController = class BonusController {
     findAll(queryParams, user) {
         return this.bonusService.findAll(queryParams, user);
     }
-    update(bonus, updateBonusDto, user) {
-        return this.bonusService.update(bonus, updateBonusDto, user);
+    update(bonus, queryParams, updateBonusDto, user) {
+        return this.bonusService.updateRoute(bonus, updateBonusDto, user, queryParams);
     }
-    remove(bonus) {
-        return this.bonusService.remove(bonus);
+    remove(bonus, queryParams) {
+        return this.bonusService.remove(bonus, queryParams);
     }
 };
 exports.BonusController = BonusController;
@@ -59,20 +59,22 @@ __decorate([
 ], BonusController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:bonusId'),
-    (0, common_1.Redirect)('/bonus?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('bonusId', ObjectId_pipe_1.ObjectIdPipe, bonus_id_pipe_1.BonusIdPipe)),
-    __param(1, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)(bonus_data_pipe_1.BonusDataPipe)),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, bonus_dto_1.BonusDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, bonus_dto_1.BonusDto, Object]),
     __metadata("design:returntype", void 0)
 ], BonusController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:bonusId'),
-    (0, common_1.Redirect)('/bonus'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('bonusId', ObjectId_pipe_1.ObjectIdPipe, bonus_id_pipe_1.BonusIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], BonusController.prototype, "remove", null);
 exports.BonusController = BonusController = __decorate([

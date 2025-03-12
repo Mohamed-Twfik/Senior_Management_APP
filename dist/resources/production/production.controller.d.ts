@@ -7,6 +7,8 @@ export declare class ProductionController {
     constructor(productionService: ProductionService);
     create(createProductionDto: ProductionDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(production: ProductionDocument, updateProductionDto: ProductionDto, user: UserDocument): Promise<void>;
-    remove(production: ProductionDocument): Promise<void>;
+    update(production: ProductionDocument, queryParams: any, updateProductionDto: ProductionDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(production: ProductionDocument, queryParams: any): Promise<object>;
 }

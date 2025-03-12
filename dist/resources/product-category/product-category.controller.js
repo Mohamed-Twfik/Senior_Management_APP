@@ -30,11 +30,11 @@ let ProductCategoryController = class ProductCategoryController {
     findAll(queryParams, user) {
         return this.productCategoryService.findAll(queryParams, user);
     }
-    update(productCategory, productCategoryDto, user) {
-        return this.productCategoryService.update(productCategory, productCategoryDto, user);
+    async update(productCategory, queryParams, productCategoryDto, user) {
+        return this.productCategoryService.updateRoute(productCategory, productCategoryDto, user, queryParams);
     }
-    remove(productCategory) {
-        return this.productCategoryService.remove(productCategory);
+    remove(productCategory, queryParams) {
+        return this.productCategoryService.remove(productCategory, queryParams);
     }
 };
 exports.ProductCategoryController = ProductCategoryController;
@@ -58,20 +58,22 @@ __decorate([
 ], ProductCategoryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:productCategoryId'),
-    (0, common_1.Redirect)('/productCategory?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productCategoryId', ObjectId_pipe_1.ObjectIdPipe, product_category_id_pipe_1.ProductCategoryIdPipe)),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, product_category_dto_1.ProductCategoryDto, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object, Object, product_category_dto_1.ProductCategoryDto, Object]),
+    __metadata("design:returntype", Promise)
 ], ProductCategoryController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:productCategoryId'),
-    (0, common_1.Redirect)('/productCategory'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productCategoryId', ObjectId_pipe_1.ObjectIdPipe, product_category_id_pipe_1.ProductCategoryIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductCategoryController.prototype, "remove", null);
 exports.ProductCategoryController = ProductCategoryController = __decorate([

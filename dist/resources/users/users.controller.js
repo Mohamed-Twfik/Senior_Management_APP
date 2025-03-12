@@ -33,11 +33,11 @@ let UsersController = class UsersController {
     findAll(queryParams, user) {
         return this.usersService.findAll(queryParams, user);
     }
-    update(user, wantedUser, updateUserDto) {
-        return this.usersService.update(wantedUser, updateUserDto, user);
+    update(user, wantedUser, queryParams, updateUserDto) {
+        return this.usersService.updateRoute(wantedUser, updateUserDto, user, queryParams);
     }
-    remove(user) {
-        return this.usersService.remove(user);
+    remove(queryParams, user) {
+        return this.usersService.remove(user, queryParams);
     }
 };
 exports.UsersController = UsersController;
@@ -61,20 +61,22 @@ __decorate([
 ], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:userId'),
-    (0, common_1.Redirect)('/users?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, get_user_decorator_1.GetUser)()),
     __param(1, (0, common_1.Param)('userId', ObjectId_pipe_1.ObjectIdPipe, user_id_pipe_1.UserIdPipe)),
-    __param(2, (0, common_1.Body)()),
+    __param(2, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(3, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [Object, Object, Object, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:userId'),
-    (0, common_1.Redirect)('/users'),
-    __param(0, (0, common_1.Param)('userId', ObjectId_pipe_1.ObjectIdPipe, user_id_pipe_1.UserIdPipe)),
+    (0, common_1.Redirect)(),
+    __param(0, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(1, (0, common_1.Param)('userId', ObjectId_pipe_1.ObjectIdPipe, user_id_pipe_1.UserIdPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "remove", null);
 exports.UsersController = UsersController = __decorate([

@@ -1,11 +1,10 @@
 /**
  * Users Form Validation
  * Used to validate user form data before submitting it to the server
- * @param {string} formSelector The form selector to get the form data
+ * @param form The form element
  * @param {boolean} isUpdate 
  */
-const Validation = (formSelector, isUpdate = false) => {
-  const form = document.querySelector(formSelector);
+const Validation = (form, isUpdate = false) => {
   const username = form.querySelector('input[name="username"]').value;
   const password = form.querySelector('input[name="password"]').value;
 
@@ -41,19 +40,5 @@ const Validation = (formSelector, isUpdate = false) => {
     }
   }
 
-  if (isValid) form.submit();
+  return isValid;
 };
-
-
-// Create entity
-document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
-  Validation(`#create-${PAGE_TYPE}-form`);
-});
-
-// Update entity
-document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
-  button.addEventListener('click', (e) => {
-    const entityId = button.getAttribute('dataItemId');
-    Validation(`#update-${PAGE_TYPE}-form-${entityId}`);
-  });
-});
