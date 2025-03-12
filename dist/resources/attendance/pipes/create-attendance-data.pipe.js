@@ -19,6 +19,8 @@ let CreateAttendanceDataPipe = class CreateAttendanceDataPipe {
     }
     async transform(data, metadata) {
         data.price = [];
+        if (!Array.isArray(data.worker))
+            data.worker = [data.worker];
         for (let i = 0; i < data.worker.length; i++) {
             const workerExists = await this.workersService.findById(data.worker[i].toString());
             if (!workerExists)
