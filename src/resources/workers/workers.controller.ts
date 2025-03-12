@@ -41,21 +41,23 @@ export class WorkersController {
   }
 
   @Post('update/:workerId')
-  @Redirect('/workers?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('workerId', ObjectIdPipe, WorkerIdPipe) worker: WorkerDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @GetUser() user: UserDocument,
     @Body(WorkerDataPipe) updateWorkerDto: WorkerDto,
 
   ) {
-    return this.workersService.update(worker, updateWorkerDto, user);
+    return this.workersService.updateRoute(worker, updateWorkerDto, user, queryParams);
   }
 
   @Get('delete/:workerId')
-  @Redirect('/workers')
+  @Redirect()
   remove(
     @Param('workerId', ObjectIdPipe, WorkerIdPipe) worker: WorkerDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.workersService.remove(worker);
+    return this.workersService.remove(worker, queryParams);
   }
 }

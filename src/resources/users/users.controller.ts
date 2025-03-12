@@ -43,20 +43,22 @@ export class UsersController {
   }
 
   @Post('update/:userId')
-  @Redirect('/users?sort=-updatedAt')
+  @Redirect()
   update(
     @GetUser() user: UserDocument,
     @Param('userId', ObjectIdPipe, UserIdPipe) wantedUser: UserDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body() updateUserDto: UpdateUserDto
   ) {
-    return this.usersService.update(wantedUser, updateUserDto, user);
+    return this.usersService.updateRoute(wantedUser, updateUserDto, user, queryParams);
   }
 
   @Get('delete/:userId')
-  @Redirect('/users')
+  @Redirect()
   remove(
+    @Query(QueryParamPipe) queryParams: any,
     @Param('userId', ObjectIdPipe, UserIdPipe) user: UserDocument
   ) {
-    return this.usersService.remove(user);
+    return this.usersService.remove(user, queryParams);
   }
 }

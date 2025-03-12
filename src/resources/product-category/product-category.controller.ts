@@ -31,20 +31,22 @@ export class ProductCategoryController {
   }
 
   @Post('update/:productCategoryId')
-  @Redirect('/productCategory?sort=-updatedAt')
-  update(
+  @Redirect()
+  async update(
     @Param('productCategoryId', ObjectIdPipe, ProductCategoryIdPipe) productCategory: ProductCategoryDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body() productCategoryDto: ProductCategoryDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.productCategoryService.update(productCategory, productCategoryDto, user);
+    return this.productCategoryService.updateRoute(productCategory, productCategoryDto, user, queryParams);
   }
 
   @Get('delete/:productCategoryId')
-  @Redirect('/productCategory')
+  @Redirect()
   remove(
     @Param('productCategoryId', ObjectIdPipe, ProductCategoryIdPipe) productCategory: ProductCategoryDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.productCategoryService.remove(productCategory);
+    return this.productCategoryService.remove(productCategory, queryParams);
   }
 }

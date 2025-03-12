@@ -41,20 +41,22 @@ export class ProductionController {
   }
 
   @Post('update/:productionId')
-  @Redirect('/production?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body(ProductionDataPipe) updateProductionDto: ProductionDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.productionService.update(production, updateProductionDto, user);
+    return this.productionService.updateRoute(production, updateProductionDto, user, queryParams);
   }
 
   @Get('delete/:productionId')
-  @Redirect('/production')
+  @Redirect()
   remove(
-    @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument
+    @Param('productionId', ObjectIdPipe, ProductionIdPipe) production: ProductionDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.productionService.remove(production);
+    return this.productionService.remove(production, queryParams);
   }
 }

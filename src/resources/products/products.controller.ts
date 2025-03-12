@@ -41,20 +41,22 @@ export class ProductsController {
   }
 
   @Post('update/:productId')
-  @Redirect('/products?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body(ProductPipe) updateProductDto: ProductDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.productsService.update(product, updateProductDto, user);
+    return this.productsService.updateRoute(product, updateProductDto, user, queryParams);
   }
 
   @Get('delete/:productId')
-  @Redirect('/products?sort=updatedAt')
+  @Redirect()
   remove(
     @Param('productId', ObjectIdPipe, ProductIdPipe) product: ProductDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.productsService.remove(product);
+    return this.productsService.remove(product, queryParams);
   }
 }

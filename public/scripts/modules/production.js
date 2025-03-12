@@ -53,8 +53,7 @@ document.querySelector('#add-production-input').addEventListener("click", (e) =>
  * Validate the Production form data before submitting it to the server
  * @param {string} formSelector The form selector to get the form data
  */
-const Validation = (formSelector) => {
-  const form = document.querySelector(formSelector);
+const Validation = (form) => {
   let isValid = true;
 
   const date = form.querySelector('input[name="date"]').value;
@@ -116,20 +115,5 @@ const Validation = (formSelector) => {
     });
   }
 
-  if (isValid) {
-    form.submit();
-  }
+  return isValid;
 };
-
-// Create entity
-document.querySelector(`.create-${PAGE_TYPE}`).addEventListener('click', (e) => {
-  Validation(`#create-${PAGE_TYPE}-form`);
-});
-
-// Update entity
-document.querySelectorAll(`.update-${PAGE_TYPE}`).forEach(button => {
-  button.addEventListener('click', (e) => {
-    const entityId = button.getAttribute('dataItemId');
-    Validation(`#update-${PAGE_TYPE}-form-${entityId}`);
-  });
-});

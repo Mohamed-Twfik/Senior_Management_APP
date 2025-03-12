@@ -31,11 +31,11 @@ let ProductsController = class ProductsController {
     async findAll(queryParams, user) {
         return this.productsService.findAll(queryParams, user);
     }
-    update(product, updateProductDto, user) {
-        return this.productsService.update(product, updateProductDto, user);
+    update(product, queryParams, updateProductDto, user) {
+        return this.productsService.updateRoute(product, updateProductDto, user, queryParams);
     }
-    remove(product) {
-        return this.productsService.remove(product);
+    remove(product, queryParams) {
+        return this.productsService.remove(product, queryParams);
     }
 };
 exports.ProductsController = ProductsController;
@@ -59,20 +59,22 @@ __decorate([
 ], ProductsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:productId'),
-    (0, common_1.Redirect)('/products?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productId', ObjectId_pipe_1.ObjectIdPipe, product_id_pipe_1.ProductIdPipe)),
-    __param(1, (0, common_1.Body)(product_pipe_1.ProductPipe)),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)(product_pipe_1.ProductPipe)),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, product_dto_1.ProductDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, product_dto_1.ProductDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:productId'),
-    (0, common_1.Redirect)('/products?sort=updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('productId', ObjectId_pipe_1.ObjectIdPipe, product_id_pipe_1.ProductIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "remove", null);
 exports.ProductsController = ProductsController = __decorate([

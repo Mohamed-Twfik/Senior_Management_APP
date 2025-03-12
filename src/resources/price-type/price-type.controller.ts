@@ -32,20 +32,22 @@ export class PriceTypeController {
   }
 
   @Post('update/:priceTypeId')
-  @Redirect('/priceType?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('priceTypeId', ObjectIdPipe, PriceTypeIdPipe) priceType: PriceTypeDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body(PriceTypePipe) updatePriceTypeDto: PriceTypeDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.priceTypeService.update(priceType, updatePriceTypeDto, user);
+    return this.priceTypeService.updateRoute(priceType, updatePriceTypeDto, user, queryParams);
   }
 
   @Get('delete/:priceTypeId')
-  @Redirect('/priceType')
+  @Redirect()
   remove(
     @Param('priceTypeId', ObjectIdPipe, PriceTypeIdPipe) priceType: PriceTypeDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.priceTypeService.remove(priceType);
+    return this.priceTypeService.remove(priceType, queryParams);
   }
 }

@@ -40,20 +40,22 @@ export class DepartmentsController {
   }
 
   @Post('update/:departmentId')
-  @Redirect('/departments?sort=-updatedAt')
+  @Redirect()
   update(
     @Param('departmentId', ObjectIdPipe, DepartmentIdPipe) department: DepartmentDocument,
+    @Query(QueryParamPipe) queryParams: any,
     @Body() updateDepartmentDto: DepartmentDto,
     @GetUser() user: UserDocument,
   ) {
-    return this.departmentsService.update(department, updateDepartmentDto, user);
+    return this.departmentsService.updateRoute(department, updateDepartmentDto, user, queryParams);
   }
 
   @Get('delete/:departmentId')
-  @Redirect('/departments')
+  @Redirect()
   remove(
     @Param('departmentId', ObjectIdPipe, DepartmentIdPipe) department: DepartmentDocument,
+    @Query(QueryParamPipe) queryParams: any,
   ) {
-    return this.departmentsService.remove(department);
+    return this.departmentsService.remove(department, queryParams);
   }
 }

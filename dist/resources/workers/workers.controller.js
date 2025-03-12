@@ -31,11 +31,11 @@ let WorkersController = class WorkersController {
     findAll(queryParams, user) {
         return this.workersService.findAll(queryParams, user);
     }
-    update(worker, user, updateWorkerDto) {
-        return this.workersService.update(worker, updateWorkerDto, user);
+    update(worker, queryParams, user, updateWorkerDto) {
+        return this.workersService.updateRoute(worker, updateWorkerDto, user, queryParams);
     }
-    remove(worker) {
-        return this.workersService.remove(worker);
+    remove(worker, queryParams) {
+        return this.workersService.remove(worker, queryParams);
     }
 };
 exports.WorkersController = WorkersController;
@@ -59,20 +59,22 @@ __decorate([
 ], WorkersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:workerId'),
-    (0, common_1.Redirect)('/workers?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('workerId', ObjectId_pipe_1.ObjectIdPipe, worker_id_pipe_1.WorkerIdPipe)),
-    __param(1, (0, get_user_decorator_1.GetUser)()),
-    __param(2, (0, common_1.Body)(worker_data_pipe_1.WorkerDataPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(3, (0, common_1.Body)(worker_data_pipe_1.WorkerDataPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, worker_dto_1.WorkerDto]),
+    __metadata("design:paramtypes", [Object, Object, Object, worker_dto_1.WorkerDto]),
     __metadata("design:returntype", void 0)
 ], WorkersController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:workerId'),
-    (0, common_1.Redirect)('/workers'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('workerId', ObjectId_pipe_1.ObjectIdPipe, worker_id_pipe_1.WorkerIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], WorkersController.prototype, "remove", null);
 exports.WorkersController = WorkersController = __decorate([

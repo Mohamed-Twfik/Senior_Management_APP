@@ -32,11 +32,11 @@ let AttendanceController = class AttendanceController {
     findAll(queryParams, user) {
         return this.attendanceService.findAll(queryParams, user);
     }
-    update(attendance, updateDto, user) {
-        return this.attendanceService.update(attendance, updateDto, user);
+    update(attendance, queryParams, updateDto, user) {
+        return this.attendanceService.updateRoute(attendance, updateDto, user, queryParams);
     }
-    remove(attendance) {
-        return this.attendanceService.remove(attendance);
+    remove(attendance, queryParams) {
+        return this.attendanceService.remove(attendance, queryParams);
     }
 };
 exports.AttendanceController = AttendanceController;
@@ -60,20 +60,22 @@ __decorate([
 ], AttendanceController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:attendanceId'),
-    (0, common_1.Redirect)('/attendance?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('attendanceId', ObjectId_pipe_1.ObjectIdPipe, attendance_id_pipe_1.AttendanceIdPipe)),
-    __param(1, (0, common_1.Body)(update_attendance_data_pipe_1.UpdateAttendanceDataPipe)),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)(update_attendance_data_pipe_1.UpdateAttendanceDataPipe)),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, update_attendance_dto_1.UpdateAttendanceDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, update_attendance_dto_1.UpdateAttendanceDto, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:attendanceId'),
-    (0, common_1.Redirect)('/attendance'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('attendanceId', ObjectId_pipe_1.ObjectIdPipe, attendance_id_pipe_1.AttendanceIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AttendanceController.prototype, "remove", null);
 exports.AttendanceController = AttendanceController = __decorate([

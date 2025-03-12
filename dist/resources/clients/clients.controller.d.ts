@@ -7,6 +7,8 @@ export declare class ClientsController {
     constructor(clientsService: ClientsService);
     create(user: UserDocument, clientDto: ClientsDto): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(client: ClientDocument, clientDto: ClientsDto, user: UserDocument): Promise<void>;
-    remove(client: ClientDocument): Promise<void>;
+    update(client: ClientDocument, queryParams: any, clientDto: ClientsDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(client: ClientDocument, queryParams: any): Promise<object>;
 }

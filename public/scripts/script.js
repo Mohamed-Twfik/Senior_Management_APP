@@ -74,3 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', adjustWidth);
   });
 });
+
+document.querySelectorAll(".delete-item").forEach(deleteLinks => {
+  deleteLinks.addEventListener("click", (e) => {
+    e.preventDefault();
+    const query = getFilterUrl(document.querySelector('#filter-form')).split('?')[1];
+    window.location.href = `${e.target.href}?${query}`;
+  });
+});

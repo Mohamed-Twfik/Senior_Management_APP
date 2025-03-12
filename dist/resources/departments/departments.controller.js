@@ -30,11 +30,11 @@ let DepartmentsController = class DepartmentsController {
     findAll(queryParams, user) {
         return this.departmentsService.findAll(queryParams, user);
     }
-    update(department, updateDepartmentDto, user) {
-        return this.departmentsService.update(department, updateDepartmentDto, user);
+    update(department, queryParams, updateDepartmentDto, user) {
+        return this.departmentsService.updateRoute(department, updateDepartmentDto, user, queryParams);
     }
-    remove(department) {
-        return this.departmentsService.remove(department);
+    remove(department, queryParams) {
+        return this.departmentsService.remove(department, queryParams);
     }
 };
 exports.DepartmentsController = DepartmentsController;
@@ -58,20 +58,22 @@ __decorate([
 ], DepartmentsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:departmentId'),
-    (0, common_1.Redirect)('/departments?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('departmentId', ObjectId_pipe_1.ObjectIdPipe, department_id_pipe_1.DepartmentIdPipe)),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, department_dto_1.DepartmentDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, department_dto_1.DepartmentDto, Object]),
     __metadata("design:returntype", void 0)
 ], DepartmentsController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:departmentId'),
-    (0, common_1.Redirect)('/departments'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('departmentId', ObjectId_pipe_1.ObjectIdPipe, department_id_pipe_1.DepartmentIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], DepartmentsController.prototype, "remove", null);
 exports.DepartmentsController = DepartmentsController = __decorate([

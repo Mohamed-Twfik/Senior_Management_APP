@@ -1,11 +1,17 @@
 <td>
-  <%= (dataItem.worker && dataItem.worker.name) ? dataItem.worker.name : "لا يوجد" %>
+  <a href="/workers?name=search:<%= dataItem.worker.name %>">
+    <%= (dataItem.worker && dataItem.worker.name) ? dataItem.worker.name : "لا يوجد" %>
+  </a>
 </td>
 <td>
-  <%= (dataItem.product && dataItem.product.name)? `${dataItem.quantity} ${dataItem.product.name}` : 'لا يوجد' %>
+  <a href="/products?name=search:<%= dataItem.product.name %>">
+    <%= (dataItem.product && dataItem.product.name)? `${dataItem.quantity} ${dataItem.product.name}` : 'لا يوجد' %>
+  </a>
 </td>
 <td>
-  <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لا يوجد' %>
+  <a href="/departments?name=search:<%= dataItem.department.name %>">
+    <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
+  </a>
 </td>
 <!-- <td>
   <%= //(dataItem.quantity) ? dataItem.quantity : 'لايوجد' %>

@@ -44,7 +44,7 @@ let AttendanceService = class AttendanceService extends base_service_1.BaseServi
         for (let i = 0; i < createDto.worker.length; i++) {
             const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker[i], date: createDto.date });
             if (existAttendance)
-                throw new common_1.ConflictException('تم إضافة حضور العامل مسبقا.');
+                continue;
             inputData.push({
                 date: createDto.date,
                 worker: createDto.worker[i],

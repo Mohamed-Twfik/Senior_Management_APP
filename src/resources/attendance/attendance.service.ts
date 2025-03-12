@@ -43,8 +43,7 @@ export class AttendanceService extends BaseService {
     const inputData: Attendance[] = [];
     for (let i = 0; i < createDto.worker.length; i++) {
       const existAttendance = await this.attendanceModel.findOne({ worker: createDto.worker[i], date: createDto.date });
-      if (existAttendance) throw new ConflictException('تم إضافة حضور العامل مسبقا.');
-      
+      if (existAttendance) continue;
       inputData.push({
         date: createDto.date,
         worker: createDto.worker[i],

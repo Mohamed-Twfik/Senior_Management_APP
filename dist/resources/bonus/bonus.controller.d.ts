@@ -7,6 +7,8 @@ export declare class BonusController {
     constructor(bonusService: BonusService);
     create(createBonusDto: BonusDto, user: UserDocument): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(bonus: BonusDocument, updateBonusDto: BonusDto, user: UserDocument): Promise<void>;
-    remove(bonus: BonusDocument): Promise<void>;
+    update(bonus: BonusDocument, queryParams: any, updateBonusDto: BonusDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(bonus: BonusDocument, queryParams: any): Promise<object>;
 }

@@ -7,6 +7,8 @@ export declare class ProductsController {
     constructor(productsService: ProductsService);
     create(user: UserDocument, createProductDto: ProductDto): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(product: ProductDocument, updateProductDto: ProductDto, user: UserDocument): Promise<void>;
-    remove(product: ProductDocument): Promise<void>;
+    update(product: ProductDocument, queryParams: any, updateProductDto: ProductDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(product: ProductDocument, queryParams: any): Promise<object>;
 }

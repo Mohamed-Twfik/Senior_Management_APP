@@ -7,6 +7,8 @@ export declare class DepartmentsController {
     constructor(departmentsService: DepartmentsService);
     create(user: UserDocument, createDepartmentDto: DepartmentDto): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("../users/types/base-render-variables.type").BaseRenderVariablesType>;
-    update(department: DepartmentDocument, updateDepartmentDto: DepartmentDto, user: UserDocument): Promise<void>;
-    remove(department: DepartmentDocument): Promise<void>;
+    update(department: DepartmentDocument, queryParams: any, updateDepartmentDto: DepartmentDto, user: UserDocument): Promise<{
+        url: string;
+    }>;
+    remove(department: DepartmentDocument, queryParams: any): Promise<object>;
 }

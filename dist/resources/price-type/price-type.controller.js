@@ -31,11 +31,11 @@ let PriceTypeController = class PriceTypeController {
     findAll(queryParams, user) {
         return this.priceTypeService.findAll(queryParams, user);
     }
-    update(priceType, updatePriceTypeDto, user) {
-        return this.priceTypeService.update(priceType, updatePriceTypeDto, user);
+    update(priceType, queryParams, updatePriceTypeDto, user) {
+        return this.priceTypeService.updateRoute(priceType, updatePriceTypeDto, user, queryParams);
     }
-    remove(priceType) {
-        return this.priceTypeService.remove(priceType);
+    remove(priceType, queryParams) {
+        return this.priceTypeService.remove(priceType, queryParams);
     }
 };
 exports.PriceTypeController = PriceTypeController;
@@ -59,20 +59,22 @@ __decorate([
 ], PriceTypeController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Post)('update/:priceTypeId'),
-    (0, common_1.Redirect)('/priceType?sort=-updatedAt'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('priceTypeId', ObjectId_pipe_1.ObjectIdPipe, price_type_id_pipe_1.PriceTypeIdPipe)),
-    __param(1, (0, common_1.Body)(price_type_pipe_1.PriceTypePipe)),
-    __param(2, (0, get_user_decorator_1.GetUser)()),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
+    __param(2, (0, common_1.Body)(price_type_pipe_1.PriceTypePipe)),
+    __param(3, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, price_type_dto_1.PriceTypeDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, price_type_dto_1.PriceTypeDto, Object]),
     __metadata("design:returntype", void 0)
 ], PriceTypeController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)('delete/:priceTypeId'),
-    (0, common_1.Redirect)('/priceType'),
+    (0, common_1.Redirect)(),
     __param(0, (0, common_1.Param)('priceTypeId', ObjectId_pipe_1.ObjectIdPipe, price_type_id_pipe_1.PriceTypeIdPipe)),
+    __param(1, (0, common_1.Query)(queryParam_pipe_1.QueryParamPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], PriceTypeController.prototype, "remove", null);
 exports.PriceTypeController = PriceTypeController = __decorate([

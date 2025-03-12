@@ -74,8 +74,20 @@ export abstract class BaseService {
     return this.getModuleModel().deleteMany(filter);
   }
 
-  async remove(entity: Document): Promise<void> {
+  async remove(entity: Document, queryParams: QueryDto): Promise<object> {
     await this.getModuleModel().findByIdAndDelete(entity._id);
+    return this.setQueryFilters(queryParams);
+  }
+
+  async setQueryFilters(queryParams: QueryDto) {
+    const queryString = new URLSearchParams({ ...queryParams }).toString();
+    let result = { url: `/${(await this.getAdditionalRenderVariables())['type']}?${queryString}` };
+    return result;
+  }
+
+  async updateRoute(entity: Document, updateDto: any, userDocument: UserDocument, queryParams: QueryDto) {
+    await this.update(entity, updateDto, userDocument);
+    return this.setQueryFilters(queryParams)
   }
 
   abstract getModuleModel(): Model<any>;

@@ -30,7 +30,9 @@ let SalaryService = class SalaryService {
         let attendanceSum = 0;
         for (const worker of attendanceWorkers) {
             worker.totalPrice = Math.ceil(worker.totalPrice);
-            worker.totalPrice = worker.totalPrice - (worker.totalPrice % 5) + 5;
+            let modFive = worker.totalPrice % 5;
+            if (modFive !== 0)
+                worker.totalPrice = worker.totalPrice - modFive + 5;
             attendanceSum += worker.totalPrice;
         }
         const productionSum = {
@@ -53,7 +55,9 @@ let SalaryService = class SalaryService {
             }
             worker.totalPrice = Math.ceil(worker.totalPrice);
             worker.totalSalary = worker.totalPrice + worker.bonus;
-            worker.totalSalary = worker.totalSalary - (worker.totalSalary % 5) + 5;
+            let modFive = worker.totalSalary % 5;
+            if (modFive !== 0)
+                worker.totalSalary = worker.totalSalary - modFive + 5;
             productionSum.totalPrice += worker.totalPrice;
             productionSum.totalSalary += worker.totalSalary;
         }

@@ -7,6 +7,8 @@ export declare class UsersController {
     constructor(usersService: UsersService);
     create(user: UserDocument, createUserDto: CreateUserDto): Promise<void>;
     findAll(queryParams: any, user: UserDocument): Promise<import("./types/base-render-variables.type").BaseRenderVariablesType>;
-    update(user: UserDocument, wantedUser: UserDocument, updateUserDto: UpdateUserDto): Promise<void>;
-    remove(user: UserDocument): Promise<void>;
+    update(user: UserDocument, wantedUser: UserDocument, queryParams: any, updateUserDto: UpdateUserDto): Promise<{
+        url: string;
+    }>;
+    remove(queryParams: any, user: UserDocument): Promise<object>;
 }
