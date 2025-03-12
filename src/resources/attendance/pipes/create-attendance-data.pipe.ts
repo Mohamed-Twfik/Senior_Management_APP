@@ -20,6 +20,7 @@ export class CreateAttendanceDataPipe {
    */
   async transform(data: CreateAttendanceDto & { price: number[] }, metadata: ArgumentMetadata) {
     data.price = [];
+    if(!Array.isArray(data.worker)) data.worker = [data.worker];
     for (let i = 0; i < data.worker.length; i++) {
       const workerExists = await this.workersService.findById(data.worker[i].toString());
       if (!workerExists) throw new NotAcceptableException('خطأ في معرف العامل.');
