@@ -29,23 +29,23 @@
       <% }) %>
   </select>
 </td>
-<!-- <td scope="col">
+<td scope="col">
   <div class="input-group">
     <select class="form-select">
-      <option value="" <%=(filters.quantity.split(":").length===1) ? 'selected' : '' %>>=</option>
-      <option value="lt:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='lt' )
+      <option value="" <%=(filters.price.split(":").length===1) ? 'selected' : '' %>>=</option>
+      <option value="lt:" <%=(filters.price.split(":").length===2 && filters.price.split(":")[0]==='lt' )
         ? 'selected' : '' %>>></option>
-      <option value="lte:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='lte' )
+      <option value="lte:" <%=(filters.price.split(":").length===2 && filters.price.split(":")[0]==='lte' )
         ? 'selected' : '' %>>>=</option>
-      <option value="gt:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='gt' )
+      <option value="gt:" <%=(filters.price.split(":").length===2 && filters.price.split(":")[0]==='gt' )
         ? 'selected' : '' %>><</option>
-      <option value="gte:" <%=(filters.quantity.split(":").length===2 && filters.quantity.split(":")[0]==='gte' )
+      <option value="gte:" <%=(filters.price.split(":").length===2 && filters.price.split(":")[0]==='gte' )
         ? 'selected' : '' %>><=</option>
     </select>
-    <input type="number" class="form-control" name="quantity" form="filter-form" placeholder="الرقم"
-      value='<%= (filters.quantity.split(":").length === 2) ? filters.quantity.split(":")[1] : filters.quantity.split(":")[0] %>'>
+    <input type="number" class="form-control" name="price" form="filter-form" placeholder="الرقم"
+      value='<%= (filters.price.split(":").length === 2) ? filters.price.split(":")[1] : filters.price.split(":")[0] %>'>
   </div>
-</td> -->
+</td>
 <td scope="col">
   <input type="text" class="form-control" name="arabicDate" form="filter-form" placeholder="إبحث"
     value='<%= (filters.arabicDate) ? filters.arabicDate : '' %>'>

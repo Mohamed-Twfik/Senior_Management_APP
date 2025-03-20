@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductionDataPipe = void 0;
 const common_1 = require("@nestjs/common");
 const departments_service_1 = require("../../departments/departments.service");
-const workerType_enum_1 = require("../../workers/enums/workerType.enum");
 const products_service_1 = require("../../products/products.service");
 const workers_service_1 = require("../../workers/workers.service");
 const price_type_service_1 = require("../../price-type/price-type.service");
@@ -43,11 +42,9 @@ let ProductionDataPipe = class ProductionDataPipe {
             else {
                 productDetail.department = workerExists.department;
             }
-            if (workerExists.type !== workerType_enum_1.WorkerType.Weekly) {
-                const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
-                const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
-                productDetail.price = (unitPrice.price / 100) * productDetail.quantity;
-            }
+            const priceType = await this.priceTypeService.findById(productExists.priceType.toString());
+            const unitPrice = priceType.departmentsPrice.find(price => price.department.toString() === productDetail.department.toString());
+            productDetail.price = (unitPrice.price / 100) * productDetail.quantity;
         }
         return data;
     }
