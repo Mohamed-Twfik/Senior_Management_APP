@@ -8,6 +8,6 @@
     dataItem.departmentsPrice.forEach(department=> { 
       if(department.price > 0) {
   %>
-    <div scope="col"><strong class="mx-2"><%= department.department.name %>:</strong> <%= department.price %></div>
+    <div class="my-3"><strong class="mx-2"><%= department.department.name %>:</strong> <kbd><%= department.price %></kbd></div>
   <% }}); %>
 </td>

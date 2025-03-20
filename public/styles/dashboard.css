@@ -183,3 +183,8 @@ td .form-check {
 tr.table-dark td .choices {
   max-width: 300px;
 }
+
+kbd {
+  background-color: #000217;
+  color: #bdecff;
+}

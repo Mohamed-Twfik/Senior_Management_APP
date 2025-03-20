@@ -5,7 +5,11 @@
 </td>
 <td>
   <a href="/products?name=search:<%= dataItem.product.name %>">
-    <%= (dataItem.product && dataItem.product.name)? `${dataItem.quantity} ${dataItem.product.name}` : 'لا يوجد' %>
+    <% if(dataItem.product && dataItem.product.name) { %>
+      <kbd><%= dataItem.quantity %></kbd><strong class="mx-3">-</strong><%= dataItem.product.name %>
+    <% } else { %>
+      لا يوجد
+    <% } %>
   </a>
 </td>
 <td>
