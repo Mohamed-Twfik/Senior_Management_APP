@@ -13,9 +13,9 @@
     <%= (dataItem.department && dataItem.department.name)? dataItem.department.name : 'لايوجد' %>
   </a>
 </td>
-<!-- <td>
-  <%= //(dataItem.quantity) ? dataItem.quantity : 'لايوجد' %>
-</td> -->
+<td>
+  <%= (dataItem.price) ? Math.round(dataItem.price) + " جنيه" : 'لايوجد' %>
+</td>
 <td>
   <%= (dataItem.arabicDate) ? dataItem.arabicDate : 'لايوجد' %>
 </td>
